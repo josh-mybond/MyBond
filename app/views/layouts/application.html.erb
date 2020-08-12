@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fundmybond</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <!-- Bootstrap CSS -->
+    <%= stylesheet_link_tag 'bootstrap.min.css', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <!-- Font awesome CSS -->
+    <%= stylesheet_link_tag 'all.css', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <!-- Circular-std CSS -->
+    <%= stylesheet_link_tag 'circular-std.css', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <!-- Style CSS -->
+    <%= stylesheet_link_tag 'style.css', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
