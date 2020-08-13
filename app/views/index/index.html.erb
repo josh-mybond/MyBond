@@ -56,8 +56,8 @@
                         <span aria-hidden="true">×</span>
                     </button>
 
-                    <form class="quote-form" action="https://api.jogly.io/e/form/de2ffe32-853b-4ff8-96c4-fddf50f30625/" method="post" id="phpcontactform" data-remote="true">
-                        <h5 class="text-center mt-3 mb-4" id="form_header">Apply Today!</h5>
+                    <form class="quote-form" action="https://api.jogly.io/e/form/de2ffe32-853b-4ff8-96c4-fddf50f30625/" method="post" id="phpcontactform" data-remote="">
+                        <h5 class="text-center mt-3 mb-4" id="contact_form">Apply Today!</h5>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-6"> <input type="text" class="form-control" id="first_name" name="first_name"
@@ -78,7 +78,7 @@
                             <input type="text" class="form-control" id="pac-input" name="address" placeholder="Address*"
                                 required>
                         </div>
-                        <button type="submit" class="btn btn-danger w-100" id="js-contact-btn" onclick="doSomethingBeforeClosing()">
+                        <button type="submit" class="btn btn-danger w-100" id="js-contact-btn" onclick="onclickEvent()">
                           <strong>
                                 Apply Today!
                           </strong>
@@ -467,14 +467,14 @@
 
 
 <script>
-  function doSomethingBeforeClosing() {
   //Do something. For example, display a result:
-  $("#phpcontactform").submit(function(e) {
-    e.preventDefault();
-    $( "#js-contact-btn" )[0].disabled ="true";
-    $( "#form_header" )[0].style.color ="green";
-    $( "#form_header" )[0].innerText = "Thank you! We will contact you shortly."
-  });
+  function onclickEvent()
+  {
+    $( "#js-contact-btn" )[0].style.display ="none";
+    $( "#contact_form" )[0].style.color= "green";
+    $( "#contact_form" )[0].innerText = "Thank you! We will contact you shortly."
 
-}
+    setTimeout(function(){ $("#phpcontactform").submit(); }, 30000);  
+  };
+  //
 </script>
