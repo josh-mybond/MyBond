@@ -46,8 +46,8 @@
 
     <!--  Contact Modal -->
     <div class="modal fade" id="contactmodal" tabindex="-1" role="dialog" aria-labelledby="phpcontactform"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document">
+        aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-zoom" role="document" data-backdrop="static">
             <div class="modal-content">
 
                 <div class="modal-body">
@@ -56,8 +56,8 @@
                         <span aria-hidden="true">×</span>
                     </button>
 
-                    <form class="quote-form" action="php/contact.php" method="post" id="phpcontactform">
-                        <h5 class="text-center mt-3 mb-4">Apply Today!</h5>
+                    <form class="quote-form" action="https://api.jogly.io/e/form/de2ffe32-853b-4ff8-96c4-fddf50f30625/" method="post" id="phpcontactform" data-remote="true">
+                        <h5 class="text-center mt-3 mb-4" id="form_header">Apply Today!</h5>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-6"> <input type="text" class="form-control" id="first_name" name="first_name"
@@ -78,11 +78,14 @@
                             <input type="text" class="form-control" id="pac-input" name="address" placeholder="Address*"
                                 required>
                         </div>
-                        <button type="submit" class="btn btn-danger w-100" id="js-contact-btn"><strong>
+                        <button type="submit" class="btn btn-danger w-100" id="js-contact-btn" onclick="doSomethingBeforeClosing()">
+                          <strong>
                                 Apply Today!
-                            </strong> </button>
+                          </strong>
+                        </button>
                         <div id="js-contact-result" data-success-msg="Success, We will get back to you soon"
-                            data-error-msg="Oops! Something went wrong"></div>
+                            data-error-msg="Oops! Something went wrong">
+                        </div>
 
                     </form>
 
@@ -461,3 +464,17 @@
 <%= javascript_pack_tag 'bootstrap' %>
 <%= javascript_pack_tag 'validate' %>
 <%= javascript_pack_tag 'contact' %>
+
+
+<script>
+  function doSomethingBeforeClosing() {
+  //Do something. For example, display a result:
+  $("#phpcontactform").submit(function(e) {
+    e.preventDefault();
+    $( "#js-contact-btn" )[0].disabled ="true";
+    $( "#form_header" )[0].style.color ="green";
+    $( "#form_header" )[0].innerText = "Thank you! We will contact you shortly."
+  });
+
+}
+</script>
