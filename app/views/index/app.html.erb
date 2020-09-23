@@ -41,22 +41,24 @@
           - First payment made today, then 4 more each fortnightly (plan length of approx 2 months)
           */
 
-          exposure_type  = "dollars"; // 0: dollars, 1: cents
-          exposure             = 2000;        // $2000
-          payment_cycle = 0;               // 0: fortnight, 1: monthly, 2: custom, 3: weekly
-          periods                = 5;
+          // exposure_type  = "dollars"; // 0: dollars, 1: cents
+          // exposure             = 2000;        // $2000
+          // payment_cycle = 0;               // 0: fortnight, 1: monthly, 2: custom, 3: weekly
+          // periods                = 5;
 
           /***************************************************************************/
           /* Example: 2 - Custom  */
 
-          // payment_cycle = 2;             // 0: fortnight, 1: monthly, 2: custom, 3: weekly
-          // exposure_type = "cents";  // 0: dollars, 1: cents
-          // exposure            = 60025;    // $600.25
-          // managed            = true;
-          //
-          // // Payment Plan schedule
-          // dates       = ["2020-11-01", "2020-11-15”];  // 1st November, 2020 & 15th November 2020
-          // amounts = [30000, 30025];  // cents
+          payment_cycle = 2;             // 0: fortnight, 1: monthly, 2: custom, 3: weekly
+          exposure_type = "cents";  // 0: dollars, 1: cents
+          exposure            = 60025;    // $600.25
+          managed            = true;
+
+          // Payment Plan schedule
+          // 1st November, 2020 & 15th November 2020
+          dates       = ["2020-11-01", "2020-11-15"];
+
+          amounts = [30000, 30025];  // cents
 
 
           /***************************************************************************/
