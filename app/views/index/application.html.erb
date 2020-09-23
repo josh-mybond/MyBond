@@ -1,0 +1,136 @@
+<link
+      rel="stylesheet"
+      type="text/css"
+      href="https://staging.moneyloop.com.au/api/applicationform.css"
+/>
+    <script src="https://staging.moneyloop.com.au/api/applicationform.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+
+        renderApplyForm();
+
+        async function renderApplyForm() {
+
+            const host             = "https://demonstration.moneyloop.com.au";
+            const dashboard = "https://demonstration-dashboard.moneyloop.com.au";
+
+          const api_key   = "9";  // provided by MoneyLoop
+
+          // Declare all fields to simplify examples
+          let exposure_type = null;
+          let exposure      = null;
+          let payment_cycle = null;
+          let repayment     = null;
+          let periods       = null;
+          let discount_options = null;
+          let dates         = null;
+          let amounts       = null;
+          let managed       = false;
+
+          /***************************************************************************/
+          /*
+
+          Note: Uncomment examples to test
+
+          Example: 1 - Standard
+
+          Notes:
+          - exposure = $2000
+          - payment_cycle = fortnightly
+          - First payment made today, then 4 more each fortnightly (plan length of approx 2 months)
+          */
+
+          // exposure_type  = "dollars"; // 0: dollars, 1: cents
+          // exposure             = 2000;        // $2000
+          // payment_cycle = 0;               // 0: fortnight, 1: monthly, 2: custom, 3: weekly
+          // periods                = 5;
+
+          /***************************************************************************/
+          /* Example: 2 - Custom  */
+
+          payment_cycle = 2;             // 0: fortnight, 1: monthly, 2: custom, 3: weekly
+          exposure_type = "cents";  // 0: dollars, 1: cents
+          exposure            = 60025;    // $600.25
+          managed            = true;
+
+          // Payment Plan schedule
+          dates       = ["2020-11-01", "2020-11-15”];  // 1st November, 2020 & 15th November 2020
+          amounts = [30000, 30025];  // cents
+
+
+          /***************************************************************************/
+          /* Example: 3 - Financial Hardship  */
+
+          // exposure_type = "dollars"; // 0: dollars, 1: cents
+          // exposure            = 2000;       // $2000
+          // payment_cycle = 0;             // 0: fortnight, 1: monthly, 2: custom, 3: weekly
+          // plan_detail_type: 1,
+          // managed     = true;
+          // repayment   = 50; // $50
+
+
+          // Set discount options
+          // TBD
+
+          // Initialise MLApp
+
+          document.getElementById("MLApp").innerHTML = createMLLoader();
+
+          return await renderMLApplication({
+            // Required Fields
+            url: `${host}/api/applicationform/`,
+            host:   host,
+            id:     "MLApp",
+            method: "api",
+            apiKey: api_key,
+
+            // Use your Google Map's API Key,
+            googleApiKey: "AIzaSyDHPVjNgG79rqU6e6_5nzbOwISVbTEAJig",
+            exposure_type: exposure_type,
+            exposure: exposure,
+
+            managed: managed,
+            repayment: repayment,
+            paymentCycle: payment_cycle,
+            periods: periods,
+            dates: dates,
+            amounts: amounts,
+            discountOptions: discount_options,
+
+            requiredFields: [
+              'Full Name',
+              'Date of Birth',
+              'Country',
+              // 'Mobile Phone Number',
+              'Email',
+              // 'Address',
+              'Job Title'
+            ],
+
+            // Prepopulate data
+            firstName: "test firstname",
+            lastName:  "test lastname",
+            mobileNumber: "043221XXXX",
+            homeNumber: "029977XXXX",
+            dobDay:   "05",
+            dobMonth: "04",
+            dobYear:  "2001",
+            email:    Date.now() + "@test.com",
+            employer: "MoneyLoop",
+            salary:   "3",
+            residencyStatus: "Yes"
+          });
+        }
+      });
+    </script>
+
+  </head>
+
+  <body class="container-fluid page__container">
+    <h2 id="widget_test">Component test</h2>
+
+    <%# Application form %>
+    <div class="w-100 pt-3" id="MLAppContainer">
+        <div id="MLApp"></div>
+    </div>
