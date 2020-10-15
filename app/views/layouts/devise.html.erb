@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+  <%= render 'layouts/head' %>
+
+  <body>
+    <%= render "shared/flash_messages", flash: flash %>
+
+    <div class="container">
+      <br>
+
+      <%= yield %>
+
+      <br>
+      <%= render 'layouts/footer' %>
+    </div>
+  </body>
+</html>

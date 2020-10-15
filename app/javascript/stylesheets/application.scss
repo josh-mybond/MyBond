@@ -1,0 +1,35 @@
+@import './fincorp.scss';
+@import './bootstrap_custom.scss';
+// @import './scaffold.scss';
+@import '@fortawesome/fontawesome-free';
+
+#error_explanation {
+  color: #f00;
+  ul {
+    list-style: none;
+    margin: 0 0 18px 0;
+  }
+}
+
+.jumbotron_header_image {
+  width: 68%;
+}
+
+.field_with_errors input {
+  border: 1px solid red;
+}
+
+.bg_indigo {
+  background-color: #3c8dbc;
+}
+
+.small_padding_fix {
+  padding-left: 12px;
+}
+
+.hr_top_padding {
+  margin-top: 36px;
+}
+
+.hidden  { display: none; }
+.visible { display: block; }

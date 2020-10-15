@@ -15,6 +15,12 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto">
 
+                              <% if params[:admin] %>
+                                <li>
+                                  <%= link_to 'login', new_user_session_path %>
+                                </li>
+                              <% end %>
+
                             </ul>
                         </div>
                     </nav>
@@ -22,6 +28,7 @@
             </div>
         </div>
     </div>
+
     <div class="banner-img">
         <img src=<%=image_path("banner-illustration.svg")%> class="img-fluid" alt="#">
 
@@ -426,7 +433,8 @@
                     <p>516/1 Wattle Crescent<br>
                         Pyrmont, 2009, NSW<br>
                         +61423934037<br>
-                        hello@mybond.com.au/p>
+                        hello@mybond.com.au
+                    </p>
                 </div>
             </div>
             <div class="col-md-3">
@@ -456,14 +464,15 @@
         </div>
     </div>
 </footer>
+
 <!--//END FOOTER -->
 <!--  JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<%= javascript_pack_tag 'jquery-3' %>
-<%= javascript_pack_tag 'popper' %>
-<%= javascript_pack_tag 'bootstrap' %>
-<%= javascript_pack_tag 'validate' %>
-<%= javascript_pack_tag 'contact' %>
+<%#= javascript_pack_tag 'jquery-3' %>
+<%#= javascript_pack_tag 'popper' %>
+<%#= javascript_pack_tag 'bootstrap' %>
+<%#= javascript_pack_tag 'validate' %>
+<%#= javascript_pack_tag 'contact' %>
 
 
 <script>
