@@ -19,6 +19,14 @@ Rails.application.routes.draw do
 
   # get  '/application', to: "index#app"
 
+  # Callbacks
+
+  namespace :api do
+    post 'callback_moneyloop', to: 'callback#moneyloop', as: "callback_moneyloop"
+  end
+
+
+
   root "index#index"
 
 end

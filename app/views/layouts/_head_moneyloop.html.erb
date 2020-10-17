@@ -15,15 +15,15 @@
 
         // Housekeeping
         <% if Rails.env.development? %>
-          let host      = "https://staging.moneyloop.com.au";
-          let dashboard = "https://staging-dashboard.moneyloop.com.au";
+          let host      = "http://localhost:3001";
+          let dashboard = "http://localhost:3000";
+          const api_key   = "75";  // provided by MoneyLoop
         <% else %>
           let host      = "https://www.moneyloop.com.au";
           let dashboard = "https://dashboard.moneyloop.com.au";
+          const api_key   = "75";  // provided by MoneyLoop
         <% end %>
 
-
-        const api_key   = "9";  // provided by MoneyLoop
 
         // Declare all fields to simplify examples
         let repayment     = null;
