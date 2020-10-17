@@ -1,0 +1,46 @@
+<%= form_with(model: @contract, url: step3_path(@contract), local: true) do |f| %>
+  <%= render "shared/error_messages", resource: @contract %>
+
+  <%# Save model keys %>
+  <%= hidden_field_tag :customer_id, @customer.id %>
+  <%= hidden_field_tag :contract_id, @contract_id %>
+
+  <div class="form-group">
+    <%= f.label @value_label %>
+    <%= f.number_field :value, value: @contract.value, class: "form-control", min: 0, max: 1000000, step: 1, required: true %>
+  </div>
+
+  <h3>Payment Schedule</h3>
+
+  <table class="table table-striped">
+  <thead>
+    <th>Date</th>
+    <td>Amount</th>
+  </thead>
+  <tbody>
+    <% total = 0 %>
+    <% 0.upto(@contract.dates.length - 1) do |i| %>
+      <tr>
+        <td>
+          <%= i == 0 ? "Today" : @contract.dates[i] %>
+        </td>
+        <td>
+          <% total += @contract.amounts[i] %>
+          <%= @contract.amounts[i] %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td>
+        <strong>Total</strong>
+      </td>
+      <td>
+        <%= total %>
+      </td>
+    </tr>
+  </tbody>
+  </table>
+
+  <%= f.submit "Next", class: "btn btn-info" %>
+
+<% end %>

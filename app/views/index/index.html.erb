@@ -30,7 +30,7 @@
     </div>
 
     <div class="banner-img">
-        <img src=<%=image_path("banner-illustration.svg")%> class="img-fluid" alt="#">
+        <img src=<%= image_path("banner-illustration.svg") %> class="img-fluid" alt="#">
 
         <!-- Main Title -->
         <div class="main-title">
@@ -41,7 +41,10 @@
                             <p>Hello, We are MyBond</p>
                             <h1>Rental Bonds<br>
                                 made easy.</h1>
+                            <!--
                             <a href="#" data-toggle="modal" data-target="#contactmodal" class="btn btn-danger">Apply Today!</a>
+                            -->
+                            <%= link_to 'Apply Today', step1_path, class: "btn btn-danger" %>
                         </div>
                     </div>
                 </div>

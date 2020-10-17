@@ -1,0 +1,106 @@
+<% if Rails.env.development? %>
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://staging.moneyloop.com.au/api/applicationform.css"
+  />
+  <script src="https://staging.moneyloop.com.au/api/applicationform.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+      renderApplyForm();
+
+      async function renderApplyForm() {
+
+        // Housekeeping
+        <% if Rails.env.development? %>
+          let host      = "https://staging.moneyloop.com.au";
+          let dashboard = "https://staging-dashboard.moneyloop.com.au";
+        <% else %>
+          let host      = "https://www.moneyloop.com.au";
+          let dashboard = "https://dashboard.moneyloop.com.au";
+        <% end %>
+
+
+        const api_key   = "9";  // provided by MoneyLoop
+
+        // Declare all fields to simplify examples
+        let repayment     = null;
+        let periods       = null;
+        let discount_options = null;
+
+        const api_identifier = "123456789"; // Your unique identier
+
+        /***************************************************************************/
+        /* Example: 3 - Custom Payment Plan */
+
+        let payment_cycle = 2;        // 0: fortnight, 1: monthly, 2: custom, 3: weekly
+        let exposure_type = "cents";  // 0: dollars, 1: cents
+        let exposure      = <%= @contract.value %>;    // $600.25
+        let managed       = true;
+
+        // Payment Plan schedule
+        let dates   = <%= @contract.dates.flatten   %>;
+        let amounts = <%= @contract.amounts.flatten %>; // must in in cents
+
+        // Set discount options
+        // TBD
+
+        // Initialise MLApp
+
+        document.getElementById("MLApp").innerHTML = createMLLoader();
+
+        return await renderMLApplication({
+          // Required Fields
+          url: `${host}/api/applicationform/`,
+          host:   host,
+          // dashboard: dashboard,
+          id:     "MLApp",
+          method: "api",
+          apiKey: api_key,
+          api_identifier: api_identifier,
+
+          // Use your Google Map's API Key,
+          googleApiKey: "AIzaSyDHPVjNgG79rqU6e6_5nzbOwISVbTEAJig",
+          exposure_type: exposure_type,
+          exposure: exposure,
+
+          managed: managed,
+          repayment: repayment,
+          paymentCycle: payment_cycle,
+          periods: periods,
+          dates: dates,
+          amounts: amounts,
+          discountOptions: discount_options,
+
+          requiredFields: [
+            'Full Name',
+            'Date of Birth',
+            'Country',
+            'Mobile Phone Number',
+            'Email',
+            'Address',
+            'Job Title'
+          ],
+
+          // Prepopulate data
+          firstName: '<%= @customer.first_name %>',
+          lastName:  '<%= @customer.last_name %>',
+          // mobileNumber: "",
+          // homeNumber: "0299775976",
+          // dobDay:   "05",
+          // dobMonth: "04",
+          // dobYear:  "2001",
+          // address: "320 Harris Street, Pyrmont NSW, Australia",
+          email:    '<%= @customer.email %>',
+          // employer: "MoneyLoop",
+          // salary:   "3",
+          // residencyStatus: "Yes"
+        });
+      }
+
+    });
+  </script>
+
+<% end %>

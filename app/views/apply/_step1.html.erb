@@ -1,0 +1,39 @@
+<%= form_with(model: @customer, url: step2_path(@customer), local: true) do |f| %>
+  <%= render "shared/error_messages", resource: @customer %>
+
+  <div class="form-group">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name, class: "form-control", placeholder: "First Name", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name, class: "form-control", placeholder: "Last Name", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.text_field :email, class: "form-control", placeholder: "Email", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password %>
+    <% if Rails.env.development? %>
+      <%= f.password_field :password, value: @password, class: "form-control", placeholder: "Password", required: true %>
+    <% else %>
+      <%= f.password_field :password, class: "form-control", placeholder: "Password", required: true %>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password_confirmation %>
+    <% if Rails.env.development? %>
+      <%= f.password_field :password_confirmation, value: @password, class: "form-control", placeholder: "Password Confirmation", required: true %>
+    <% else %>
+      <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Password Confirmation", required: true %>
+    <% end %>
+  </div>
+
+  <%= f.submit "Next", class: "btn btn-info" %>
+
+<% end %>

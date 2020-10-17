@@ -18,9 +18,26 @@ class ApplicationController < ActionController::Base
     logger.debug string
   end
 
-  # redirect user after login
+  # # redirect user after login
+  # def after_sign_in_path_for(resource)
+  #   stored_location_for(resource) || current_user.admin? ? admin_root_path : root_path
+  # end
+
+  protected
+
   def after_sign_in_path_for(resource)
-    stored_location_for(resource) || current_user.admin? ? admin_root_path : root_path
+    case current_user.admin?
+    when false then (stored_location_for(resource) || dashboard_path)
+    when true  then admin_root_path
+    end
   end
+
+  private
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :first_name, :last_name, :registration_code, :country_code, :postal_code, :password, :password_confirmation])
+  end
+
+
 
 end
