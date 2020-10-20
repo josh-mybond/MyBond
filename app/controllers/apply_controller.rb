@@ -15,8 +15,6 @@ class ApplyController < ApplicationController
       @customer.last_name  = 'last'
       @customer.email      = Customer::test_email
       @password            = 'test_password!@#$'
-      # @customer.password   = 'test_password!@#$'
-      # @customer.password_confirmation = 'test_password!@#$'
     end
 
   end
@@ -46,7 +44,7 @@ class ApplyController < ApplicationController
     # Add some test data to speed up testing
     # TODO: Remove for production
     @contract.value = 300000 if Rails.env.development?
-    @contract.initialize_dates_and_amounts
+    @contract.calculate_dates_and_amounts
   end
 
   def step3
@@ -57,9 +55,14 @@ class ApplyController < ApplicationController
 
     case @contract.nil?
     when false then @contract.update(contract_params)
-    when true  then @contract = Contract.create(contract_params)
+    when true
+      params[:contract][:customer_id] = @customer.id
+      @contract = Contract.create(contract_params)
     end
 
+    # recalculate payment
+    @contract.calculate_dates_and_amounts
+    @contract.save
   end
 
   private

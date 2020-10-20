@@ -26,7 +26,7 @@
         </td>
         <td>
           <% total += @contract.amounts[i] %>
-          <%= @contract.amounts[i] %>
+          <%= currency @contract.amounts[i] %>
         </td>
       </tr>
     <% end %>
@@ -35,7 +35,7 @@
         <strong>Total</strong>
       </td>
       <td>
-        <%= total %>
+        <%= currency total %>
       </td>
     </tr>
   </tbody>

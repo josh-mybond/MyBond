@@ -2,9 +2,9 @@
   <link
     rel="stylesheet"
     type="text/css"
-    href="https://staging.moneyloop.com.au/api/applicationform.css"
+    href="http://localhost:3001/api/applicationform.css"
   />
-  <script src="https://staging.moneyloop.com.au/api/applicationform.js"></script>
+  <script src="http://localhost:3001/api/applicationform.js"></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -30,19 +30,19 @@
         let periods       = null;
         let discount_options = null;
 
-        const api_identifier = "123456789"; // Your unique identier
+        const api_identifier = "<%= @contract.id %>"; // Your unique identier
 
         /***************************************************************************/
         /* Example: 3 - Custom Payment Plan */
 
         let payment_cycle = 2;        // 0: fortnight, 1: monthly, 2: custom, 3: weekly
-        let exposure_type = "cents";  // 0: dollars, 1: cents
-        let exposure      = <%= @contract.value %>;    // $600.25
+        let exposure_type = 'cents';  // 0: dollars, 1: cents
+        let exposure      = '<%= @contract.value %>';    // $600.25
         let managed       = true;
 
         // Payment Plan schedule
-        let dates   = <%= @contract.dates.flatten   %>;
-        let amounts = <%= @contract.amounts.flatten %>; // must in in cents
+        let dates   = <%= raw @contract.dates.flatten   %>;
+        let amounts = <%= raw @contract.amounts.flatten %>; // must in in cents
 
         // Set discount options
         // TBD
@@ -73,6 +73,13 @@
           dates: dates,
           amounts: amounts,
           discountOptions: discount_options,
+
+          dobDay:   "05",
+          dobMonth: "04",
+          dobYear:  "2001",
+          address: "320 Harris Street, Pyrmont NSW, Australia",
+          mobileNumber: "0432212713",
+
 
           requiredFields: [
             'Full Name',
