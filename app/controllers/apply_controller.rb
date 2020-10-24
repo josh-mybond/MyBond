@@ -89,9 +89,8 @@ class ApplyController < ApplicationController
       @contract = Contract.create(contract_params)
     end
 
-    # recalculate payment
-    @contract.calculate_dates_and_amounts
     @contract.save
+    @contract.risk_check!
 
     if !@contract.valid?
       render :step2 and return
