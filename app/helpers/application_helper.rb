@@ -27,10 +27,11 @@ module ApplicationHelper
 
   def invalid_html_message
     "All your base are belong to us"
-  end  
+  end
 
   def currency(number)
-    sprintf('$%.2f', number.to_f / 100)
+    # sprintf('$%.2f', number.to_f / 100)
+    sprintf('$%.2f', number.to_f)
   end
 
   def format_date(date)

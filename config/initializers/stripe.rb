@@ -1,0 +1,6 @@
+
+
+publishable_key = "pk_test_51HfNuULGovslRiHyH9vr7DJMUyFjis9DGS4xer9qS1bnHdq0CSeE4b2HnTy5aTdaIPaJc9gFHlGhB6D6rvCrnyYb00txWG3U2x"
+secret_key = "sk_test_51HfNuULGovslRiHyNDp7SLbUsHmemafIomCsZvPPrctGRC5p6vPPOvaAVz693Cwyin9htEHoWhCBCSvCHPzd9MPi00hKp82WIy"
+
+Stripe.api_key = secret_key

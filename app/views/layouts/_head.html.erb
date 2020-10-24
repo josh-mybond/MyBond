@@ -12,7 +12,8 @@
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
   <% if params[:action] == "step3" %>
-    <%= render 'layouts/head_moneyloop' %>
+    <script src="https://js.stripe.com/v3/"></script>
+    <%#= render 'layouts/head_moneyloop' %>
   <% end %>
 
 </head>

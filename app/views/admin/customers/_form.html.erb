@@ -1,5 +1,5 @@
 <%= form_with(model: [:admin, customer], local: true) do |form| %>
-  <%= render "error_messages", resource: customer %>
+  <%= render "shared/error_messages", resource: customer %>
 
   <div class="actions">
     <%= form.submit %>

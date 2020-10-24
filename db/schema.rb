@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_17_043359) do
+ActiveRecord::Schema.define(version: 2020_10_23_103039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 2020_10_17_043359) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status", default: 0
+    t.string "agent_name"
+    t.string "agent_telephone"
+    t.string "agent_email"
+    t.integer "property_weekly_rent"
+    t.string "property_address"
+    t.string "property_postcode"
+    t.string "property_iso_country_code", default: "AU"
+    t.string "rental_bond_board_id"
+    t.integer "weekly_rent", default: 0
+    t.integer "rental_bond", default: 0
+    t.index ["property_postcode"], name: "index_contracts_on_property_postcode"
     t.index ["status"], name: "index_contracts_on_status"
   end
 
@@ -50,10 +61,21 @@ ActiveRecord::Schema.define(version: 2020_10_17_043359) do
     t.datetime "locked_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "iso_country_code", default: "AU"
+    t.string "mobile_number"
     t.index ["confirmation_token"], name: "index_customers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_customers_on_unlock_token", unique: true
+  end
+
+  create_table "postcodes", force: :cascade do |t|
+    t.string "postcode", default: "", null: false
+    t.float "risk", default: 0.0
+    t.float "risk_limit", default: 0.8
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["postcode"], name: "index_postcodes_on_postcode"
   end
 
   create_table "users", force: :cascade do |t|

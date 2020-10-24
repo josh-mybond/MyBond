@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable
 
+  
   ROLE = {
     user:    0,
     admin: 100
@@ -21,5 +22,6 @@ class User < ApplicationRecord
   def admin?
     self.role == ROLE[:admin]
   end
+
 
 end

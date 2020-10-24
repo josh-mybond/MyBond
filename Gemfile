@@ -41,6 +41,17 @@ gem 'groupdate'
 # Networking API
 gem 'httparty'
 
+# Countries & phone
+gem 'countries', require: 'countries/global'
+gem 'country_select', '~> 4.0'
+gem 'phony'                         # translate international numbers into twilio whatsappp numbers
+gem 'phonelib'                      # validates phone numbers
+
+# Let's handle email professionally
+gem 'truemail'
+
+gem 'stripe'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

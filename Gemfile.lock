@@ -78,6 +78,13 @@ GEM
     chartkick (3.4.1)
     childprocess (3.0.0)
     concurrent-ruby (1.1.7)
+    countries (3.0.1)
+      i18n_data (~> 0.10.0)
+      sixarm_ruby_unaccent (~> 1.1)
+      unicode_utils (~> 1.4)
+    country_select (4.0.0)
+      countries (~> 3.0)
+      sort_alphabetical (~> 1.0)
     crass (1.0.6)
     devise (4.7.3)
       bcrypt (~> 3.0)
@@ -98,6 +105,7 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
+    i18n_data (0.10.0)
     jbuilder (2.10.0)
       activesupport (>= 5.0.0)
     kaminari (1.2.1)
@@ -143,6 +151,8 @@ GEM
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
     pg (1.2.3)
+    phonelib (0.6.46)
+    phony (2.18.15)
     public_suffix (4.0.5)
     puma (5.0.2)
       nio4r (~> 2.0)
@@ -201,6 +211,11 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    simpleidn (0.1.1)
+      unf (~> 0.1.4)
+    sixarm_ruby_unaccent (1.2.0)
+    sort_alphabetical (1.1.0)
+      unicode_utils (>= 1.2.2)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -212,15 +227,22 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stripe (5.28.0)
     systemu (2.6.5)
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
+    truemail (2.0.1)
+      simpleidn (~> 0.1.1)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.7)
+    unicode_utils (1.4.0)
     uniform_notifier (1.13.0)
     uuid (2.3.9)
       macaddr (~> 1.0)
@@ -256,6 +278,8 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   chartkick
+  countries
+  country_select (~> 4.0)
   devise
   font-awesome-rails (~> 4.7, >= 4.7.0.5)
   groupdate
@@ -265,6 +289,8 @@ DEPENDENCIES
   letter_opener
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
+  phonelib
+  phony
   puma (~> 5.0.2)
   rails (~> 6.0.3, >= 6.0.3.2)
   ruby-growl
@@ -272,6 +298,8 @@ DEPENDENCIES
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
+  stripe
+  truemail
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 3.3.0)

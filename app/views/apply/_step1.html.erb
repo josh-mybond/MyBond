@@ -1,14 +1,27 @@
 <%= form_with(model: @customer, url: step2_path(@customer), local: true) do |f| %>
   <%= render "shared/error_messages", resource: @customer %>
 
-  <div class="form-group">
-    <%= f.label :first_name %>
-    <%= f.text_field :first_name, class: "form-control", placeholder: "First Name", required: true %>
+  <div class="row form-group">
+    <div class="col-lg-6">
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name, class: "form-control", placeholder: "First Name", required: true %>
+    </div>
+    <div class="col-lg-6">
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name, class: "form-control", placeholder: "Last Name", required: true %>
+    </div>
   </div>
 
-  <div class="form-group">
-    <%= f.label :last_name %>
-    <%= f.text_field :last_name, class: "form-control", placeholder: "Last Name", required: true %>
+   <div class="row form-group">
+    <div class="col-lg-6">
+      <%= f.label :country %>
+      <%= f.country_select :iso_country_code, { selected: @customer.iso_country_code } , { class: 'form-control' } %>
+    </div>
+
+    <div class="col-lg-6">
+      <%= f.label :mobile_number %>
+      <%= f.text_field :mobile_number, class: "form-control", placeholder: "Mobile number", required: true %>
+    </div>
   </div>
 
   <div class="form-group">
@@ -16,6 +29,7 @@
     <%= f.text_field :email, class: "form-control", placeholder: "Email", required: true %>
   </div>
 
+  <!--
   <div class="form-group">
     <%= f.label :password %>
     <% if Rails.env.development? %>
@@ -33,6 +47,7 @@
       <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Password Confirmation", required: true %>
     <% end %>
   </div>
+  -->
 
   <%= f.submit "Next", class: "btn btn-info" %>
 

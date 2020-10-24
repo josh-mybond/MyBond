@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :admin do
-    resources :users, :customers
+    resources :users, :customers, :postcodes
 
     get  'charts/signups', to: 'charts#signups'
 
@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   post 'step1', to: 'apply#step1', as: 'step1_back'
   post 'step2', to: 'apply#step2', as: 'step2'
   post 'step3', to: 'apply#step3', as: 'step3'
+
+  get 'payment_success', to: 'apply#payment_success', as: 'payment_success'
+  get 'payment_failed',  to: 'apply#payment_failed',  as: 'payment_failed'
 
   # get  '/application', to: "index#app"
 

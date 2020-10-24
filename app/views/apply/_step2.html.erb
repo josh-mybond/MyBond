@@ -5,41 +5,71 @@
   <%= hidden_field_tag :customer_id, @customer.id %>
   <%= hidden_field_tag :contract_id, @contract_id %>
 
-  <div class="form-group">
-    <%= f.label @value_label %>
-    <%= f.number_field :value, value: @contract.value, class: "form-control", min: 0, max: 1000000, step: 1, required: true %>
+  <div class="row form-group">
+    <div class="col-lg-12">
+      <%= f.label :agent_name %>
+      <%= f.text_field :agent_name, class: "form-control", placeholder: "Real Estate Agent Name", required: true %>
+    </div>
   </div>
 
-  <h3>Payment Schedule</h3>
+  <div class="row form-group">
+    <div class="col-lg-6">
+      <%= f.label :agent_telephone %>
+      <%= f.text_field :agent_telephone, class: "form-control", placeholder: "Real Estate Agent Telephone", required: true %>
+    </div>
+    <div class="col-lg-6">
+      <%= f.label :agent_email %>
+      <%= f.text_field :agent_email, class: "form-control", placeholder: "Real Estate Agent Email", required: true %>
+    </div>
+  </div>
 
-  <table class="table table-striped">
-  <thead>
-    <th>Date</th>
-    <td>Amount</th>
-  </thead>
-  <tbody>
-    <% total = 0 %>
-    <% 0.upto(@contract.dates.length - 1) do |i| %>
-      <tr>
-        <td>
-          <%= i == 0 ? "Today" : @contract.dates[i] %>
-        </td>
-        <td>
-          <% total += @contract.amounts[i] %>
-          <%= currency @contract.amounts[i] %>
-        </td>
-      </tr>
-    <% end %>
-    <tr>
-      <td>
-        <strong>Total</strong>
-      </td>
-      <td>
-        <%= currency total %>
-      </td>
-    </tr>
-  </tbody>
-  </table>
+  <hr>
+
+  <h3>Property Details</h3>
+
+  <div class="row form-group">
+    <div class="col-lg-12">
+      <%= f.label :property_address %>
+      <%= f.text_field :property_address, class: "form-control", placeholder: "Address", required: true %>
+      <small>
+        <a href="https://www.enable-javascript.com/" target="_blank">
+          Make sure your web browser has JavaScript enabled.
+        </a>
+      </small>
+
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-lg-6">
+      <%= f.label :property_postcode %>
+      <%= f.text_field :property_postcode, class: "form-control", placeholder: "Postcode", required: true %>
+    </div>
+    <div class="col-lg-6">
+      <%= f.label :country %>
+      <%= f.country_select :property_iso_country_code, { selected: @contract.property_iso_country_code } , { class: 'form-control' } %>
+    </div>
+  </div>
+
+  <div class="row form-group">
+
+    <div class="col-lg-6">
+      <%= f.label :weekly_rent %>
+      <%= f.number_field :property_weekly_rent, class: "form-control", placeholder: "Weekly rent", min: 0, step: 1, required: true %>
+    </div>
+
+    <div class="col-lg-6">
+      <%= f.label :rental_bond %>
+      <%= f.number_field :rental_bond, class: "form-control", placeholder: "Rental Bond Amount", min: 0, step: 1, required: true %>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-lg-12">
+      <%= f.label :rental_bond_board_id %>
+      <%= f.text_field :rental_bond_board_id, class: "form-control", placeholder: "Rental Bond Number", required: true %>
+    </div>
+  </div>
 
   <%= f.submit "Next", class: "btn btn-info" %>
 

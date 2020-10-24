@@ -1,0 +1,31 @@
+<%= form_with(model: [:admin, postcode], local: true) do |f| %>
+  <%= render "shared/error_messages", resource: postcode %>
+
+  <div class="container">
+    <div class="row">
+      <div class="form-group">
+        <%= f.label :postcode %>
+        <%= f.text_field :postcode, class: "form-control", placeholder: "Postcode", required: true %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <%= f.label :risk %>
+        <%= f.number_field :risk, class: "form-control", placeholder: "Risk", min: 0, max: 1.0, step: 0.01, required: true %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <%= f.label :risk_limit %>
+        <%= f.number_field :risk_limit, class: "form-control", placeholder: "Risk Limit", min: 0, max: 1.0, step: 0.01, required: true %>
+      </div>
+    </div>
+
+    <div class="actions">
+      <%= f.submit 'Save', class: 'btn btn-info' %>
+    </div>
+
+  </div>
+<% end %>
