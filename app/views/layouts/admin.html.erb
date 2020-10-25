@@ -6,7 +6,6 @@
   <body id="dashboard">
 
     <div class="container">
-
       <nav class="navbar navbar-expand-lg navbar-light bg_indigo text-white border-bottom" role="navigation">
 
         <%= link_to "Dashboard", admin_root_path, class: "text-white" %>
@@ -58,6 +57,8 @@
             <%= link_to 'Users',          admin_users_path,          class: class_list %>
             <%= link_to 'Customers',      admin_customers_path,      class: class_list %>
             <%= link_to 'Postcodes',      admin_postcodes_path,      class: class_list %>
+            <%= link_to 'Terms and Conditions', admin_terms_and_conditions_path, class: class_list %>
+            <%= link_to 'Privacy Policies',     admin_privacy_policies_path,     class: class_list %>
           </div>
 
         </div>

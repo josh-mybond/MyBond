@@ -1,0 +1,13 @@
+toolbar:
+  - styleselect | bold italic | undo redo | numlist bullist | link | forecolor backcolor | emoticons | table | code
+plugins:
+  - image
+  - link
+  - table
+  - colorpicker
+  - code
+  - lists
+  - emoticons
+content_css: "/assets/email.css"
+browser_spellcheck:
+  - true

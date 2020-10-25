@@ -16,4 +16,8 @@
     <%#= render 'layouts/head_moneyloop' %>
   <% end %>
 
+  <% if admin? %>
+    <%= tinymce_assets %>
+  <% end %>
+
 </head>

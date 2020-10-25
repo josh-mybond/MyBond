@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :admin do
-    resources :users, :customers, :postcodes
+    resources :users, :customers, :postcodes, :terms_and_conditions, :privacy_policies
 
     get  'charts/signups', to: 'charts#signups'
 

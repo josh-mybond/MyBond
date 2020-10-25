@@ -6,8 +6,6 @@ class Admin::PostcodesController < Admin::BaseController
   def index
     log_header
 
-    Postcode.where("postcode ILIKE '2001'")
-
     @postcodes = case params[:query].blank?
       when false
         Postcode
@@ -19,8 +17,6 @@ class Admin::PostcodesController < Admin::BaseController
           .order(:created_at)
           .page params[:page]
       end
-
-    l @postcodes.inspect
 
     respond_to do |format|
       format.html {}

@@ -1,0 +1,46 @@
+<%= tinymce %>
+
+
+<%= form_with(model: [:admin, terms_and_condition], local: true) do |f| %>
+  <%= render "shared/error_messages", resource: terms_and_condition %>
+
+  <div class="container">
+    <div class="row">
+      <div class="form-group">
+        <%= f.label :status %>
+        <%#= f.text_field :status, class: "form-control", placeholder: "0", required: true %>
+        <select name="terms_and_condition[status]" class="form-control">
+          <% TermsAndCondition::STATUS.each do |key, value| %>
+            <option value="<%= value %>" <%= terms_and_condition.status == value ? "selected" : "" %>>
+              <%= key.capitalize %>
+           </option>
+          <% end %>
+        </select>
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <%= f.label :summary %>
+    </div>
+    <div class="row form-group">
+      <%= text_area_tag "terms_and_condition[summary]", terms_and_condition.summary, class: 'tinymce form-control' %>
+    </div>
+
+
+    <div class="row form-group">
+      <%= f.label :full %>
+    </div>
+    <div class="row form-group">
+      <%= text_area_tag "terms_and_condition[full]", terms_and_condition.full, class: 'tinymce form-control' %>
+    </div>
+
+    <br>
+
+    <div class="actions">
+      <%= f.submit 'Save', class: 'btn btn-info' %>
+    </div>
+
+    <br>
+
+  </div>
+<% end %>

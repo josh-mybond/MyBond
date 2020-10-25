@@ -1,1 +1,1 @@
-json.partial! "postcodes/postcode", user: @postcode
+json.partial! "postcodes/postcode", postcode: @postcode

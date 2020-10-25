@@ -39,5 +39,9 @@ module ApplicationHelper
     date.in_time_zone("Australia/Sydney").strftime("%A, %d %b %Y %H:%M %p")
   end
 
+  def admin?
+    params[:controller].include?("admin/")
+  end
+
 
 end

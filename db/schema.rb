@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_23_103039) do
+ActiveRecord::Schema.define(version: 2020_10_25_061519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,24 @@ ActiveRecord::Schema.define(version: 2020_10_23_103039) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["postcode"], name: "index_postcodes_on_postcode"
+  end
+
+  create_table "privacy_policies", force: :cascade do |t|
+    t.integer "status", default: 0
+    t.string "summary"
+    t.string "full"
+    t.string "version"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "terms_and_conditions", force: :cascade do |t|
+    t.integer "status", default: 0
+    t.string "summary"
+    t.string "full"
+    t.string "version"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
