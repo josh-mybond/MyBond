@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   get "privacy_policy",       to: 'index#privacy_policy',       as: 'privacy_policy'
   get "terms_and_conditions", to: 'index#terms_and_conditions', as: 'terms_and_conditions'
   get "contact",              to: 'index#contact',              as: 'contact'
+  post "contact",             to: 'index#contact',              as: 'contact_form'
+
 
   root "index#index"
 

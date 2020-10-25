@@ -25,6 +25,7 @@ class ApplyController < ApplicationController
   def step2
     log_header
 
+
     @customer = Customer.find(params[:customer_id]) if params[:customer_id] and !params[:customer_id].blank?
     @contract = Customer.find(params[:contract_id]) if params[:contract_id] and !params[:contract_id].blank?
 
@@ -41,7 +42,18 @@ class ApplyController < ApplicationController
       customer[:password_confirmation] = temp_password
       customer[:confirmed_at]          = DateTime.now
 
-      @customer = Customer.create(customer)
+      # @customer = Customer.create(customer)
+
+      @customer = Customer.new(customer)
+
+      if Rails.env.production?
+        if !verify_recaptcha(model: @customer)
+          render :step1 and return
+        end
+      end
+
+      @customer.save
+
     end
 
     if !@customer.valid?

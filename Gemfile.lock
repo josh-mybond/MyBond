@@ -108,6 +108,7 @@ GEM
     i18n_data (0.10.0)
     jbuilder (2.10.0)
       activesupport (>= 5.0.0)
+    json (2.3.1)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.1)
@@ -191,6 +192,8 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    recaptcha (5.6.0)
+      json
     regexp_parser (1.7.1)
     responders (3.0.1)
       actionpack (>= 5.0)
@@ -295,6 +298,7 @@ DEPENDENCIES
   phony
   puma (~> 5.0.2)
   rails (~> 6.0.3, >= 6.0.3.2)
+  recaptcha
   ruby-growl
   sass-rails (>= 6)
   selenium-webdriver

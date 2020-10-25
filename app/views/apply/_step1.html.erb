@@ -1,6 +1,10 @@
 <%= form_with(model: @customer, url: step2_path(@customer), local: true) do |f| %>
   <%= render "shared/error_messages", resource: @customer %>
 
+  <% if Rails.env.production? %>
+    <%= recaptcha_tags %>
+  <% end %>
+
   <div class="row form-group">
     <div class="col-lg-6">
       <%= f.label :first_name %>
