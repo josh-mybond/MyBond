@@ -28,7 +28,9 @@ Rails.application.routes.draw do
     post 'callback_moneyloop', to: 'callback#moneyloop', as: "callback_moneyloop"
   end
 
-
+  get "privacy_policy",       to: 'index#privacy_policy',       as: 'privacy_policy'
+  get "terms_and_conditions", to: 'index#terms_and_conditions', as: 'terms_and_conditions'
+  get "contact",              to: 'index#contact',              as: 'contact'
 
   root "index#index"
 

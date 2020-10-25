@@ -26,10 +26,13 @@ class PrivacyPolicy < ApplicationRecord
     #
 
     def self.latest
-      PrivacyPolicy
-        .where(status: STATUS[:published])
-        .order(updated_at: :desc)
-        .limit(1)
+      result = PrivacyPolicy
+          .where(status: STATUS[:published])
+          .order(updated_at: :desc)
+          .limit(1)
+
+      return "" if result.nil? or result.empty?
+      result.first.full
     end
 
     #

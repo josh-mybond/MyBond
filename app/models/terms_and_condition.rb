@@ -26,10 +26,13 @@ class TermsAndCondition < ApplicationRecord
   #
 
   def self.latest
-    TermsAndCondition
+    result = TermsAndCondition
       .where(status: STATUS[:published])
       .order(updated_at: :desc)
       .limit(1)
+
+    return "" if result.nil? or result.empty?
+    result.first.full
   end
 
   #
