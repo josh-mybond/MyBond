@@ -23,6 +23,7 @@ class IndexController < ApplicationController
     @message = params[:message]
 
     if !@name.nil?
+      # send email to... contact@mybond.com.au
       flash[:notice] = "Thank you. We sill respond to you as soon as we can."
     end
 

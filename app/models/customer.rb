@@ -36,6 +36,15 @@ class Customer < ApplicationRecord
   end
 
   #
+  #
+  #
+
+  def full_name
+    "#{self.first_name} #{self.last_name}"
+  end
+
+
+  #
   # Phone number
   #
 

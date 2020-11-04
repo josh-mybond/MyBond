@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :admin do
-    resources :users, :customers, :postcodes, :terms_and_conditions, :privacy_policies
+    resources :users, :customers, :postcodes, :terms_and_conditions,
+              :privacy_policies, :contacts
 
     get  'charts/signups', to: 'charts#signups'
 
@@ -15,10 +16,23 @@ Rails.application.routes.draw do
   get  'step1', to: 'apply#step1', as: 'step1'
   post 'step1', to: 'apply#step1', as: 'step1_back'
   post 'step2', to: 'apply#step2', as: 'step2'
-  post 'step3', to: 'apply#step3', as: 'step3'
 
+  # Stripe
+  post 'step3', to: 'apply#step3', as: 'step3'
   get 'payment_success', to: 'apply#payment_success', as: 'payment_success'
   get 'payment_failed',  to: 'apply#payment_failed',  as: 'payment_failed'
+
+  # Split
+  get  'invitation', to: 'apply#invitation', as: 'invitation_back'
+  post 'invitation', to: 'apply#invitation', as: 'invitation'
+
+  get 'success/:contract_id', to: 'apply#success'
+  get 'failure/:contract_id', to: 'apply#failure'
+  get 'cancel/:contract_id',  to: 'apply#cancel'
+
+  # webhooks
+
+  post 'webhooks/split',      to: 'webhooks#split'
 
   # get  '/application', to: "index#app"
 

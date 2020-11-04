@@ -17,16 +17,9 @@ end
 class Contract < ApplicationRecord
   belongs_to :customer
 
-
   validates :status, :agent_name, :property_address, :property_postcode, presence: true
 
-# #<Contract id: nil, contract_type: 0, customer_id: nil,
-# created_at: nil, updated_at: nil, status: 0,
-# agent_name: nil, agent_telephone: nil, agent_email: nil,
-#  property_weekly_rent: nil, property_address: nil,
-#  property_postcode: nil, property_iso_country_code: "AU",
-#  rental_bond_board_id: nil>
-
+  before_save :action_change_of_status
 
   TYPE = {
     rental_bond: 0
@@ -37,43 +30,157 @@ class Contract < ApplicationRecord
   }
 
   STATUS = {
-    open: 0,
-    active: 1,
-    paid: 2,
-    refunded: 3,
-    cancelled: 4,
-    default: 5,
-    suspended: 6,
-    awaiting_customer_acceptance: 10,
-    awaiting_payment_acceptance: 11
+    application: 0,
+    customer_rejected: 1,
+    customer_accepted: 2,
+    payment_requested: 3,
+    paid: 4,
+    cancelled: 5,
+    refunded: 6,
+    default: 7,
+    suspended: 8
+  }
+
+  VENDOR = {
+    split: 0,
+    stripe: 0
   }
 
   #
-  # Status
+  # Status Queries
   #
 
-  def open?
-    self.status == STATUS[:open]
+  def status_to_s
+    case self.status
+    when STATUS[:application]       then "Application"
+    when STATUS[:customer_rejected] then "Customer Rejected"
+    when STATUS[:customer_accepted] then "Customer Accepted"
+    when STATUS[:payment_requested] then "Payment Requested"
+    when STATUS[:paid]              then "Paid"
+    when STATUS[:cancelled]         then "Cancelled"
+    when STATUS[:refunded]          then "Refunded"
+    when STATUS[:default]           then "Default"
+    when STATUS[:suspended]         then "Suspended"
+    end
   end
 
-  def active?
-    self.status == STATUS[:active]
+  def application?
+    self.status == STATUS[:application]
+  end
+
+  def customer_rejected?
+    self.status == STATUS[:customer_rejected]
+  end
+
+  def customer_accepted?
+    self.status == STATUS[:customer_accepted]
+  end
+
+  def payment_requested?
+    self.status == STATUS[:payment_requested]
   end
 
   def paid?
     self.status == STATUS[:paid]
   end
 
-  def refunded?
-    self.status == STATUS[:refunded]
-  end
-
   def cancelled?
     self.status == STATUS[:cancelled]
   end
 
+  def refunded?
+    self.status == STATUS[:refunded]
+  end
+
   def default?
     self.status == STATUS[:default]
+  end
+
+  def suspended?
+    self.status == STATUS[:suspended]
+  end
+
+  #
+  # Status updates
+  #
+
+  def application!
+    self.status = STATUS[:application]
+    self.save
+  end
+
+  def customer_rejected!
+    self.status = STATUS[:customer_rejected]
+    self.save
+  end
+
+  def customer_accepted!
+    self.status = STATUS[:customer_accepted]
+
+    split_agreement = self.data["split_history"].last
+
+
+    # Extract & save Split contact_id - this is who we can charge!
+    # TODO: error checking.. as if badly formed, will crash :-(
+    self.split_authoriser_contact_id = split_agreement[:data][0][:contact_id]
+    self.save
+  end
+
+  # def split_contact_id
+  #   self.data["split_metadata"]["contact_id"]
+  # end
+
+  def payment_requested!
+    self.status = STATUS[:payment_requested]
+    self.save
+  end
+
+  def paid!
+    self.status = STATUS[:paid]
+    self.save
+  end
+
+  def cancelled!
+    self.status = STATUS[:cancelled]
+    self.save
+  end
+
+  def refunded!
+    self.status = STATUS[:refunded]
+    self.save
+  end
+
+  def default!
+    self.status = STATUS[:default]
+    self.save
+  end
+
+  def suspended!
+    self.status ==STATUS[:suspended]
+    self.save
+  end
+
+
+  #
+  # vendor
+  #
+
+  def split?
+    self.vendor == VENDOR[:split]
+  end
+
+  def stripe?
+    self.vendor == VENDOR[:stripe]
+  end
+
+  def split!
+    self.vendor = VENDOR[:split]
+    self.save
+  end
+
+  def stripe!
+    self.vendor = VENDOR[:stripe]
+    self.save
   end
 
   #
@@ -103,30 +210,48 @@ class Contract < ApplicationRecord
     end
   end
 
-  def calculate_dates_and_amounts
-    return if self.value <= 0
+  #
+  # Transactions
+  #
 
-    case contract_type
-    when TYPE[:rental_bond]
 
-      # First payment
-      payment_amount = self.value * 0.05 # 5% of bond
-      payment_date   = Time.now
-      push_date_and_amount(payment_date, payment_amount)
-
-      residual_amount = self.value - payment_amount
-      period          = 14.days
-      payments        = 5
-      payment_amount  = residual_amount / payments
-
-      while residual_amount > 0 do
-        payment_date += period
-        push_date_and_amount(payment_date, payment_amount)
-        residual_amount -= payment_amount
-      end
-
-    end
+  def first_payment!
+    # Note: send to split - webhook will handle result
+    @split = MBSplit.new
+    data   = @split.payment_request(self.property_weekly_rent, self.split_authoriser_contact_id)
+    self.push_to_split_history!({ data: data, save: false})
+    self.payment_requested!
   end
+
+  def recurring_payment!
+    first_payment!
+  end
+
+  # TODO -- Deprecate this..
+  # def calculate_dates_and_amounts
+  #   return if self.value <= 0
+  #
+  #   case contract_type
+  #   when TYPE[:rental_bond]
+  #
+  #     # First payment
+  #     payment_amount = self.value * 0.05 # 5% of bond
+  #     payment_date   = Time.now
+  #     push_date_and_amount(payment_date, payment_amount)
+  #
+  #     residual_amount = self.value - payment_amount
+  #     period          = 14.days
+  #     payments        = 5
+  #     payment_amount  = residual_amount / payments
+  #
+  #     while residual_amount > 0 do
+  #       payment_date += period
+  #       push_date_and_amount(payment_date, payment_amount)
+  #       residual_amount -= payment_amount
+  #     end
+  #
+  #   end
+  # end
 
   def update_from_callback!(json)
     # {"api_identifier"=>"test_api_identifier",
@@ -165,6 +290,21 @@ class Contract < ApplicationRecord
     case self.contract_type
     when TYPE[:rental_bond] then "Rental Bond Amount"
     end
+  end
+
+  #
+  # Risk
+  #
+
+  def risk_check!
+
+    p = Postcode.find_by(postcode: self.property_postcode)
+
+    case
+    when p.nil?              then self.errors.add(property_postcode: "Postcode not found.")
+    when !p.acceptable_risk? then self.errors.add(property_postcode: "We are not serving this postcode at the moment.")
+    end
+
   end
 
   #
@@ -217,6 +357,65 @@ class Contract < ApplicationRecord
     self.data["history"] = [] if self.data["history"].nil?
     self.data["history"] << JSON.parse(response.to_json)
     self.save!
+
+  end
+
+  #
+  # Split
+  #
+
+  def split_agreement_link(customer)
+    split     = MBSplit.new
+    agreement = split.split_unassigned_agreement(self)
+    link      = split.add_link_customisation(self, customer, agreement["data"]["link"])
+
+    self.push_to_split_history!({ data: agreement, save: true })
+
+    return agreement, link
+  end
+
+  #
+  # Status updates
+  #
+
+
+  def push_to_split_history!(options)
+    self.data = {} if self.data.nil?
+    self.data["split_history"] = [] if self.data["split_history"].nil?
+    self.data["split_history"] << options[:data]
+    self.save if options[:save] == true
+  end
+
+  #
+  # Handle any change of status
+  #
+
+  # Note: before save is run after validations pass
+  def action_change_of_status
+    # puts "business_logic: 1"
+    return if self.status_was == self.status
+    # puts "business_logic: 2"
+
+    case self.status
+    when STATUS[:application]
+      puts "action_change_of_status: Application"
+    when STATUS[:customer_rejected]
+      puts "action_change_of_status: Customer Rejected"
+    when STATUS[:customer_accepted]
+      puts "action_change_of_status: Customer Accepted"
+    when STATUS[:payment_requested]
+      puts "action_change_of_status: Payment Requested"
+    when STATUS[:paid]
+      puts "action_change_of_status: Paid"
+    when STATUS[:cancelled]
+      puts "action_change_of_status: Cancelled"
+    when STATUS[:refunded]
+      puts "action_change_of_status: Refunded"
+    when STATUS[:default]
+      puts "action_change_of_status: Default"
+    when STATUS[:suspended]
+      puts "action_change_of_status: Suspended"
+    end
 
   end
 

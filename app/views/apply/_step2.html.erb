@@ -1,4 +1,5 @@
-<%= form_with(model: @contract, url: step3_path(@contract), local: true) do |f| %>
+<%#= form_with(model: @contract, url: step3_path(@contract), local: true) do |f| %>
+<%= form_with(model: @contract, url: invitation_path(@contract), local: true) do |f| %>
   <%= render "shared/error_messages", resource: @contract %>
 
   <%# Save model keys %>
@@ -36,7 +37,6 @@
           Make sure your web browser has JavaScript enabled.
         </a>
       </small>
-
     </div>
   </div>
 

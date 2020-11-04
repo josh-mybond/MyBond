@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_25_061519) do
+ActiveRecord::Schema.define(version: 2020_11_03_224328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "contacts", force: :cascade do |t|
+    t.integer "status", default: 0
+    t.string "email"
+    t.string "mobile"
+    t.string "message"
+    t.json "history"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "contracts", force: :cascade do |t|
     t.integer "contract_type", default: 0
@@ -35,8 +45,12 @@ ActiveRecord::Schema.define(version: 2020_10_25_061519) do
     t.string "rental_bond_board_id"
     t.integer "weekly_rent", default: 0
     t.integer "rental_bond", default: 0
+    t.integer "vendor", default: 0
+    t.string "split_authoriser_contact_id"
     t.index ["property_postcode"], name: "index_contracts_on_property_postcode"
+    t.index ["split_authoriser_contact_id"], name: "index_contracts_on_split_authoriser_contact_id"
     t.index ["status"], name: "index_contracts_on_status"
+    t.index ["vendor"], name: "index_contracts_on_vendor"
   end
 
   create_table "customers", force: :cascade do |t|

@@ -2,6 +2,8 @@ class ApplyController < ApplicationController
 
   layout 'apply'
 
+  before_action :get_contract, only: [:success, :failure, :cancel]
+
   def step1
     log_header
 
@@ -88,7 +90,59 @@ class ApplyController < ApplicationController
 
   end
 
+  #
+  # Stripe
+  #
+
   def step3
+    log_header
+
+    # Stripe
+    # @customer = Customer.find(params[:customer_id]) if params[:customer_id] and !params[:customer_id].blank?
+    # @contract = Customer.find(params[:contract_id]) if params[:contract_id] and !params[:contract_id].blank?
+    #
+    # case @contract.nil?
+    # when false then @contract.update(contract_params)
+    # when true
+    #   params[:contract][:customer_id] = @customer.id
+    #   @contract = Contract.create(contract_params)
+    # end
+    #
+    # @contract.save
+    # @contract.risk_check!
+    #
+    # if !@contract.valid?
+    #   render :step2 and return
+    # end
+    #
+    # @session = @contract.create_stripe_session!(@customer.email)
+    # session[:contract_id] = @contract.id
+    #
+    # l "*** session[:contract_id] 1 ***"
+    # l session[:contract_id]
+  end
+
+  def payment_success
+    log_header
+
+    l "*** session[:contract_id] 2 ***"
+    l session[:contract_id]
+
+    handle_stripe_response
+  end
+
+  def payment_failed
+    log_header
+
+    handle_stripe_response
+  end
+
+
+  #
+  # Split
+  #
+
+  def invitation
     log_header
 
     @customer = Customer.find(params[:customer_id]) if params[:customer_id] and !params[:customer_id].blank?
@@ -108,29 +162,26 @@ class ApplyController < ApplicationController
       render :step2 and return
     end
 
-    @session = @contract.create_stripe_session!(@customer.email)
-    session[:contract_id] = @contract.id
-
-    l "*** session[:contract_id] 1 ***"
-    l session[:contract_id]
+    @agreement, @link = @contract.split_agreement_link(@customer)
   end
 
-  def step4
-  end
-
-  def payment_success
+  def success
     log_header
 
-    l "*** session[:contract_id] 2 ***"
-    l session[:contract_id]
+    l "params[:agreement_ref]: #{params[:agreement_ref]}"
 
-    handle_stripe_response
+    @contract.split!
+    render layout: 'apply_split_complete'
   end
 
-  def payment_failed
-    log_header
+  def failure
+    @contract.split!
+    render layout: 'apply_split_complete'
+  end
 
-    handle_stripe_response
+  def cancel
+    @contract.split!
+    render layout: 'apply_split_complete'
   end
 
   private
@@ -158,4 +209,7 @@ class ApplyController < ApplicationController
     params.require(:contract).permit(:customer_id, :value, :agent_name, :agent_telephone, :agent_email, :property_weekly_rent, :property_address, :property_postcode, :property_country, :property_iso_country_code, :rental_bond, :rental_bond_board_id)
   end
 
+  def get_contract
+    @contract = Contract.find(params[:contract_id])
+  end
 end

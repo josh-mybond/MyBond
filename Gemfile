@@ -56,6 +56,10 @@ gem 'stripe'
 # HTML Editor
 gem 'tinymce-rails'
 
+# Colored logs
+# gem 'rainbow'
+gem 'colorize'
+
 # Recaptcha
 gem "recaptcha"
 
