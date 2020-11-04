@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(stripe_session_id);
     console.log(stripe_public_key);
 
-    // let stripe = Stripe('pk_test_51HfNuULGovslRiHyH9vr7DJMUyFjis9DGS4xer9qS1bnHdq0CSeE4b2HnTy5aTdaIPaJc9gFHlGhB6D6rvCrnyYb00txWG3U2x');
     let stripe = Stripe(stripe_public_key);
 
     // Create a new Checkout Session using the server-side endpoint you

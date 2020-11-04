@@ -1,5 +1,5 @@
 
-  <span id="stripe_public_key" class="hidden">pk_test_51HfNuULGovslRiHyH9vr7DJMUyFjis9DGS4xer9qS1bnHdq0CSeE4b2HnTy5aTdaIPaJc9gFHlGhB6D6rvCrnyYb00txWG3U2x</span>
+  <span id="stripe_public_key" class="hidden"><%= ENV['stripe_publishable_key'] %></span>
   <span id="stripe_session_id" class="hidden"><%= @session.id %></span>
 
   <div class="row form-group">

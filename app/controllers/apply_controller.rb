@@ -7,7 +7,7 @@ class ApplyController < ApplicationController
   def step1
     log_header
 
-    CustomerMailer::application_update(Customer.last).deliver_now
+    # CustomerMailer::application_update(Customer.last).deliver_now
 
     @customer = Customer.find(params[:id]) if params[:id]
     @customer = Customer.new if @customer.nil?

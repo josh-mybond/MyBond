@@ -34,6 +34,10 @@ gem 'devise'
 # paging
 gem 'kaminari'
 
+# Redis
+gem 'redis'
+gem 'hiredis'  # hi-speed redis
+
 # Chartkick & groupdate
 gem "chartkick"
 gem 'groupdate'

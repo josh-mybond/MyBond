@@ -9,26 +9,34 @@ class MBSplit
     @confidential   = true
     @callback_urls  = "urn:ietf:wg:oauth:2.0:oob"
 
-    case Rails.env.production?
-    when true
-      @api_url        = "https://api.split.cash/"
-      @ui_url         = "https://go.split.cash/"
-      @valid_ips      = ["52.64.11.67", "13.238.78.114"]
+    # case Rails.env.production?
+    # when true
+    #   @api_url        = "https://api.split.cash/"
+    #   @ui_url         = "https://go.split.cash/"
+    #   @valid_ips      = ["52.64.11.67", "13.238.78.114"]
+    #
+    #   # TODO: change these for production..
+    #   @access_token   = "KEMJnZHvzOnOVkQfK5iFIpzaxOhhbPdgGNXiG09fpYc"
+    #   @application_id = "GJ9OpmlOtDNz9ciyiQNlx8UFsbJh1evznb3bSqfuJVs"
+    #   @secret         = "slohw7ehgH1YBUH_fFqRtG7KL20fMd0zN86lMdCpb_Q"
+    #   @webhook_key    = "c9230c73f4dae4d497bfb437886b05906548a46ad65476826114e2c08fecb493"
+    # when false
+    #   @api_url        = "https://api.sandbox.split.cash/"
+    #   @ui_url         = "https://go.sandbox.split.cash/"
+    #   @valid_ips      = "13.237.142.60"
+    #   @access_token   = "KEMJnZHvzOnOVkQfK5iFIpzaxOhhbPdgGNXiG09fpYc"
+    #   @application_id = "GJ9OpmlOtDNz9ciyiQNlx8UFsbJh1evznb3bSqfuJVs"
+    #   @secret         = "slohw7ehgH1YBUH_fFqRtG7KL20fMd0zN86lMdCpb_Q"
+    #   @webhook_key    = "c9230c73f4dae4d497bfb437886b05906548a46ad65476826114e2c08fecb493"
+    # end
 
-      # TODO: change these for production..
-      @access_token   = "KEMJnZHvzOnOVkQfK5iFIpzaxOhhbPdgGNXiG09fpYc"
-      @application_id = "GJ9OpmlOtDNz9ciyiQNlx8UFsbJh1evznb3bSqfuJVs"
-      @secret         = "slohw7ehgH1YBUH_fFqRtG7KL20fMd0zN86lMdCpb_Q"
-      @webhook_key    = "c9230c73f4dae4d497bfb437886b05906548a46ad65476826114e2c08fecb493"
-    when false
-      @api_url        = "https://api.sandbox.split.cash/"
-      @ui_url         = "https://go.sandbox.split.cash/"
-      @valid_ips      = "13.237.142.60"
-      @access_token   = "KEMJnZHvzOnOVkQfK5iFIpzaxOhhbPdgGNXiG09fpYc"
-      @application_id = "GJ9OpmlOtDNz9ciyiQNlx8UFsbJh1evznb3bSqfuJVs"
-      @secret         = "slohw7ehgH1YBUH_fFqRtG7KL20fMd0zN86lMdCpb_Q"
-      @webhook_key    = "c9230c73f4dae4d497bfb437886b05906548a46ad65476826114e2c08fecb493"
-    end
+    @api_url        = ENV['split_api_url']
+    @ui_url         = ENV['split_ui_url']
+    @valid_ips      = ENV['split_valid_ips']
+    @access_token   = ENV['split_access_token']
+    @application_id = ENV['split_application_id']
+    @secret         = ENV['split_secret']
+    @webhook_key    = ENV['split_webhook_key']
 
   end
 
@@ -152,13 +160,15 @@ class MBSplit
     # Check this link for options
     # https://help.split.cash/en/articles/1777919-unassigned-agreement
     header_title = "My Bond Direct Debit Agreement"
-    # success_url  = "http://localhost:3005/success/#{contract.id}"
-    # failure_url  = "http://localhost:3005/failure/#{contract.id}"
-    # cancel_url   = "http://localhost:3005/cancel/#{contract.id}"
-    # "#{link}?embed=1&whitelabel=1&name=#{customer.full_name}&email=#{customer.email}&success_url=#{success_url}&failure_url=#{failure_url}&cancel_url=#{cancel_url}"
+    success_url  = "#{ENV['split_success_url']}#{contract.id}"
+    failure_url  = "#{ENV['split_failure_url']}#{contract.id}"
+    cancel_url   = "#{ENV['split_cancel_url']}#{contract.id}"
 
-    "#{link}?embed=1&whitelabel=1&name=#{customer.full_name}&email=#{customer.email}&handle_success=1&handle_failure=1"
+    # use redirect method
+    "#{link}?embed=1&whitelabel=1&name=#{customer.full_name}&email=#{customer.email}&success_url=#{success_url}&failure_url=#{failure_url}&cancel_url=#{cancel_url}"
 
+    # use javascript method window
+    # "#{link}?embed=1&whitelabel=1&name=#{customer.full_name}&email=#{customer.email}&handle_success=1&handle_failure=1"
   end
 
   def get_unassigned_agreement(ref)
