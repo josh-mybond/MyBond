@@ -14,17 +14,19 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   get  'step1', to: 'apply#step1', as: 'step1'
-  post 'step1', to: 'apply#step1', as: 'step1_back'
-  post 'step2', to: 'apply#step2', as: 'step2'
+  # post 'step1', to: 'apply#step1', as: 'step1_back'
+  get  'step2',  to: 'apply#step2'
+  post 'step2',  to: 'apply#step2'
 
   # Stripe
-  post 'step3', to: 'apply#step3', as: 'step3'
+  get  'step3', to: 'apply#step3'
+  post 'step3', to: 'apply#step3'
   get 'payment_success', to: 'apply#payment_success', as: 'payment_success'
   get 'payment_failed',  to: 'apply#payment_failed',  as: 'payment_failed'
 
   # Split
-  get  'invitation', to: 'apply#invitation', as: 'invitation_back'
-  post 'invitation', to: 'apply#invitation', as: 'invitation'
+  get  'invitation', to: 'apply#invitation'
+  post 'invitation', to: 'apply#invitation'
 
   get 'success/:contract_id', to: 'apply#success'
   get 'failure/:contract_id', to: 'apply#failure'

@@ -37,6 +37,10 @@ module Fundmybond
     #   end
     # end
 
+    # Redis
+    # config.cache_store = :redis_cache_store, { url: ENV['redis_url'] }
+    # config.session_store :cache_store, key: ENV['redis_session_key']
+
     # Listen to websocket requests on /websocket
     config.action_cable.mount_path = '/websocket'
 
