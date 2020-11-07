@@ -10,6 +10,9 @@ require("channels")
 require("jquery")
 require("@fortawesome/fontawesome-free");
 
+// sockets
+require('channels/admin');
+
 // charts
 require("chartkick");
 require("chart.js");

@@ -33,3 +33,29 @@
 
 .hidden  { display: none; }
 .visible { display: block; }
+
+/* Images */
+
+.logo {
+  background-image: url("../images/logos/my-bond-logo-for-white-background.png");
+  background-size: 100% 100%;
+  width: 220px;
+  height: 80px;
+}
+
+.icon {
+  background-image: url("../images/logos/my-bond-icon.png");
+  background-size: 100% 100%;
+  width: 20px;
+  height: 20px;
+}
+
+
+
+/* Apply - header */
+
+.apply_progress_bar {
+  margin-top: 44px;
+}
+
+/* Apply - Pages */

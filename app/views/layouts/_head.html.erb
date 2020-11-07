@@ -18,6 +18,8 @@
 
   <% if admin? %>
     <%= tinymce_assets %>
+    <%# tell javascript to open socket for admins %>
+    <%= tag :meta, name: "admin-user", data: { id: current_user.id } %>
   <% end %>
 
   <%# Favicon gubbins %>

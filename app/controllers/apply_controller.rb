@@ -4,6 +4,10 @@ class ApplyController < ApplicationController
 
   before_action :get_contract, only: [:success, :failure, :cancel]
 
+  def how_to_apply
+    log_header
+  end
+
   def step1
     log_header
 
@@ -63,7 +67,8 @@ class ApplyController < ApplicationController
       end
     end
 
-    if !@customer.valid?
+    if !@customer or !@customer.valid?
+      @customer = Customer.new if !@customer
       render :step1 and return
     end
 

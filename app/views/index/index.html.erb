@@ -6,7 +6,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="#"><h3>MyBond</h3></a>
+                        <a class="navbar-brand" href="#">
+                          <div class="img-fluid logo" alt="My Bond" title="My Bond"></div>
+                        </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <i class="fas fa-bars"></i>
@@ -31,7 +33,6 @@
 
     <div class="banner-img">
         <img src=<%= image_path("banner-illustration.svg") %> class="img-fluid" alt="#">
-
         <!-- Main Title -->
         <div class="main-title">
             <div class="container">
@@ -43,8 +44,9 @@
                                 made easy.</h1>
                             <!--
                             <a href="#" data-toggle="modal" data-target="#contactmodal" class="btn btn-danger">Apply Today!</a>
+                            <%#= link_to 'Apply Today', how_to_apply_path, class: "btn btn-danger" %>
                             -->
-                            <%= link_to 'Apply Today', step1_path, class: "btn btn-danger" %>
+                            <%= link_to 'Apply Today', how_to_apply_path, class: "btn btn-info" %>
                         </div>
                     </div>
                 </div>
