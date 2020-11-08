@@ -29,5 +29,5 @@ import "bootstrap";
 
 import './address_validation';
 //import './mutation_observer';
-// import './stripe';
+import './stripe';
 // import './split_payments';

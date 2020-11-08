@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_07_235942) do
+ActiveRecord::Schema.define(version: 2020_11_08_105249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 2020_11_07_235942) do
     t.integer "rental_bond", default: 0
     t.integer "vendor", default: 0
     t.string "split_authoriser_contact_id"
+    t.string "pay_by_credit_card_guid"
+    t.index ["pay_by_credit_card_guid"], name: "index_contracts_on_pay_by_credit_card_guid"
     t.index ["property_postcode"], name: "index_contracts_on_property_postcode"
     t.index ["split_authoriser_contact_id"], name: "index_contracts_on_split_authoriser_contact_id"
     t.index ["status"], name: "index_contracts_on_status"

@@ -1,12 +1,11 @@
 class Admin::Customers::ContractsController < Admin::BaseController
+  before_action :log_header
   before_action :set_customer
   before_action :set_contract, only: [:show, :edit, :update, :destroy]
 
   # GET /contracts
   # GET /contracts.json
   def index
-    log_header
-
     @contracts = Contract
                    .where(customer_id: @customer.id)
                    .order(:created_at)
@@ -74,6 +73,19 @@ class Admin::Customers::ContractsController < Admin::BaseController
   #     format.json { head :no_content }
   #   end
   # end
+
+  def pay_by_credit_card
+    @contract = Contract.find(params[:contract_id])
+
+    case request.method.downcase
+    when "get"  # Do nothing
+    when "post"
+      @contract.send_pay_by_credit_card_email!
+      flash[:success] = "#{@customer.full_name} has been sent an email with a link to pay by credit card"
+    end
+
+
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

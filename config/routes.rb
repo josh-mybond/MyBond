@@ -7,7 +7,11 @@ Rails.application.routes.draw do
               :privacy_policies, :contacts
 
     resources :customers do
-      resources :contracts, controller: 'customers/contracts'
+      resources :contracts, controller: 'customers/contracts' do
+        get  'pay_by_credit_card'
+        post 'pay_by_credit_card'
+      end
+
     end
 
     get  'charts/signups', to: 'charts#signups'
@@ -24,6 +28,7 @@ Rails.application.routes.draw do
   post 'step2',  to: 'apply#step2'
 
   # Stripe
+  get 'pay_by_credit_card/:guid', to: 'apply#pay_by_credit_card', as: 'pay_by_credit_card'
   get  'step3', to: 'apply#step3'
   post 'step3', to: 'apply#step3'
   get 'payment_success', to: 'apply#payment_success', as: 'payment_success'

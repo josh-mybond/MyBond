@@ -11,7 +11,7 @@
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-  <% if params[:action] == "step3" %>
+  <% if params[:action] == "step3" or params[:action] == "pay_by_credit_card" %>
     <script src="https://js.stripe.com/v3/"></script>
     <%#= render 'layouts/head_moneyloop' %>
   <% end %>

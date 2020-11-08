@@ -189,6 +189,13 @@ class Contract < ApplicationRecord
     self.save
   end
 
+  def send_pay_by_credit_card_email!
+    self.pay_by_credit_card_guid = SecureRandom.uuid
+    self.save
+
+    CustomerMailer::pay_by_credit_card(self).deliver_now
+  end
+
   #
   #
   #

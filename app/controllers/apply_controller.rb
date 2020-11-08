@@ -127,6 +127,29 @@ class ApplyController < ApplicationController
     # l session[:contract_id]
   end
 
+  def pay_by_credit_card
+    log_header
+
+    @contract = Contract.find_by(pay_by_credit_card_guid: params[:guid])
+
+    case @contract.nil?
+    when true then flash[:error] = "Unable to process your request"
+    when false
+      @customer = @contract.customer
+      flash[:error] = "Invalid request" if @customer.nil?
+    end
+
+    if @customer
+      @session = @contract.create_stripe_session!(@customer.email)
+      session[:contract_id] = @contract.id
+
+      l "*** session[:contract_id] 1 ***"
+      l session[:contract_id]
+    end
+
+
+  end
+
   def payment_success
     log_header
 

@@ -28,7 +28,13 @@
         <td><%= currency contract.property_weekly_rent %></td>
         <td><%= currency contract.rental_bond %></td>
         <td><%= contract.property_postcode %></td>
-        <td><%= link_to 'Edit', edit_admin_customer_contract_path(customer_id: @customer, id: contract.id) %></td>
+        <td>
+          <%= link_to 'Edit', edit_admin_customer_contract_path(customer_id: @customer, id: contract.id) %>
+
+          <% if contract.application? %>
+            <%= link_to 'Pay by credit card', admin_customer_contract_pay_by_credit_card_path(customer_id: @customer, contract_id: contract.id) %>
+          <% end %>
+        </td>
         <!--
         <td><%#= link_to 'Destroy', [:admin, user], method: :delete, data: { confirm: 'Are you sure?' } %></td>
         -->
