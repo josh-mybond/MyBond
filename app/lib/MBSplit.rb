@@ -162,10 +162,11 @@ class MBSplit
     header_title = "My Bond Direct Debit Agreement"
     success_url  = "#{ENV['split_success_url']}#{contract.id}"
     failure_url  = "#{ENV['split_failure_url']}#{contract.id}"
-    cancel_url   = "#{ENV['split_cancel_url']}#{contract.id}"
+    # cancel_url   = "#{ENV['split_cancel_url']}#{contract.id}"
 
     # use redirect method
-    "#{link}?embed=1&whitelabel=1&name=#{customer.full_name}&email=#{customer.email}&success_url=#{success_url}&failure_url=#{failure_url}&cancel_url=#{cancel_url}"
+    # "#{link}?embed=1&whitelabel=1&name=#{customer.full_name}&email=#{customer.email}&success_url=#{success_url}&failure_url=#{failure_url}&cancel_url=#{cancel_url}"
+    "#{link}?embed=1&whitelabel=1&name=#{customer.full_name}&email=#{customer.email}&success_url=#{success_url}&failure_url=#{failure_url}"
 
     # use javascript method window
     # "#{link}?embed=1&whitelabel=1&name=#{customer.full_name}&email=#{customer.email}&handle_success=1&handle_failure=1"

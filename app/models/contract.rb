@@ -50,6 +50,12 @@ class Contract < ApplicationRecord
   # Status Queries
   #
 
+  def type_to_s
+    case self.contract_type
+    when TYPE[:rental_bond] then "Rental Bond"
+    end
+  end
+
   def status_to_s
     case self.status
     when STATUS[:application]       then "Application"

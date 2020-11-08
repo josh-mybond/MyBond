@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_03_224328) do
+ActiveRecord::Schema.define(version: 2020_11_07_235942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,7 +43,6 @@ ActiveRecord::Schema.define(version: 2020_11_03_224328) do
     t.string "property_postcode"
     t.string "property_iso_country_code", default: "AU"
     t.string "rental_bond_board_id"
-    t.integer "weekly_rent", default: 0
     t.integer "rental_bond", default: 0
     t.integer "vendor", default: 0
     t.string "split_authoriser_contact_id"

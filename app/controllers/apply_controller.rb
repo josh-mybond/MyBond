@@ -104,7 +104,7 @@ class ApplyController < ApplicationController
 
     # Stripe
     # @customer = Customer.find(params[:customer_id]) if params[:customer_id] and !params[:customer_id].blank?
-    # @contract = Customer.find(params[:contract_id]) if params[:contract_id] and !params[:contract_id].blank?
+    # @contract = Contract.find(params[:contract_id]) if params[:contract_id] and !params[:contract_id].blank?
     #
     # case @contract.nil?
     # when false then @contract.update(contract_params)
@@ -150,8 +150,8 @@ class ApplyController < ApplicationController
   def invitation
     log_header
 
-    @customer = Customer.find(session[:customer_id]) if session[:customer_id] and !params[:customer_id].blank?
-    @contract = Customer.find(session[:contract_id]) if session[:contract_id] and !params[:contract_id].blank?
+    @customer = Customer.find(session[:customer_id]) if session[:customer_id]
+    @contract = Contract.find(session[:contract_id]) if session[:contract_id]
 
     case request.method.downcase
     when "get"  # Refresh
@@ -167,6 +167,8 @@ class ApplyController < ApplicationController
         params[:contract][:customer_id] = @customer.id
         @contract = Contract.create(contract_params)
         @contract.save
+
+        session[:contract_id] = @contract.id
       end
     end
 

@@ -3,8 +3,12 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :admin do
-    resources :users, :customers, :postcodes, :terms_and_conditions,
+    resources :users, :postcodes, :terms_and_conditions,
               :privacy_policies, :contacts
+
+    resources :customers do
+      resources :contracts, controller: 'customers/contracts'
+    end
 
     get  'charts/signups', to: 'charts#signups'
 
@@ -52,7 +56,6 @@ Rails.application.routes.draw do
 
   # Socker server
   mount ActionCable.server => '/cable'
-
 
   root "index#index"
 
