@@ -43,7 +43,7 @@ class Contract < ApplicationRecord
 
   VENDOR = {
     split: 0,
-    stripe: 0
+    stripe: 1
   }
 
   #
@@ -67,6 +67,13 @@ class Contract < ApplicationRecord
     when STATUS[:refunded]          then "Refunded"
     when STATUS[:default]           then "Default"
     when STATUS[:suspended]         then "Suspended"
+    end
+  end
+
+  def vendor_to_s
+    case self.vendor
+    when VENDOR[:split]  then "Split"
+    when VENDOR[:stripe] then "Stripe"
     end
   end
 
@@ -104,6 +111,10 @@ class Contract < ApplicationRecord
 
   def suspended?
     self.status == STATUS[:suspended]
+  end
+
+  def has_vendor?
+    self.paid? or self.refunded? or self.suspended? or self.default?
   end
 
   #
@@ -358,19 +369,17 @@ class Contract < ApplicationRecord
   end
 
   def update_from_stripe_session!
-    # Retrieve
     require 'stripe'
     Stripe.api_key = "sk_test_51HfNuULGovslRiHyNDp7SLbUsHmemafIomCsZvPPrctGRC5p6vPPOvaAVz693Cwyin9htEHoWhCBCSvCHPzd9MPi00hKp82WIy"
     response = Stripe::Checkout::Session.retrieve(self.data["stripe_session_id"])
 
-    case response["payment_status"]
-    when "paid" then self.status == STATUS[:paid]
+    case response["payment_status"].to_s
+    when "paid" then self.status = STATUS[:paid]
     end
 
-    self.data["history"] = [] if self.data["history"].nil?
-    self.data["history"] << JSON.parse(response.to_json)
-    self.save!
-
+    self.data["stripe_history"] = [] if self.data["stripe_history"].nil?
+    self.data["stripe_history"] << JSON.parse(response.to_json)
+    self.stripe!
   end
 
   #

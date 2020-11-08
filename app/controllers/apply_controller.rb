@@ -19,6 +19,9 @@ class ApplyController < ApplicationController
     # Add some test data to speed up testing
     # Remove for production
     if Rails.env.development?
+      session[:customer_id] = nil
+      session[:contract_id] = nil
+
       if @customer.new_record?
         @customer.first_name = 'first'
         @customer.last_name  = 'last'
@@ -130,30 +133,35 @@ class ApplyController < ApplicationController
   def pay_by_credit_card
     log_header
 
+    l "*** pay_by_credit_card: 1 ***"
+
     @contract = Contract.find_by(pay_by_credit_card_guid: params[:guid])
 
     case @contract.nil?
-    when true then flash[:error] = "Unable to process your request"
+    when true then @error = "Unable to process your request"
     when false
+      l "*** pay_by_credit_card: 2 ***"
+
       @customer = @contract.customer
-      flash[:error] = "Invalid request" if @customer.nil?
+      @error    = "Invalid request" if @customer.nil?
     end
 
     if @customer
+      l "*** pay_by_credit_card: 3 ***"
       @session = @contract.create_stripe_session!(@customer.email)
       session[:contract_id] = @contract.id
 
-      l "*** session[:contract_id] 1 ***"
-      l session[:contract_id]
+      l "session[:contract_id]: #{session[:contract_id]}"
     end
 
 
+    set_error
   end
 
   def payment_success
     log_header
 
-    l "*** session[:contract_id] 2 ***"
+    l "*** payment_success: 1"
     l session[:contract_id]
 
     handle_stripe_response
@@ -173,8 +181,12 @@ class ApplyController < ApplicationController
   def invitation
     log_header
 
+    l "invitation: 1"
+
     @customer = Customer.find(session[:customer_id]) if session[:customer_id]
     @contract = Contract.find(session[:contract_id]) if session[:contract_id]
+
+    l "invitation: 2"
 
     case request.method.downcase
     when "get"  # Refresh
@@ -184,14 +196,25 @@ class ApplyController < ApplicationController
       end
 
     when "post" # form submission
+
+      l "invitation: 3"
+
       case @contract.nil?
-      when false then @contract.update(contract_params)
+      when false
+        l "invitation: 4"
+         @contract.update(contract_params)
       when true
+        l "invitation: 5"
         params[:contract][:customer_id] = @customer.id
         @contract = Contract.create(contract_params)
         @contract.save
 
+        l @contract.errors.inspect
+
         session[:contract_id] = @contract.id
+        l "invitation: 6"
+        l "session[:contract_id]: #{session[:contract_id]}"
+
       end
     end
 
@@ -226,10 +249,17 @@ class ApplyController < ApplicationController
   private
 
   def handle_stripe_response
+    l "*** handle_stripe_response: 1"
+    l "session[:contract_id]: #{session[:contract_id]}"
+
+
     case session[:contract_id].nil?
     when true then @error = "Invalid session"
     when false
       @contract = Contract.find(session[:contract_id])
+
+      l "*** handle_stripe_response: 1"
+      l @contract.inspect
 
       case @contract.nil?
       when true  then @error = "Invalid contract"
@@ -237,6 +267,7 @@ class ApplyController < ApplicationController
       end
     end
 
+    set_error
   end
 
   def customer_params

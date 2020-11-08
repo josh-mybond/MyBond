@@ -10,11 +10,11 @@ class Admin::CustomersController < Admin::BaseController
       when false
         Customer
           .where("email ILIKE ? ", "%#{params[:query]}%")
-          .order(:created_at)
+          .order(created_at: :desc)
           .page params[:page]
       when true
         Customer
-          .order(:created_at)
+          .order(created_at: :desc)
           .page params[:page]
       end
 

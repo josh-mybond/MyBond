@@ -18,12 +18,16 @@ class ApplicationController < ActionController::Base
     logger.debug string
   end
 
+  def set_error
+    flash[:error] = @error if @error
+  end
+
+  protected
+
   # # redirect user after login
   # def after_sign_in_path_for(resource)
   #   stored_location_for(resource) || current_user.admin? ? admin_root_path : root_path
   # end
-
-  protected
 
   def after_sign_in_path_for(resource)
     case current_user.admin?

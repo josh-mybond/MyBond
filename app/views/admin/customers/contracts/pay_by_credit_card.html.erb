@@ -10,15 +10,8 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <p>This will email the customer a link to pay by credit card</p>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-12">
-
     <%= form_with(url: admin_customer_contract_pay_by_credit_card_path(customer_id: @customer, contract_id: @contract.id), method: "post", local: true) do |f| %>
-      <button type="submit" class="btn btn-warning">Allow this customer to pay by credit card</button>
+      <%= f.submit "Allow this customer to pay by credit card", class: "btn btn-warning", data: { confirm: 'Are you sure?' } %>
     <% end %>
   </div>
 </div>

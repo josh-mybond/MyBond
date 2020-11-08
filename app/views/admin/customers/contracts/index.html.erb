@@ -13,6 +13,7 @@
     <tr>
       <th>Type</th>
       <th>Status</th>
+      <th>Vendor</th>
       <th>Weekly Rent</th>
       <th>Bond</th>
       <th>Post Code</th>
@@ -25,6 +26,11 @@
       <tr>
         <td><%= contract.type_to_s %></td>
         <td><%= contract.status_to_s %></td>
+        <td>
+          <% if contract.has_vendor? %>
+            <%= contract.vendor_to_s %>
+          <% end %>
+        </td>
         <td><%= currency contract.property_weekly_rent %></td>
         <td><%= currency contract.rental_bond %></td>
         <td><%= contract.property_postcode %></td>
