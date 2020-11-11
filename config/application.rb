@@ -37,7 +37,7 @@ module Fundmybond
     #   end
     # end
 
-    # Redis
+    # Redis - just use encrypted cookie's for the moment
     # config.cache_store = :redis_cache_store, { url: ENV['redis_url'] }
     # config.session_store :cache_store, key: ENV['redis_session_key']
 

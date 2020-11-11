@@ -11,10 +11,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   // Application Form Mutation Observer
-  console.log("mutation_observer: 1");
   let ml_app = document.getElementById('MLApp');
-  console.log("mutation_observer: 2");
-  console.log(ml_app);
 
   if (ml_app) {
     console.log("mutation_observer: 3");

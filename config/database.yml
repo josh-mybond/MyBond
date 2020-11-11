@@ -80,6 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: fundmybond_production
-  username: fundmybond
-  password: <%= ENV['FUNDMYBOND_DATABASE_PASSWORD'] %>
+  database: mybond_production
+  username: mybond
+  password: <%= ENV['MYBOND_DATABASE_PASSWORD'] %>
