@@ -17,6 +17,54 @@ require('channels/admin');
 require("chartkick");
 require("chart.js");
 
+// datepicker - https://flatpickr.js.org/
+import flatpickr from "flatpickr"
+// import "flatpickr/dist/flatpickr.min.css"
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  let today   = new Date();
+  let year    = today.getFullYear();
+  // var month   = today.getMonth();
+  // var day     = today.getDate();
+  var dob_maxDate = new Date(year - 15, 1, 1);
+
+  // allow start from one month ago..
+  let lease_min_date = new Date();
+  let lease_end_date = new Date();
+  lease_min_date.setMonth(lease_min_date.getMonth() - 1);
+  lease_end_date.setMonth(lease_min_date.getMonth() + 12);
+
+  flatpickr(".date_of_birth_picker", {
+    altInput: true,
+    altFormat: "F j, Y",
+    dateFormat: "Y-m-d",
+    minDate: "1900-01",
+    maxDate: dob_maxDate
+  });
+
+  flatpickr(".contract_start_date_picker", {
+    altInput: true,
+    altFormat: "F j, Y",
+    dateFormat: "Y-m-d",
+    minDate: lease_min_date,
+    defaultDate: today
+  });
+
+  flatpickr(".contract_end_date_picker", {
+    altInput: true,
+    altFormat: "F j, Y",
+    dateFormat: "Y-m-d",
+    minDate: lease_min_date,
+    defaultDate: lease_end_date
+  });
+
+
+
+
+})
+
+
 import '../stylesheets/application';
 import "bootstrap";
 

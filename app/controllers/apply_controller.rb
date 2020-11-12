@@ -200,22 +200,17 @@ class ApplyController < ApplicationController
       l "invitation: 3"
 
       case @contract.nil?
-      when false
-        l "invitation: 4"
-         @contract.update(contract_params)
+      when false then @contract.update(contract_params)
       when true
-        l "invitation: 5"
         params[:contract][:customer_id] = @customer.id
         @contract = Contract.create(contract_params)
         @contract.save
-
-        l @contract.errors.inspect
-
-        session[:contract_id] = @contract.id
-        l "invitation: 6"
-        l "session[:contract_id]: #{session[:contract_id]}"
-
       end
+    end
+
+    if !@contract or !@contract.valid?
+      @contract = Customer.new if !@contract
+      render :step2 and return
     end
 
     @contract.risk_check!
@@ -223,6 +218,8 @@ class ApplyController < ApplicationController
     if !@contract.valid?
       render :step2 and return
     end
+
+    session[:contract_id] = @contract.id
 
     @agreement, @link = @contract.split_agreement_link(@customer)
   end
@@ -272,11 +269,11 @@ class ApplyController < ApplicationController
 
   def customer_params
     params[:customer][:email] = Customer::test_email if Rails.env.development?
-    params.require(:customer).permit(:first_name, :last_name, :email, :password, :password_confirmation, :iso_country_code, :mobile_number)
+    params.require(:customer).permit(:first_name, :last_name, :email, :password, :password_confirmation, :iso_country_code, :mobile_number, :date_of_birth)
   end
 
   def contract_params
-    params.require(:contract).permit(:customer_id, :value, :agent_name, :agent_telephone, :agent_email, :property_weekly_rent, :property_address, :property_postcode, :property_country, :property_iso_country_code, :rental_bond, :rental_bond_board_id)
+    params.require(:contract).permit(:customer_id, :value, :agent_name, :agent_telephone, :agent_email, :property_weekly_rent, :property_address, :property_postcode, :property_country, :property_iso_country_code, :rental_bond, :rental_bond_board_id, :start_date, :end_date)
   end
 
   def get_contract

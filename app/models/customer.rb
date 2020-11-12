@@ -8,7 +8,7 @@ class Customer < ApplicationRecord
     # :confirmable,
 
   # Validations
-  validates :first_name, :last_name, presence: true, length: { maximum: 56 }
+  validates :first_name, :last_name, :date_of_birth, presence: true, length: { maximum: 56 }
   # validates :email, email: true, presence: true, reduce: true # This causes 'Email is Invalid' to be printed twice
 
   validate :mobile_number_is_valid

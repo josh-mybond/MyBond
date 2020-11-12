@@ -2,6 +2,9 @@
 @import './bootstrap_custom.scss';
 // @import './scaffold.scss';
 @import '@fortawesome/fontawesome-free';
+@import 'flatpickr/dist/flatpickr.css';
+// import "flatpickr/dist/flatpickr.min.css"
+
 
 #error_explanation {
   color: #f00;

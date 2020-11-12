@@ -6,9 +6,12 @@ class ContractAgentValidator < ActiveModel::Validator
       record.errors[:agent_email]     << "or Agent Telephone must be completed"
     end
 
-    if record.property_weekly_rent == 0 and record.value == 0
-      record.errors[:property_weekly_rent] << "Weekly Rent or "
-      # errors[:base] << "This person is invalid because ..."
+    # if record.property_weekly_rent == 0 and record.value == 0
+    #   record.errors[:property_weekly_rent] << "Weekly Rent or "
+    # end
+
+    if record.end_date < record.start_date
+      record.errors[:end_date] << "must be greater than Start Date"
     end
 
   end
@@ -17,7 +20,9 @@ end
 class Contract < ApplicationRecord
   belongs_to :customer
 
-  validates :status, :agent_name, :property_address, :property_postcode, presence: true
+  validates :status, :agent_name, :property_address, :property_postcode, :start_date, :end_date, presence: true
+
+  validates_with ContractAgentValidator
 
   before_save :action_change_of_status
 

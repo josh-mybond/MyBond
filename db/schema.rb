@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_08_105249) do
+ActiveRecord::Schema.define(version: 2020_11_12_063336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,9 +47,13 @@ ActiveRecord::Schema.define(version: 2020_11_08_105249) do
     t.integer "vendor", default: 0
     t.string "split_authoriser_contact_id"
     t.string "pay_by_credit_card_guid"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.index ["end_date"], name: "index_contracts_on_end_date"
     t.index ["pay_by_credit_card_guid"], name: "index_contracts_on_pay_by_credit_card_guid"
     t.index ["property_postcode"], name: "index_contracts_on_property_postcode"
     t.index ["split_authoriser_contact_id"], name: "index_contracts_on_split_authoriser_contact_id"
+    t.index ["start_date"], name: "index_contracts_on_start_date"
     t.index ["status"], name: "index_contracts_on_status"
     t.index ["vendor"], name: "index_contracts_on_vendor"
   end
@@ -78,6 +82,7 @@ ActiveRecord::Schema.define(version: 2020_11_08_105249) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "iso_country_code", default: "AU"
     t.string "mobile_number"
+    t.datetime "date_of_birth"
     t.index ["confirmation_token"], name: "index_customers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true

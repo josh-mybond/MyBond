@@ -77,6 +77,17 @@
     </div>
   </div>
 
+  <div class="row form-group">
+    <div class="col-lg-6">
+      <%= f.label :lease_start_date %>
+      <%= f.text_field :start_date, as: :string, type: :text, class: "form-control contract_start_date_picker" %>
+    </div>
+    <div class="col-lg-6">
+      <%= f.label :lease_end_date %>
+      <%= f.text_field :end_date, as: :string, type: :text, class: "form-control contract_end_date_picker" %>
+    </div>
+  </div>
+
   <%= render partial: 'apply/button', locals: { f: f, title: "Next"} %>
 
 <% end %>
