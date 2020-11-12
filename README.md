@@ -27,6 +27,7 @@ Things you may want to cover:
 - rbenv install 2.6.6
 - rbenv global 2.6.6
 - gem install bundler
+- gem install bundler:2.0.2
 
 * System dependencies
 
@@ -50,6 +51,24 @@ mybond_development / pathword
 - CREATE DATABASE mybond_production;
 - GRANT ALL PRIVILEGES ON DATABASE mybond_production TO mybond;
 
+sudo pg_ctlcluster 12 main start
+
+###### create db users and database
+sudo -u postgres createuser -s mybond_development -P
+sudo -u postgres createuser -s mybond_production -P
+
+sudo -u postgres createdb mybond_development
+sudo -u postgres createdb mybond_production
+
+
+###### assign PRIVILEGES
+sudo -i -u postgres
+psql
+GRANT ALL PRIVILEGES ON DATABASE mybond_development TO mybond_development;
+GRANT ALL PRIVILEGES ON DATABASE mybond_production TO mybond_production;
+
+
+
 ##### Development/Staging
 - sudo -u postgres createuser -s mybond_development -P
 - pathword
@@ -57,6 +76,23 @@ mybond_development / pathword
 - CREATE DATABASE mybond_development;
 - GRANT ALL PRIVILEGES ON DATABASE mybond_development TO mybond_development;
 
+
+#### Install Node.js
+
+curl -sL https://deb.nodesource.com/setup_12.x |sudo -E bash -
+sudo apt-get install -y nodejs
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+
+#### Install Yarn (Javascript package manager)
+
+echo “deb https://dl.yarnpkg.com/debian/ stable main” | sudo tee /etc/apt/sources.list.d/yarn.list
+wget -qO - https://raw.githubusercontent.com/yarnpkg/releases/gh-pages/debian/pubkey.gpg | sudo apt-key add -
+sudo apt update && sudo apt install yarn
+yarn install --check-files
+
+- note if an error is thrown then remove all " from /etc/apt/sources.list.d/yarn.list
+- note if error thrown W: GPG error: https://dl.yarnpkg.com/debian stable InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 23E7166788B63E1E
+wget -qO - https://raw.githubusercontent.com/yarnpkg/releases/gh-pages/debian/pubkey.gpg | sudo apt-key add -
 
 #### Install App Dir
 cd /var/
@@ -197,6 +233,18 @@ server {
 }
 
 
+# Install Let's encrypt
+
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo add-apt-repository universe
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install certbot python3-certbot-nginx
+sudo certbot --nginx
+
+
+RAILS_ENV=production bundle exec rails webpacker:compile
 
 * Database initialization
 

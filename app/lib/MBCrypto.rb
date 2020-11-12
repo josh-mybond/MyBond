@@ -3,10 +3,10 @@ require 'securerandom'
 
 #
 # Usage
-# keys   = MLCrypto::generate_keys
+# keys   = MBCrypto::generate_keys
 
 
-class MLCrypto
+class MBCrypto
 
   def self.generate_hmac_key
     SecureRandom.hex(64)

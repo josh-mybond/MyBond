@@ -79,6 +79,8 @@ group :development, :test do
   gem "ruby-growl"
 end
 
+# 4c2df46de76fe9f7eb82507a3956b1f5
+
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
