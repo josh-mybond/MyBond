@@ -43,11 +43,11 @@ class Admin::CustomersController < Admin::BaseController
   # POST /users
   # POST /users.json
   def create
-    @customer = Customer.new(user_params)
+    @customer = Customer.new(customer_params)
 
     respond_to do |format|
       if @customer.save
-        format.html { redirect_to @customer, notice: 'Customer was successfully created.' }
+        format.html { redirect_to admin_customers_url, notice: 'Customer was successfully created.' }
         format.json { render :show, status: :created, location: @customer }
       else
         format.html { render :new }
@@ -60,8 +60,8 @@ class Admin::CustomersController < Admin::BaseController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if @customer.update(user_params)
-        format.html { redirect_to @customer, notice: 'Customer was successfully updated.' }
+      if @customer.update(customer_params)
+        format.html { redirect_to admin_customers_url, notice: 'Customer was successfully updated.' }
         format.json { render :show, status: :ok, location: @customer }
       else
         format.html { render :edit }
@@ -75,19 +75,19 @@ class Admin::CustomersController < Admin::BaseController
   def destroy
     @customer.destroy
     respond_to do |format|
-      format.html { redirect_to admin_users_url, notice: 'Customer was successfully destroyed.' }
+      format.html { redirect_to admin_customers_url, notice: 'Customer was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_user
+    def set_customer
       @customer = Customer.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
-    def user_params
-      params.fetch(:customer, {})
+    def customer_params
+      params.fetch(:customer, {}).permit(:email, :first_name, :last_name, :iso_country_code, :mobile_number, :residential_status, :date_of_birth, :previous_address, :previous_agent)
     end
 end

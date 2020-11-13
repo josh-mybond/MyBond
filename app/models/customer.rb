@@ -15,6 +15,7 @@ class Customer < ApplicationRecord
 
   has_many :contracts
 
+
   #
   # Validations
   #
@@ -28,6 +29,22 @@ class Customer < ApplicationRecord
 
   end
 
+
+  RESIDENTIAL_STATUS = {
+    citizen: 0,
+    permanent_resident: 1,
+    working_visa: 2,
+    other: 3
+  }
+
+  def residential_status_to_s
+    case self.residential_status
+    when RESIDENTIAL_STATUS[:citizen]            then "Citizen"
+    when RESIDENTIAL_STATUS[:permanent_resident] then "Permanent Resident"
+    when RESIDENTIAL_STATUS[:working_visa]       then "Working Visa"
+    when RESIDENTIAL_STATUS[:other]              then "Other"
+    end
+  end
 
   if !Rails.env.production?
     def self.test_email

@@ -43,5 +43,9 @@ module ApplicationHelper
     params[:controller].include?("admin/")
   end
 
+  def admin_form_button_class
+    "btn btn-info"
+  end
+
 
 end

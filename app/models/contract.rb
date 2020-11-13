@@ -20,6 +20,7 @@ end
 class Contract < ApplicationRecord
   belongs_to :customer
 
+  # rental_bond_board_id
   validates :status, :agent_name, :property_address, :property_postcode, :start_date, :end_date, presence: true
 
   validates_with ContractAgentValidator

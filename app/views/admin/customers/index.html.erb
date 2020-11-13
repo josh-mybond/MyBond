@@ -32,6 +32,7 @@
       <th>First Name</th>
       <th>Last Name</th>
       <th>Contracts</th>
+      <th>Residency</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -49,7 +50,12 @@
             <%= link_to customer.contracts.count, admin_customer_contracts_path(customer_id: customer.id) %>
           <% end %>
         </td>
-        <td><%= link_to 'Show', [:admin, customer] %> : <%= link_to 'Edit', edit_admin_customer_path(customer) %></td>
+        <td><%= customer.residential_status_to_s %></td>
+        <td>
+          <!--
+          <%#= link_to 'Show', [:admin, customer] %> :
+          -->
+          <%= link_to 'Edit', edit_admin_customer_path(customer) %></td>
         <!--
         <td><%#= link_to 'Destroy', [:admin, user], method: :delete, data: { confirm: 'Are you sure?' } %></td>
         -->

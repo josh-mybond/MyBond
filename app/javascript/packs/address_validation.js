@@ -1,7 +1,8 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  let address = document.getElementById("contract_property_address");
+  let address = document.getElementById("customer_previous_address");
+  if (!address) { address = document.getElementById("contract_property_address"); }
   if (!address) { return }
 
   //
