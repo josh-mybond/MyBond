@@ -16,6 +16,7 @@ class Customer < ApplicationRecord
   has_many :contracts
 
   has_one_attached :drivers_license
+  has_one_attached :face_photo
 
   #
   # Validations

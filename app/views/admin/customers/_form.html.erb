@@ -70,6 +70,12 @@
     </div>
   </div>
 
+  <div class="row form-group">
+    <div class="col-lg-12">
+      <%= image_tag(customer.face_photo, width: 200) if customer.drivers_license.attached? %>
+    </div>
+  </div>
+
   <div class="actions row_padding">
     <%= f.submit class: admin_form_button_class %>
   </div>
