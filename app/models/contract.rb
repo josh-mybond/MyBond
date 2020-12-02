@@ -27,8 +27,13 @@ class Contract < ApplicationRecord
 
   before_save :action_change_of_status
 
+  # TODO: refactor to seperate model with versions
+  ESTABLISHMENT_FEE     = 0.05
+  MONTHLY_INTEREST_RATE = 0.02
+
   TYPE = {
-    rental_bond: 0
+    new_rental_bond: 0,
+    existing_rental_bond: 1
   }
 
   HISTORY_TYPE = {
@@ -331,7 +336,7 @@ class Contract < ApplicationRecord
     p = Postcode.find_by(postcode: self.property_postcode)
 
     case
-    when p.nil?              then self.errors.add(property_postcode: "Postcode not found.")
+    when p.nil?              then self.errors.add(:property_postcode, "Postcode not found.")
     when !p.acceptable_risk? then self.errors.add(property_postcode: "We are not serving this postcode at the moment.")
     end
 
@@ -400,6 +405,59 @@ class Contract < ApplicationRecord
     self.push_to_split_history!({ data: agreement, save: true })
 
     return agreement, link
+  end
+
+  #
+  # Calculators
+  #
+
+  # ESTABLISHMENT_FEE     = 0.05
+  # MONTHLY_INTEREST_RATE = 0.02
+
+  if Rails.env.development?
+    def self.test
+      c = Contract.new
+      c.rental_bond = 2400
+      c.property_weekly_rent = 600
+      c.calculate_new_bond
+    end
+  end
+
+  def number_to_currency(number)
+    sprintf("$%2.2f", number)
+  end
+
+  def calculate_new_bond
+    risk_check!
+
+    case self.errors.count > 0
+    when true  then { error: "We do not service this postcode at the moment." }
+    when false
+      establishment_fee  = self.rental_bond * ESTABLISHMENT_FEE
+      min_buy_back       = self.rental_bond - self.property_weekly_rent
+      one_month_interest = min_buy_back * MONTHLY_INTEREST_RATE
+
+      bond_buy_back = []
+      1.upto(12) do |i|
+        # case i
+        # when 1, 2, 3 then bond_buy_back << min_buy_back
+        # when 4..12   then bond_buy_back << min_buy_back + (i * one_month_interest)
+        # end
+        bond_buy_back << number_to_currency(min_buy_back + (i * one_month_interest))
+      end
+
+      {
+        contract_type: self.contract_type,
+        establishment_fee: number_to_currency(establishment_fee),
+        weekly_rent:   number_to_currency(self.property_weekly_rent),
+        fee:           number_to_currency(establishment_fee + self.property_weekly_rent),
+        bond_buy_back: bond_buy_back
+      }
+    end
+
+  end
+
+  def calculate_existing_bond
   end
 
   #

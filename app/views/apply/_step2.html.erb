@@ -90,6 +90,29 @@
     </div>
   </div>
 
+  <div class="row form-group">
+    <div class="col-lg-12">
+      <hr>
+      <h4>Secondary Tenants</h4>
+      <p>
+        Please provide details of other tenants
+      </p>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-lg-6">
+      <%= f.label :name %>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-lg-6">
+      <%= f.label :mobile_number %>
+    </div>
+  </div>
+
+
   <%= render partial: 'apply/button', locals: { f: f, title: "Next"} %>
 
 <% end %>

@@ -22,6 +22,30 @@ class ApplicationController < ActionController::Base
     flash[:error] = @error if @error
   end
 
+  def set_flash
+    flash[:error] = @error if @error
+  end
+
+  def api_render(object)
+    respond_to do |format|
+      format.html { render plain: invalid_html_message }
+      format.json { render json: object.to_json }
+      format.js   { render json: object.to_json }
+    end
+  end
+
+  def common_render(object, redirect_me = nil)
+    respond_to do |format|
+      format.html {
+        set_flash
+        redirect_to redirect_me if redirect_me
+      }
+      format.json { render json: object.to_json }
+      format.js   { render json: object.to_json }
+    end
+  end
+
+
   protected
 
   # # redirect user after login

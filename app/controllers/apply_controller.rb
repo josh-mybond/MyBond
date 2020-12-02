@@ -29,6 +29,8 @@ class ApplyController < ApplicationController
         @password            = 'test_password!@#$'
         @customer.mobile_number = "0432212713"
         @customer.date_of_birth = Date.parse("1968-12-15")
+        @customer.previous_address = "over there"
+        @customer.previous_agent   = "Previous Agent Bob"
       end
     end
 
@@ -270,7 +272,7 @@ class ApplyController < ApplicationController
 
   def customer_params
     params[:customer][:email] = Customer::test_email if Rails.env.development?
-    params.require(:customer).permit(:first_name, :last_name, :email, :password, :password_confirmation, :iso_country_code, :mobile_number, :date_of_birth, :residential_status, :previous_address)
+    params.require(:customer).permit(:first_name, :last_name, :email, :password, :password_confirmation, :iso_country_code, :mobile_number, :date_of_birth, :residential_status, :previous_address, :previous_agent, :drivers_license)
   end
 
   def contract_params

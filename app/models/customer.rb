@@ -15,6 +15,7 @@ class Customer < ApplicationRecord
 
   has_many :contracts
 
+  has_one_attached :drivers_license
 
   #
   # Validations

@@ -32,7 +32,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // allow start from one month ago..
   let lease_min_date = new Date();
   let lease_end_date = new Date();
+  let lease_min_date_existing = new Date();
+
   lease_min_date.setMonth(lease_min_date.getMonth() - 1);
+  lease_min_date_existing.setYear(lease_min_date_existing.getYear() - 8);
+  lease_min_date_existing.setMonth(0);
   lease_end_date.setMonth(lease_min_date.getMonth() + 12);
 
   flatpickr(".date_of_birth_picker", {
@@ -59,11 +63,23 @@ document.addEventListener('DOMContentLoaded', function() {
     defaultDate: lease_end_date
   });
 
+  flatpickr(".calculator_start_date_picker", {
+    altInput: true,
+    altFormat: "F j, Y",
+    dateFormat: "Y-m-d",
+    minDate: lease_min_date_existing,
+    defaultDate: lease_min_date
+  });
 
-
+  flatpickr(".calculator_end_date_picker", {
+    altInput: true,
+    altFormat: "F j, Y",
+    dateFormat: "Y-m-d",
+    minDate: lease_min_date,
+    defaultDate: lease_end_date
+  });
 
 })
-
 
 import '../stylesheets/application';
 import "bootstrap";
@@ -79,3 +95,5 @@ import './address_validation';
 //import './mutation_observer';
 import './stripe';
 // import './split_payments';
+
+import './calculator'

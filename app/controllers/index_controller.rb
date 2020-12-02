@@ -1,4 +1,5 @@
 class IndexController < ApplicationController
+  layout 'apply', except: :index
 
   def index
   end
@@ -24,7 +25,7 @@ class IndexController < ApplicationController
 
     if !@name.nil?
       # send email to... contact@mybond.com.au
-      flash[:notice] = "Thank you. We sill respond to you as soon as we can."
+      flash[:notice] = "Thank you. We will respond to you as soon as we can."
     end
 
   end
