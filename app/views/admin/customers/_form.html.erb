@@ -64,15 +64,24 @@
     </div>
   </div>
 
+  <br>
   <div class="row form-group">
     <div class="col-lg-12">
+      <strong>
+        <%= label_tag :drivers_license %>
+      </strong>
+      <br>
       <%= image_tag(customer.drivers_license, width: 200) if customer.drivers_license.attached? %>
     </div>
   </div>
 
   <div class="row form-group">
     <div class="col-lg-12">
-      <%= image_tag(customer.face_photo, width: 200) if customer.drivers_license.attached? %>
+      <strong>
+        <%= label_tag :face_photo %>
+      </strong>
+      <br>
+      <%= image_tag(customer.face_photo, width: 200) if customer.face_photo.attached? %>
     </div>
   </div>
 

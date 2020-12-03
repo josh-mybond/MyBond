@@ -13,6 +13,8 @@ class Customer < ApplicationRecord
 
   validate :mobile_number_is_valid
 
+  validate :acceptable_image
+
   has_many :contracts
 
   has_one_attached :drivers_license
@@ -30,6 +32,28 @@ class Customer < ApplicationRecord
     end
 
   end
+
+  def acceptable_image
+  return unless self.drivers_license.attached? and self.face_photo.attached?
+
+  # https://pragmaticstudio.com/tutorials/using-active-storage-in-rails
+
+  acceptable_types = ["image/jpeg", "image/png", "application/pdf"]
+  error            = "must be a JPEG, PNG or PDF"
+
+  if self.drivers_license.attached?
+    unless acceptable_types.include?(drivers_license.content_type)
+      errors.add(:drivers_license, error)
+    end
+  end
+
+  if self.face_photo.attached?
+    unless acceptable_types.include?(face_photo.content_type)
+      errors.add(:face_photo, error)
+    end
+  end
+
+end
 
 
   RESIDENTIAL_STATUS = {

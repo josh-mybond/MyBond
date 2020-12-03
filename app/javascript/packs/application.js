@@ -96,4 +96,5 @@ import './address_validation';
 import './stripe';
 // import './split_payments';
 
-import './calculator'
+import './calculator';
+import './apply'

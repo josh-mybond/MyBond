@@ -44,6 +44,9 @@ mybond_development / pathword
 #### Postgres
 - sudo apt install postgresql
 
+#### Imagemagick 
+- sudo apt-get install imagemagick
+
 ##### Production
 - sudo -u postgres createuser -s mybond -P
 - pathword
@@ -244,7 +247,6 @@ sudo apt-get install certbot python3-certbot-nginx
 sudo certbot --nginx
 
 
-RAILS_ENV=production bundle exec rails webpacker:compile
 
 * Database initialization
 
