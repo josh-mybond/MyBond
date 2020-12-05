@@ -1,156 +1,160 @@
-<h4 id="mybond_calculator">Calculator</h4>
+<div class="lead-hero-wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+          <!-- hero-caption -->
+          <div class="lead-hero-caption">
+            <h1 class="lead-hero-title">Lead Generation Page</h1>
+            <p class="text-white">A personal loan Lead Generation Templates is a short to medium term unsecured loan (no collateral) that you can use to meet current financial needs. </p>
+            <p class="lead mb0 text-white">Apply For <strong class="text-white">$1000 to $7000</strong></p>
+            <span>(Minimum loan amount $1000)</span>
+            <div class="rating-list">
+              <span><i class="fa fa-star"></i></span>
+              <span><i class="fa fa-star"></i></span>
+              <span><i class="fa fa-star"></i></span>
+              <span><i class="fa fa-star"></i></span>
+              <span><i class="fa fa-star-half"></i></span>
+              <span class="text-white">4.5 / 5 (65 Reviews)</span>
+            </div>
+          </div>
 
-<div id="calculator_alert" class="alert alert-danger fade show hidden" role="alert">
-    <strong>Error</strong>
-    <span id="calculator_alert_content"></span>
-</div>
+          <!-- /.hero-caption -->
+        </div>
+        <div class="offset-xl-1 col-xl-6 offset-lg-1 col-lg-6 col-md-12 col-sm-12 col-12">
+          <div class="lead-calculator pinside40">
+              <div class="row" id="mybond_calculator">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb10">
+                  <h2 class="text-white mb20">Apply Today</h2>
 
-<form class="form needs-validation" novalidate">
-  <span id="calculator_host" class="hidden">
-    <%= "#{ENV['who_am_i']}/calculator" %>
-  </span>
+                  <form class="form needs-validation" novalidate">
+                    <span id="calculator_host" class="hidden">
+                      <%= "#{ENV['who_am_i']}/calculator" %>
+                    </span>
 
-  <h4>Calculations</h4>
-  <ol>
-    <li>X Example 1 - New Bond</li>
-    <li>Example 2 - Existing Bond</li>
-  </ol>
+                    <div id="calculator_alert" class="alert alert-danger fade show hidden" role="alert">
+                      <strong>Error</strong>
+                      <span id="calculator_alert_content"></span>
+                    </div>
 
-  <h4>Results</h4>
-  <ol>
-    <li>X Example 1 - results</li>
-    <li>Example 2 - results</li>
-  </ol>
+                    <table>
+                      <tr>
+                        <td colspan="2">
+                          <select class="form-control" id='calculator_rental_type'>
+                            <option value="0">I have a new lease and want a Rental Bond Facility</option>
+                            <option value="1" selected>I have an existing Rental Bond that I would like to sell</option>
+                          </select>
+                        </td>
+                      </tr>
 
-  <div class="row form-group">
-    <div class="col-lg-6">
-      <%= label_tag :rental_status %>
-    </div>
-    <div class="col-lg-6">
-      <select class="form-control" id='calculator_rental_type'>
-        <option value="0">I have a new lease and want a Rental Bond Facility</option>
-        <option value="1">I have an existing Rental Bond that I would like to sell</option>
-      </select>
+                      <!--
+                      <tr>
+                        <td>
+                          <%= label_tag :months_left_on_lease %>
+                        </td>
+                        <td>
+                          <select class="form-control" id='calculator_months_until_expiry'>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8" selected>8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                          </select>
+                        </td>
+                      </tr>
+                      -->
+
+                      <tr>
+                        <td>
+                          <%= label_tag :your_bond_amount %>
+                        </td>
+                        <td>
+                          <%= number_field_tag :bond_amount, 2400, placeholder: 2400, id: 'calculator_bond_amount', class: 'form-control', min: 0, step: 1, required: true %>
+                          <div class="invalid-feedback">
+                              Please input a valid Rental Bond Amount.
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <%= label_tag :weeky_rent %>
+                        </td>
+                        <td>
+                          <%= number_field_tag :property_weekly_rent, 600, placeholder: 600, id: 'calculator_property_weekly_rent', class: 'form-control', min: 0, step: 1, required: true %>
+                          <div class="invalid-feedback">
+                              Please input a valid weekly rent.
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <%= label_tag :your_postcode %>
+                        </td>
+                        <td>
+                          <%= number_field_tag :property_postcode, 2000, placeholder: 2000, id: 'calculator_property_postcode', class: 'form-control', min: 2000, max: 2999, step: 1, required: true %>
+                          <div class="invalid-feedback">
+                              Please input a valid NSW Postcode.
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <%= label_tag :start_of_lease %>
+                        </td>
+                        <td>
+                          <%= text_field_tag :start_of_lease, "", as: :string, type: :text, class: "form-control calculator_start_date_picker" %>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <%= label_tag :end_of_lease %>
+                        </td>
+                        <td>
+                          <%= text_field_tag :end_of_lease, "", as: :string, type: :text, class: "form-control calculator_end_date_picker" %>
+                        </td>
+                      </tr>
+
+                      <tr class="hidden" id="calculator_rolling_lease_row">
+                        <td>
+                          <label>
+                            My lease has expired and I am
+                            <br>
+                            rolling my monthly lease
+                          </label>
+                        </td>
+                        <td>
+                          <label class="switch">
+                            <input type="checkbox" value="1" id="calculator_rolling_lease">
+                            <span class="slider round"></span>
+                          </label>
+                        </td>
+                      </tr>
+
+                    </table>
+
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-right">
+                      <!-- <button class="btn btn-secondary btn-sm">APPLY NOW</button> -->
+                      <br>
+                      <button id="calculator_button" type="button" class="btn btn-info float-right">Calculate</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 
-  <!--
-  <div id="calculator_previous_bond_amount_row" class="row form-group hidden">
-    <div class="col-lg-6">
-      <%= label_tag :previous_bond_amount %>
-    </div>
-    <div class="col-lg-6">
-      <%= number_field_tag :previous_bond_amount, 0, id: 'previous_bond_amount', class: 'form-control', min: 0, step: 1 %>
-    </div>
-  </div>
-  -->
-
-  <div id="calculator_months_until_expiry_row" class="row form-group hidden">
-    <div class="col-lg-6">
-      <%= label_tag :months_left_on_lease %>
-      <br>
-      <!-- <small class="text-muted">
-        <i>
-          If your lease has less than 3 months to go, please contact us
-        </i>
-      </small> -->
-    </div>
-    <div class="col-lg-6">
-      <select class="form-control" id='calculator_months_until_expiry'>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8" selected>8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-      </select>
-    </div>
-  </div>
-
-
-  <div class="row form-group">
-    <div class="col-lg-6">
-      <%= label_tag :property_weeky_rent %>
-    </div>
-    <div class="col-lg-6">
-      <%#= number_field_tag :property_weekly_rent, "", placeholder: 600, id: 'calculator_property_weekly_rent', class: 'form-control', min: 0, step: 1, required: true %>
-      <%= number_field_tag :property_weekly_rent, 600, placeholder: 600, id: 'calculator_property_weekly_rent', class: 'form-control', min: 0, step: 1, required: true %>
-      <div class="invalid-feedback">
-          Please input a valid weekly rent.
-      </div>
-    </div>
-  </div>
-
-
-  <div class="row form-group">
-    <div class="col-lg-6">
-      <%= label_tag :your_bond_amount %>
-    </div>
-    <div class="col-lg-6">
-      <%#= number_field_tag :bond_amount, "", placeholder: 2400, id: 'calculator_bond_amount', class: 'form-control', min: 0, step: 1, required: true %>
-      <%= number_field_tag :bond_amount, 2400, placeholder: 2400, id: 'calculator_bond_amount', class: 'form-control', min: 0, step: 1, required: true %>
-      <div class="invalid-feedback">
-          Please input a valid Rental Bond Amount.
-      </div>
-    </div>
-  </div>
-
-  <div class="row form-group">
-    <div class="col-lg-6">
-      <%= label_tag :property_postcode %>
-    </div>
-    <div class="col-lg-6">
-      <%#= number_field_tag :property_postcode, "", placeholder: 2000, id: 'calculator_property_postcode', class: 'form-control', min: 2000, max: 2999, step: 1, required: true %>
-      <%= number_field_tag :property_postcode, 2000, placeholder: 2000, id: 'calculator_property_postcode', class: 'form-control', min: 2000, max: 2999, step: 1, required: true %>
-      <div class="invalid-feedback">
-          Please input a valid NSW Postcode.
-      </div>
-    </div>
-  </div>
-
-
-  <div class="row form-group">
-    <div class="col-lg-6">
-      <%= label_tag :start_of_lease %>
-    </div>
-    <div class="col-lg-6">
-      <%= text_field_tag :start_of_lease, "", as: :string, type: :text, class: "form-control calculator_start_date_picker" %>
-    </div>
-  </div>
-
-  <div class="row form-group">
-    <div class="col-lg-6">
-      <%= label_tag :end_of_lease %>
-    </div>
-    <div class="col-lg-6">
-      <%= text_field_tag :end_of_lease, "", as: :string, type: :text, class: "form-control calculator_end_date_picker" %>
-    </div>
-  </div>
-
-  <div class="row form-group hidden" id="calculator_rolling_lease_row">
-    <div class="col-lg-6">
-      <label>
-        My lease has expired and I am on a rolling monthly lease
-      </label>
-    </div>
-    <div class="col-lg-6">
-      <label class="switch">
-        <input type="checkbox" value="1" id="calculator_rolling_lease">
-        <span class="slider round"></span>
-      </label>    </div>
-  </div>
-
-
-  <div class="row form-group" id="calculator_button_row">
-    <div class="col-lg-12">
-      <button id="calculator_button" type="button" class="btn btn-info float-right">Calculate</button>
-    </div>
-  </div>
 
   <div id="calculator_results_new_bond" class="hidden">
     <hr>
@@ -183,7 +187,18 @@
 
     <div class="row form-group">
       <div class="col-md-12 col-lg-7">
-        <button id="calculator_apply_new_bond" type="button" class="btn btn-success float-right">Apply Now!</button>
+        <%= form_with(url: how_to_apply_path, local: true) do |f| %>
+          <input type="hidden" name="contract[status]"            id="contact_status"            value="0">
+          <input type="hidden" name="contract[contract_type]"     id="contact_contract_type"     value="">
+          <input type="hidden" name="contract[rental_bond]"       id="contact_rental_bond"       value="">
+          <input type="hidden" name="contract[property_postcode]" id="contact_property_postcode" value="">
+          <input type="hidden" name="contract[start_of_lease]"    id="contact_start_of_lease"    value="">
+          <input type="hidden" name="contract[end_of_lease]"      id="contact_end_of_lease"      value="">
+          <input type="hidden" name="contract[rolling_lease]"     id="contact_rolling_lease"     value="">
+          <input type="hidden" name="contract[property_weekly_rent]" id="contact_property_weekly_rent" value="">
+
+          <button id="calculator_apply_button" type="submit" class="btn btn-success float-right">Apply Now!</button>
+        <% end %>
       </div>
     </div>
 
@@ -301,7 +316,4 @@
       </div>
     </div>
   </div>
-
 </div>
-
-</form>

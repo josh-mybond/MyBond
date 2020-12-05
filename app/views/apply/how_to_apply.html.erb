@@ -75,6 +75,11 @@
 
 <div class="row">
   <div class="col-md-12 col-lg-12">
-    <%= link_to 'Apply Now', step1_path, class: "btn btn-info" %>
+
+    <%= form_with(url: step1_path, local: true) do |f| %>
+      <%= render partial: 'apply/hidden_contract' %>
+      <button id="calculator_apply_button" type="submit" class="btn btn-success float-right">Apply Now!</button>
+    <% end %>
+    <%#= link_to 'Apply Now', step1_path, class: "btn btn-info" %>
   </div>
 </div>

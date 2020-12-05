@@ -1,7 +1,6 @@
 import Includes from './includes';
 
 document.addEventListener("DOMContentLoaded", () => {
-
   let form = document.getElementById('apply_form');
   if (form) {
     form.addEventListener('submit', () => {
@@ -9,5 +8,4 @@ document.addEventListener("DOMContentLoaded", () => {
       if (overlay) { overlay.classList.add('d-flex'); }
     })
   }
-
 });

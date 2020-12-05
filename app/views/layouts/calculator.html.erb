@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+  <%= render 'layouts/head' %>
+
+  <body class="calculator_body">
+    <div class="bg-white sticky-top py-2">
+      <div class="container">
+        <div class="row d-flex align-items-center">
+          <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-6">
+            <div class="logo"></div>
+          </div>
+
+          <!-- logo -->
+          <div class="col-xl-10 col-lg-10 col-md-9 col-sm-12 col-12 text-right">
+            <p class="lead ">Speak to Josh Today! Call <strong class="text-bold">1-800-123-4567</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= yield %>
+  </body>
+
+</html>

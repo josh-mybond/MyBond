@@ -6,6 +6,8 @@ class ApplyController < ApplicationController
 
   def how_to_apply
     log_header
+
+    @contract = Contract.new(contract_params)
   end
 
   def step1
@@ -13,8 +15,14 @@ class ApplyController < ApplicationController
 
     # CustomerMailer::application_update(Customer.last).deliver_now
 
-    @customer = Customer.find(params[:id]) if params[:id]
-    @customer = Customer.new if @customer.nil?
+    # @customer = Customer.find(params[:id]) if params[:id]
+    # @customer = Customer.new if @customer.nil?
+
+    @customer = params[:id].nil?          ? Customer.new : Customer.find(params[:id])
+    @contract = params[:contract_id].nil? ? Contract.new(contract_params) : Contract.find(params[:contract_id])
+
+    puts "-------------------------"
+    puts @contract.inspect
 
     # Add some test data to speed up testing
     # Remove for production
@@ -268,15 +276,6 @@ class ApplyController < ApplicationController
     end
 
     set_error
-  end
-
-  def customer_params
-    params[:customer][:email] = Customer::test_email if Rails.env.development?
-    params.require(:customer).permit(:first_name, :last_name, :email, :password, :password_confirmation, :iso_country_code, :mobile_number, :date_of_birth, :residential_status, :previous_address, :previous_agent, :drivers_license, :face_photo)
-  end
-
-  def contract_params
-    params.require(:contract).permit(:customer_id, :value, :agent_name, :agent_telephone, :agent_email, :property_weekly_rent, :property_address, :property_postcode, :property_country, :property_iso_country_code, :rental_bond, :rental_bond_board_id, :start_date, :end_date)
   end
 
   def get_contract

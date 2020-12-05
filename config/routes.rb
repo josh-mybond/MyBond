@@ -22,10 +22,12 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   # Static routes
-  get 'how_to_apply', to: 'apply#how_to_apply'
-  get  'step1', to: 'apply#step1', as: 'step1'
-  get  'step2',  to: 'apply#step2'
-  post 'step2',  to: 'apply#step2'
+  get  'how_to_apply', to: 'apply#how_to_apply'
+  post 'how_to_apply', to: 'apply#how_to_apply'
+  get  'step1', to: 'apply#step1'
+  post 'step1', to: 'apply#step1'
+  get  'step2', to: 'apply#step2'
+  post 'step2', to: 'apply#step2'
 
   # Stripe
   get 'pay_by_credit_card/:guid', to: 'apply#pay_by_credit_card', as: 'pay_by_credit_card'

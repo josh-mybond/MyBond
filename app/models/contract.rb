@@ -427,38 +427,83 @@ class Contract < ApplicationRecord
     sprintf("$%2.2f", number)
   end
 
-  def calculate_new_bond
+  def quote
+    logger.debug "*** quote: 1 ***"
     risk_check!
 
-    case self.errors.count > 0
-    when true  then { error: "We do not service this postcode at the moment." }
+
+    object = case self.errors.count > 0
+    when true then { error: "We do not service this postcode at the moment." }
     when false
+      logger.debug "*** quote: 2 ***"
+
       establishment_fee  = self.rental_bond * ESTABLISHMENT_FEE
       min_buy_back       = self.rental_bond - self.property_weekly_rent
       one_month_interest = min_buy_back * MONTHLY_INTEREST_RATE
+      fixed_fee          = 150
 
-      bond_buy_back = []
-      1.upto(12) do |i|
-        # case i
-        # when 1, 2, 3 then bond_buy_back << min_buy_back
-        # when 4..12   then bond_buy_back << min_buy_back + (i * one_month_interest)
+      logger.debug "*** quote: 3 ***"
+
+       object = {
+          contract_type: self.contract_type,
+          establishment_fee: number_to_currency(establishment_fee),
+          weekly_rent:   number_to_currency(self.property_weekly_rent),
+          fee:           number_to_currency(establishment_fee + self.property_weekly_rent),
+        }
+
+
+      case self.contract_type
+      when TYPE[:new_rental_bond]
+        logger.debug "*** quote: 4 ***"
+        bond_buy_back = []
+        1.upto(12) do |i|
+          # case i
+          # when 1, 2, 3 then bond_buy_back << min_buy_back
+          # when 4..12   then bond_buy_back << min_buy_back + (i * one_month_interest)
+          # end
+          bond_buy_back << number_to_currency(min_buy_back + (i * one_month_interest))
+        end
+
+        object[:bond_buy_back] = bond_buy_back
+
+      when TYPE[:existing_rental_bond]
+        logger.debug "*** quote: 5 ***"
+
+        now  = DateTime.now()
+        days = (end_of_lease - now).to_i.days
+
+        # object = case
+        # when now > self.end_of_lease   then { error: "Your lease has expired"      }
+        # when now > self.start_of_lease then { error: "Your lease has yet to begin" }
+        # when days < 90                 then { error: "Your lease expires in less than 90 days" }
+        # else
+          # do some calculations here..
+          months_left_on_lease = (self.start_of_lease.year * 12 + self.start_of_lease.month) - (now.year * 12 + now.month)
+
+          bond_payout   = nil
+          bond_buy_back = []
+
+          bond_payout = case months_left_on_lease
+          when 9, 10, 11 then number_to_currency(self.rental_bond - self.property_weekly_rent)
+          else
+            bond = self.rental_bond
+            rent = self.property_weekly_rent
+            (bond - rent) + establishment_fee + one_month_interest - fixed_fee
+          end
+
+          object[:bond_payout] = bond_payout
+
         # end
-        bond_buy_back << number_to_currency(min_buy_back + (i * one_month_interest))
-      end
 
-      {
-        contract_type: self.contract_type,
-        establishment_fee: number_to_currency(establishment_fee),
-        weekly_rent:   number_to_currency(self.property_weekly_rent),
-        fee:           number_to_currency(establishment_fee + self.property_weekly_rent),
-        bond_buy_back: bond_buy_back
-      }
+      end
+      logger.debug "*** quote: 6 ***"
+      logger.debug object.inspect
+
+      object
     end
 
   end
 
-  def calculate_existing_bond
-  end
 
   #
   # Status updates

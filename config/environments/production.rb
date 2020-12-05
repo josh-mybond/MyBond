@@ -70,8 +70,18 @@ Rails.application.configure do
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
-  config.action_mailer.default_url_options = { host: 'https://mybond.com.au' }
+  config.action_mailer.default_url_options = { host: 'https://www.mybond.com.au' }
 
+
+  ActionMailer::Base.smtp_settings = {
+    :user_name => 'apikey',
+    :password => ENV['sendgrid_api_key'],
+    :domain => 'www.mybond.com.au',
+    :address => 'smtp.sendgrid.net',
+    :port => 587,
+    :authentication => :plain,
+    :enable_starttls_auto => true
+  }
 
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify

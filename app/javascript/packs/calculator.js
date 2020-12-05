@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let calculator_button        = document.getElementById("calculator_button");
     let calculator_results_new_bond      = document.getElementById("calculator_results_new_bond");
     let calculator_results_existing_bond = document.getElementById("calculator_results_existing_bond");
+    let calculator_apply_button = document.getElementById('calculator_apply_button');
 
     let calculator_weekly_rent  = document.getElementById("calculator_weekly_rent");
     let calculator_total_fee    = document.getElementById("calculator_total_fee");
@@ -86,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let container = document.getElementById('calculator_new_bond_buy_back_schedule');
         if (!container) { return; }
+        if (!data.bond_buy_back) { return; }
 
         let string = "";
         let i = 1;
@@ -153,28 +155,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
       switch(parseInt(calculator_rental_type.value)) {
         case 0:
-          // validate fields
-          validate_field(property_weekly_rent);
-          validate_field(bond_amount);
-          validate_field(property_postcode);
-
-          if (error == false) {
-            contract["status"]        = 0; // application
-            contract["contract_type"] = calculator_rental_type.value
-            contract["rental_bond"]   = bond_amount.value;
-            contract["property_weekly_rent"] = property_weekly_rent.value;
-            contract["property_postcode"]    = property_postcode.value;
-            contract["start_of_lease"]       = start_of_lease.value;
-            contract["end_of_lease"]         = end_of_lease.value;
-            contract['rolling_lease']        = calculator_rolling_lease.checked;
-          }
-
-          break;
-
         case 1:
-          console.log("case == 1");
-          break;
+        // validate fields
+        validate_field(property_weekly_rent);
+        validate_field(bond_amount);
+        validate_field(property_postcode);
 
+        if (error == false) {
+          contract["status"]               = 0; // application
+          contract["contract_type"]        = calculator_rental_type.value;
+          contract["rental_bond"]          = bond_amount.value;
+          contract["property_weekly_rent"] = property_weekly_rent.value;
+          contract["property_postcode"]    = property_postcode.value;
+          contract["start_of_lease"]       = start_of_lease.value;
+          contract["end_of_lease"]         = end_of_lease.value;
+          contract['rolling_lease']        = calculator_rolling_lease.checked;
+
+          // set the hidden values
+          document.getElementById('contact_contract_type').value     = calculator_rental_type.value;
+          document.getElementById('contact_property_postcode').value = property_postcode.value;
+          document.getElementById('contact_start_of_lease').value    = start_of_lease.value;
+          document.getElementById('contact_end_of_lease').value      = end_of_lease.value;
+          document.getElementById('contact_rolling_lease').value     = calculator_rolling_lease.checked;
+          document.getElementById('contact_property_weekly_rent').value = property_weekly_rent.checked;
+        }
+          break;
         default:
           error = true;
       }
@@ -185,7 +190,26 @@ document.addEventListener("DOMContentLoaded", () => {
         calculator_button.disabled = false;
       }
 
-    })
+    });
+
+    // if (!calculator_apply_button) { return }
+    // calculator_apply_button.addEventListener('click', () => {
+    //   console.log('calculator_apply_button');
+    //
+    //   contract = {}
+    //   contract["status"]               = 0; // application
+    //   contract["contract_type"]        = calculator_rental_type.value
+    //   contract["rental_bond"]          = bond_amount.value;
+    //   contract["property_weekly_rent"] = property_weekly_rent.value;
+    //   contract["property_postcode"]    = property_postcode.value;
+    //   contract["start_of_lease"]       = start_of_lease.value;
+    //   contract["end_of_lease"]         = end_of_lease.value;
+    //   contract['rolling_lease']        = calculator_rolling_lease.checked;
+    //
+    //   // post to somewhere..??
+    //
+    //
+    // });
 
     /*
       Always send numbers to server for calcuation
