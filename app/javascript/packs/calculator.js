@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert.classList.remove('hidden');
         alert_content.innerHTML = data.error;
       } else {
-        calculator_results_new_bond.classList.remove('hidden');
+        // calculator_results_new_bond.classList.remove('hidden');
         establishment_fee.innerHTML      = data.establishment_fee;
         calculator_weekly_rent.innerHTML = data.weekly_rent;
         calculator_total_fee.innerHTML   = data.fee;
@@ -121,8 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
       bond_amount.classList.remove('is-invalid');
       property_postcode.classList.remove('is-invalid');
 
-      calculator_results_new_bond.classList.add('hidden');
-      calculator_results_existing_bond.classList.add('hidden');
+      // calculator_results_new_bond.classList.add('hidden');
+      // calculator_results_existing_bond.classList.add('hidden');
     }
 
     /*
