@@ -81,9 +81,10 @@ test:
 #
 production:
   <<: *default
+  database: fundmybond_development
   # database: mybond_production
   # username: mybond
   # password: <%= ENV['MYBOND_DATABASE_PASSWORD'] %>
-  database: <%= ENV['database_name'] %>
-  username: <%= ENV['database_username'] %>
-  password: <%= ENV['database_password'] %>
+  #database: <%= ENV['database_name'] %>
+  #username: <%= ENV['database_username'] %>
+  #password: <%= ENV['database_password'] %>

@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   end
 
   def l(string)
-    logger.debug string
+    puts string
   end
 
   def set_error

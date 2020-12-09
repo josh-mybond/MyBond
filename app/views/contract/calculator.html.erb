@@ -1,13 +1,23 @@
 <div class="lead-hero-wrapper">
     <div class="container">
+
       <div class="row">
         <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
           <!-- hero-caption -->
           <div class="lead-hero-caption">
-            <h1 class="lead-hero-title">Lead Generation Page</h1>
-            <p class="text-white">A personal loan Lead Generation Templates is a short to medium term unsecured loan (no collateral) that you can use to meet current financial needs. </p>
-            <p class="lead mb0 text-white">Apply For <strong class="text-white">$1000 to $7000</strong></p>
+            <h1 class="lead-hero-title">Access your Rental Bond</h1>
+            <p class="text-white">
+              We’ll give you the value of your bond, less a fee determined by how long is left on your lease. At most the fee you pay will be one week’s rent.
+            </p>
+
+            <p>
+              At the end of your lease, your bond will be refunded to us.
+            </p>
+
+            <p class="lead mb0 text-white"><strong class="text-white">Simple, easy, fast.</strong></p>
+            <!--
             <span>(Minimum loan amount $1000)</span>
+            -->
             <div class="rating-list">
               <span><i class="fa fa-star"></i></span>
               <span><i class="fa fa-star"></i></span>
@@ -41,7 +51,7 @@
                         <td colspan="2">
                           <select class="form-control" id='calculator_rental_type'>
                             <option value="0">I have a new lease and want a Rental Bond Facility</option>
-                            <option value="1" selected>I have an existing Rental Bond that I would like to sell</option>
+                            <option value="1" selected>Unlock my existing Rental Bond</option>
                           </select>
                         </td>
                       </tr>
@@ -144,7 +154,12 @@
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-right">
                       <!-- <button class="btn btn-secondary btn-sm">APPLY NOW</button> -->
                       <br>
-                      <button id="calculator_button" type="button" class="btn btn-info float-right">Calculate</button>
+
+                      <!-- <button id="calculator_button" type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#calculator_quote_modal">Calculate</button> -->
+                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#calculator_quote_modal">
+                        Calculate
+                      </button>
+
                     </div>
                   </form>
                 </div>
@@ -155,7 +170,113 @@
     </div>
   </div>
 
+<!-- Modal -->
+<div class="modal fade" id="calculator_quote_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">MyBond Quote</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
+      <div class="modal-body">
+
+        <div id="calculator_results">
+          <div class="row form-group">
+            <div class="col-lg-6">
+              <%= label_tag :establishment_fee %>
+            </div>
+            <div class="col-lg-6">
+              <span id="calculator_establishment_fee"></span>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-lg-6">
+              <%= label_tag :weekly_rent %>
+            </div>
+            <div class="col-lg-6">
+              <span id="calculator_weekly_rent"></span>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-lg-6">
+              <%= label_tag :total_fee %>
+            </div>
+            <div class="col-lg-6">
+              <span id="calculator_total_fee"></span>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-12 col-lg-7">
+              <%= form_with(url: how_to_apply_path, local: true) do |f| %>
+                <input type="hidden" name="contract[status]"            id="contact_status"            value="0">
+                <input type="hidden" name="contract[contract_type]"     id="contact_contract_type"     value="">
+                <input type="hidden" name="contract[rental_bond]"       id="contact_rental_bond"       value="">
+                <input type="hidden" name="contract[property_postcode]" id="contact_property_postcode" value="">
+                <input type="hidden" name="contract[start_of_lease]"    id="contact_start_of_lease"    value="">
+                <input type="hidden" name="contract[end_of_lease]"      id="contact_end_of_lease"      value="">
+                <input type="hidden" name="contract[rolling_lease]"     id="contact_rolling_lease"     value="">
+                <input type="hidden" name="contract[property_weekly_rent]" id="contact_property_weekly_rent" value="">
+
+                <button id="calculator_apply_button" type="submit" class="btn btn-success float-right">Apply Now!</button>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <br>
+</div>
+
+<div class="row">
+  <div class="col-lg-4 px-4">
+    <h4 class="midnight_express"><div class="icon" style="float: left;"></div> &nbsp; Why you may need My Bond</h4>
+    <br>
+    <ul>
+      <li><span><i class="fa fa-dollar-sign pacific_blue"></i></span> Life's little expenses</li>
+      <li><i class="fa fa-school pacific_blue"></i> Education fees</li>
+      <li><span><i class="fa fa-dollar-sign pacific_blue"></i></span> Funds to cover a quiet period</li>
+      <li><span><i class="fa fa-hotel pacific_blue"></i></span> Holiday</li>
+      <li><span><i class="fa fa-ambulance pacific_blue"></i></span> Medical bills</li>
+    </ul>
+  </div>
+  <div class="col-lg-4 px-4">
+    <h4 class="midnight_express"><div class="icon" style="float: left;"></div> &nbsp; Your bond obligations</h4>
+    <br>
+    <p>
+      <span><i class="fa fa-building pacific_blue"></i></span> We know you’ll look after the property you rent, but sometimes things do go wrong, and you may not be eligible for your full bond refund.
+    </p>
+    <p>
+      <span><i class="fa fa-hammer pacific_blue"></i></span> When that happens, all you need to do is pay us the difference between the original bond and the amount refunded by the bond board.
+    </p>
+  </div>
+  <div class="col-lg-4 px-4">
+    <h4 class="midnight_express">
+      <div class="icon" style="float: left;"></div> &nbsp; What you need to know
+    </h4>
+    <br>
+    <ul>
+      <p><i class="fa fa-credit-card pacific_blue"></i></span> If you apply for MyBond in the first three months of your lease the fee is one weeks rent.</p>
+      <p><i class="fa fa-credit-card pacific_blue"></i></span> If you apply for MyBond after three months into your lease the fee is proportionally reduced below one weeks rent.</p>
+      <p><i class="fa fa-calendar-alt pacific_blue"></i></span> You need to have more than 3 months left on your lease to apply.</p>
+    </ul>
+  </div>
+</div>
+
+
+
+<!--
   <div id="calculator_results_new_bond" class="hidden">
     <hr>
     <div class="row form-group">
@@ -232,13 +353,16 @@
     </div>
 
   </div>
+  -->
 
+  <!--
   <div id="calculator_results_existing_bond" class="hidden">
     <hr>
   </div>
+  -->
 
-
-<div id="calculator_results" class="hidden">
+<!--
+<div id="calculator_results_old" class="hidden">
 
   <hr>
 
@@ -317,3 +441,4 @@
     </div>
   </div>
 </div>
+-->
