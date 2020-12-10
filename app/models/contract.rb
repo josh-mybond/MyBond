@@ -430,8 +430,6 @@ class Contract < ApplicationRecord
   def quote
     logger.debug "*** quote: 1 ***"
     risk_check!
-
-
     object = case self.errors.count > 0
     when true then { error: "We do not service this postcode at the moment." }
     when false
@@ -478,6 +476,11 @@ class Contract < ApplicationRecord
         # when days < 90                 then { error: "Your lease expires in less than 90 days" }
         # else
           # do some calculations here..
+
+        #Formula for calculating how much we will pay for a given bond is as follows:
+        # 1. If the bond is less than 3 months old. It is the bond_payout = total_bond - rent
+        # 2. If the bond is between 4 - 6 months old it is: bond_payout = (bond - rent) + establishment_fee + one_month_interest
+        # 3. If the bond is between 6 - 9 months it is:  bond_payout = ((bond - rent) + establishment_fee + one_month_interest) - ((months_left_on_lease/10)* establishment_fee)
           months_left_on_lease = (self.start_of_lease.year * 12 + self.start_of_lease.month) - (now.year * 12 + now.month)
 
           bond_payout   = nil
@@ -485,10 +488,16 @@ class Contract < ApplicationRecord
 
           bond_payout = case months_left_on_lease
           when 9, 10, 11 then number_to_currency(self.rental_bond - self.property_weekly_rent)
-          else
+          when 8, 7 then
             bond = self.rental_bond
             rent = self.property_weekly_rent
-            (bond - rent) + establishment_fee + one_month_interest - fixed_fee
+            bond_payout = (bond - rent) + establishment_fee + one_month_interest
+          when 6, 5, 4 then
+            bond = self.rental_bond
+            rent = self.property_weekly_rent
+            bond_payout = (bond - rent) + establishment_fee + one_month_interest - ((months_left_on_lease/10)* ESTABLISHMENT_FEE)
+          else
+            bond_payout = 0
           end
 
           object[:bond_payout] = bond_payout
