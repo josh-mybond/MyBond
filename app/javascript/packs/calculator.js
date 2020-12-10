@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let property_postcode        = document.getElementById('calculator_property_postcode');
 
     let start_of_lease           = document.getElementById('start_of_lease');
-    let end_of_lease             = document.getElementById('start_of_lease');
+    let end_of_lease             = document.getElementById('end_of_lease');
     let calculator_rolling_lease_row = document.getElementById('calculator_rolling_lease_row');
     let calculator_rolling_lease = document.getElementById('calculator_rolling_lease');
 
@@ -68,9 +68,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function url_request(contract) {
+      console.log(contract)
       let data = await includes.httpRequest("POST", url, { contract: contract });
-
-      // console.log(data);
+      console.log(url);
 
       if (data.error) {
         alert.classList.remove('hidden');
@@ -90,6 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let string = "";
         let i = 1;
+        console.log(data)
         for (var element of data.bond_buy_back) {
           string += `<tr>`;
           string +=   `<th scope='row'>${i++}</th>`;
