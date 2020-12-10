@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let calculator_cash_back     = document.getElementById("calculator_cash_back");
 
     // UI's
-    let calculator_button        = document.getElementById("calculator_button");
+    // let calculator_button        = document.getElementById("calculator_button");
     let calculator_results_new_bond      = document.getElementById("calculator_results_new_bond");
     let calculator_results_existing_bond = document.getElementById("calculator_results_existing_bond");
     let calculator_apply_button = document.getElementById('calculator_apply_button');
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
         container.innerHTML = string;
       }
 
-      calculator_button.disabled = false;
+      // calculator_button.disabled = false;
       let overlay = document.getElementById('overlay_spinner');
       if (overlay) { overlay.classList.remove('d-flex'); }
     }

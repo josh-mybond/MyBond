@@ -223,7 +223,7 @@ class MBSplit
   end
 
 
-  def http_request(method, path, body, headers = headers)
+  def http_request(method, path, body, headers = self.headers)
     url = "#{@api_url}#{path}"
 
     case method.downcase
