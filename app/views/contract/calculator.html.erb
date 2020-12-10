@@ -1,7 +1,7 @@
 <div class="banner-img">
     <img src=<%= image_path("bg-image4.png") %> class="img-fluid" alt="#">
     <!-- Main Title -->
-    <div class="main-title">
+    <div class="main-title" id="main">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-lg-5">
@@ -230,38 +230,6 @@
   <br>
 </div>
 
-<div class="row">
-  <div class="col-lg-4 px-4">
-    <h4 class="midnight_express"><div class="icon" style="float: left;"></div> &nbsp; Why you may need My Bond</h4>
-    <br>
-    <ul>
-      <li><span><i class="fa fa-dollar-sign pacific_blue"></i></span> Life's little expenses</li>
-      <li><i class="fa fa-school pacific_blue"></i> Education fees</li>
-      <li><span><i class="fa fa-dollar-sign pacific_blue"></i></span> Funds to cover a quiet period</li>
-      <li><span><i class="fa fa-hotel pacific_blue"></i></span> Holiday</li>
-      <li><span><i class="fa fa-ambulance pacific_blue"></i></span> Medical bills</li>
-    </ul>
-  </div>
-  <div class="col-lg-4 px-4">
-    <h4 class="midnight_express"><div class="icon" style="float: left;"></div> &nbsp; Your bond obligations</h4>
-    <br>
-    <p>
-      <span><i class="fa fa-building pacific_blue"></i></span> We know you’ll look after the property you rent, but sometimes things do go wrong, and you may not be eligible for your full bond refund.
-    </p>
-    <p>
-      <span><i class="fa fa-hammer pacific_blue"></i></span> When that happens, all you need to do is pay us the difference between the original bond and the amount refunded by the bond board.
-    </p>
-  </div>
-  <div class="col-lg-4 px-4">
-    <h4 class="midnight_express">
-      <div class="icon" style="float: left;"></div> &nbsp; What you need to know
-    </h4>
-    <br>
-    <p><span><i class="fa fa-credit-card pacific_blue"></i></span> If you apply for MyBond in the first three months of your lease the fee is one weeks rent.</p>
-    <p><span><i class="fa fa-credit-card pacific_blue"></i></span> If you apply for MyBond after three months into your lease the fee is proportionally reduced below one weeks rent.</p>
-    <p><span><i class="fa fa-calendar-alt pacific_blue"></i></span> You need to have more than 3 months left on your lease to apply.</p>
-  </div>
-</div>
 
 <div class="space bg-image">
     <div class="container">
@@ -279,14 +247,13 @@
                     <h5>Move today, without the added stresses of finding the bond. </h5>
                     <h6>Great for individuals and families.</h6>
                     <p class="insurance-para">
-                      Move into your new property sooner, without the added financial stress. We achieve this by requesting you give us collateral over
-                      any bond refund you may get from the old property. Then you only repay us the difference.
+
                     </p>
                     <div class="insurance-type d-flex align-items-center">
                         <img src=<%=image_path("tick.png")%> alt="#">
                         <div class="insurance-type_title">
                             <h6>Cost Effective</h6>
-                            <p>For a flat fee of $100.</p>
+                            <p>No Repayments required</p>
                         </div>
                     </div>
                     <div class="insurance-type d-flex align-items-center">
@@ -328,8 +295,8 @@
                     <div class="item-icon color1">
                         <span>1</span>
                     </div>
-                    <h6>Approved for your new property!</h6>
-                    <p>Once approved, you can apply for the bond loan.</p>
+                    <h6>Got an existing bond?</h6>
+                    <p>You can sell us your bond. Work out how much we will pay for your bond through the above calculator. <a href="#" id="link">Click here</a>.</p>
                 </div>
             </div>
             <div class="col-md-12 col-lg-4">
@@ -338,7 +305,7 @@
                         <span>2</span>
                     </div>
                     <h6>Approved!</h6>
-                    <p>We will approve your application for a bond loan within 30 minutes, and pay the bond to the rental bond board, within 24 hours.</p>
+                    <p>We will review your application for a bond loan within 24 hours, and aim to have funds in your account within 48.</p>
                 </div>
             </div>
             <div class="col-md-12 col-lg-4">
@@ -348,7 +315,7 @@
                     </div>
                     <h6>Repayment</h6>
                     <p>
-                      When you recieve your bond refund from your previous property, you pay us that straight away and pay back the difference over the next month.
+                      No repayments, until your bond is refunded. Than you only pay the difference between your original bond and the amount refunded.
                     </p>
                 </div>
             </div>
@@ -363,7 +330,7 @@
             <div class="col-md-12 col-lg-7 align-items-center">
                 <div class="testi-content_block">
                     <img src=<%=image_path("quote.png")%> class="img-fluid" alt="#">
-                    <h3>I needed a change of scene, but couldn't find the bond for my dream rental. MyBond helped get the property, without the added financial stress.</h3>
+                    <h3>I needed a extra cash for Christmas. MyBond was able to provide me $1800 for my $2000 bond within 48 hours. They were life savers.</h3>
                     <span>Matthew Young</span>
                     <p>Legal Consultant, Sydney</p>
                 </div>
@@ -419,7 +386,7 @@
                         </div>
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <p class="card-body">
-                                You will need to have 100 points of ID for the credit check, and that is all.
+                                You will need to have 100 points of ID, and a copy of your tenancy agreement.
                             </p>
                         </div>
                     </div>
@@ -428,14 +395,15 @@
                             <h2 class="mb-0">
                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                     data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Is there a maximum amount you will lend?
+                                    What you need to know?
                                 </button>
                             </h2>
                         </div>
                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                             <p class="card-body">
-                                For new entrants to the rental market, no more than $2,000. For existing renters, we will lend upto 50% higher than your previous bond.
-                                For example, if your old property had a bond of $2,000. We will lend you upto $3,000 to pay the new bond.
+                              <p style="padding-left: 10px;"><span><i class="fa fa-credit-card pacific_blue"></i></span> If you apply for MyBond in the first three months of your lease the fee is one weeks rent.</p>
+                              <p style="padding-left: 10px;"><span><i class="fa fa-credit-card pacific_blue"></i></span> If you apply for MyBond after three months into your lease the fee is proportionally reduced below one weeks rent.</p>
+                              <p style="padding-left: 10px;"><span><i class="fa fa-calendar-alt pacific_blue"></i></span> You need to have more than 3 months left on your lease to apply.</p>
                             </p>
                         </div>
                     </div>
@@ -444,13 +412,18 @@
                             <h2 class="mb-0">
                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                     data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Do you accept new renters?
+                                    What happens if you don't get the full bond refunded?
                                 </button>
                             </h2>
                         </div>
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                             <p class="card-body">
-                              Yes! However, we will only lend upto $2,000 and this loan needs to be repaid within 58 days.
+                              <p style="padding-left: 10px;">
+                                <span><i class="fa fa-building pacific_blue"></i></span> We know you’ll look after the property you rent, but sometimes things do go wrong, and you may not be eligible for your full bond refund.
+                              </p>
+                              <p style="padding-left: 10px;">
+                                <span><i class="fa fa-hammer pacific_blue"></i></span> When that happens, all you need to do is pay us the difference between the original bond and the amount refunded by the bond board.
+                              </p>
                             </p>
                         </div>
                     </div>
@@ -465,7 +438,7 @@
                         </div>
                         <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                             <p class="card-body">
-                              A credit check is performed. This is to ensure that we are not going to put you in hardship through giving you this loan.
+                              A credit check is not performed. However, we do have our own proprietary approval method.
                             </p>
                         </div>
                     </div>
@@ -516,10 +489,10 @@
             <div class="col-md-4">
                 <div class="footer-title">
                     <h6>ADDRESS</h6>
-                    <p>516/1 Wattle Crescent<br>
-                        Pyrmont, 2009, NSW<br>
-                        +61423934037<br>
-                        hello@mybond.com.au
+                    <p>147 Northumberland Street<br>
+                        Liverpool, 2170, NSW<br>
+                        <a href="tel:+61423934037">+61423934037</a><br>
+                        <a href="email:hello@mybond.com.au">hello@mybond.com.au</a>
                     </p>
                 </div>
             </div>
@@ -565,3 +538,11 @@
 <%#= javascript_pack_tag 'bootstrap' %>
 <%#= javascript_pack_tag 'validate' %>
 <%#= javascript_pack_tag 'contact' %>
+
+<script>
+  $("#link").click(function() {
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#main").offset().top
+    }, 2000);
+  });
+</script>
