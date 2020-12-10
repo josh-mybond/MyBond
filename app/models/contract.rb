@@ -437,7 +437,7 @@ class Contract < ApplicationRecord
 
       establishment_fee  = self.rental_bond * ESTABLISHMENT_FEE
       min_buy_back       = self.rental_bond - self.property_weekly_rent
-      one_month_interest = min_buy_back * MONTHLY_INTEREST_RATE
+      one_month_interest = self.rental_bond * MONTHLY_INTEREST_RATE
       fixed_fee          = 150
 
       logger.debug "*** quote: 3 ***"
@@ -480,7 +480,7 @@ class Contract < ApplicationRecord
         #Formula for calculating how much we will pay for a given bond is as follows:
         # 1. If the bond is less than 3 months old. It is the bond_payout = total_bond - rent
         # 2. If the bond is between 4 - 6 months old it is: bond_payout = (bond - rent) + establishment_fee + one_month_interest
-        # 3. If the bond is between 6 - 9 months it is:  bond_payout = ((bond - rent) + establishment_fee + one_month_interest) - ((months_left_on_lease/10)* establishment_fee)
+        # 3. If the bond is between 6 - 9 months it is:  bond_payout = ((bond - rent) + establishment_fee + one_month_interest*(months_left_on_lease - 3)) - ((months_left_on_lease/10)* fixed_fee)
           months_left_on_lease = ((self.end_of_lease.year * 12 + self.end_of_lease.month) - ((self.start_of_lease.year) * 12 + self.start_of_lease.month))
           bond_payout   = nil
           bond_buy_back = []
@@ -493,7 +493,8 @@ class Contract < ApplicationRecord
           when 7, 6, 5 then
             bond = self.rental_bond
             rent = self.property_weekly_rent
-            bond_payout = (bond - rent) + establishment_fee + one_month_interest - ((months_left_on_lease/10)* ESTABLISHMENT_FEE)
+
+            bond_payout = (bond - rent)  + establishment_fee + one_month_interest*(months_left_on_lease-3) - ((months_left_on_lease.to_f/10)* fixed_fee)
           else
             bond_payout = 0
           end
