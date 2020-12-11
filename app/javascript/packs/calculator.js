@@ -68,38 +68,48 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function url_request(contract) {
-      console.log(contract)
+      // console.log(contract)
       let data = await includes.httpRequest("POST", url, { contract: contract });
-      console.log(url);
+      // console.log(url);
+
+      // console.log('url_request');
+      // console.log(data);
 
       if (data.error) {
         alert.classList.remove('hidden');
         alert_content.innerHTML = data.error;
       } else {
         // calculator_results_new_bond.classList.remove('hidden');
+
+        // You can receive !<span id="calculator_bond_payout"></span> for your $<span id="calculator_bond_original"></span> bond.
+
+        document.getElementById('calculator_bond_payout').innerHTML   = data.bond_payout;
+        // document.getElementById('calculator_bond_original').innerHTML = data.original_bond;
+
+/*
         establishment_fee.innerHTML      = data.establishment_fee;
         calculator_weekly_rent.innerHTML = data.weekly_rent;
         calculator_total_fee.innerHTML   = data.fee;
-
+*/
         // full_fee
         // Accept and Apply Now!
 
-        let container = document.getElementById('calculator_new_bond_buy_back_schedule');
-        if (!container) { return; }
-        if (!data.bond_buy_back) { return; }
-
-        let string = "";
-        let i = 1;
-        console.log(data)
-        for (var element of data.bond_buy_back) {
-          string += `<tr>`;
-          string +=   `<th scope='row'>${i++}</th>`;
-          string +=   `<td>${element}</td>`;
-          string +=   `<td></td>`;
-          string += '</tr>';
-        }
-
-        container.innerHTML = string;
+        // let container = document.getElementById('calculator_new_bond_buy_back_schedule');
+        // if (!container) { return; }
+        // if (!data.bond_buy_back) { return; }
+        //
+        // let string = "";
+        // let i = 1;
+        // console.log(data)
+        // for (var element of data.bond_buy_back) {
+        //   string += `<tr>`;
+        //   string +=   `<th scope='row'>${i++}</th>`;
+        //   string +=   `<td>${element}</td>`;
+        //   string +=   `<td></td>`;
+        //   string += '</tr>';
+        // }
+        //
+        // container.innerHTML = string;
       }
 
       // calculator_button.disabled = false;
@@ -145,12 +155,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     var targetNode = document.getElementById('calculator_quote_modal');
-    var observer = new MutationObserver(function() {
+    var observer   = new MutationObserver(function() {
 
       if (targetNode.classList.contains('show')) {
         let overlay = document.getElementById('overlay_spinner');
         if (overlay) { overlay.classList.add('d-flex'); }
-
 
         // modal is visible, so calculate
         // calculator_button.disabled = true;  // no double taps

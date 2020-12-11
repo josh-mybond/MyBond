@@ -192,12 +192,12 @@ class ApplyController < ApplicationController
   def invitation
     log_header
 
-    l "invitation: 1"
+    # l "invitation: 1"
 
     @customer = Customer.find(session[:customer_id]) if session[:customer_id]
     @contract = Contract.find(session[:contract_id]) if session[:contract_id]
 
-    l "invitation: 2"
+    # l "invitation: 2"
 
     case request.method.downcase
     when "get"  # Refresh
@@ -208,7 +208,7 @@ class ApplyController < ApplicationController
 
     when "post" # form submission
 
-      l "invitation: 3"
+      # l "invitation: 3"
 
       case @contract.nil?
       when false then @contract.update(contract_params)

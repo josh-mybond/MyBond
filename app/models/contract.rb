@@ -499,7 +499,8 @@ class Contract < ApplicationRecord
             bond_payout = 0
           end
 
-          object[:bond_payout] = bond_payout
+          object[:bond_payout]   = bond_payout
+          object[:original_bond] = "$#{self.rental_bond}"
 
         # end
 
