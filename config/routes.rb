@@ -66,6 +66,7 @@ Rails.application.routes.draw do
   # Socker server
   mount ActionCable.server => '/cable'
 
-  root "index#index"
+  # root "index#index"
+  root "contract#calculator"
 
 end
