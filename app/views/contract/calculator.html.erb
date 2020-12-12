@@ -136,11 +136,9 @@
 
                             </table>
 
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
-                              <!-- <button class="btn btn-secondary btn-sm">APPLY NOW</button> -->
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center">
                               <br>
 
-                              <!-- <button id="calculator_button" type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#calculator_quote_modal">Calculate</button> -->
                               <button type="button" class="btn btn-info" data-toggle="modal" data-target="#calculator_quote_modal">
                                 Calculate Your Payout Now!
                               </button>
@@ -172,7 +170,7 @@
                 <br>
 
                 <p class="text-center">
-                  You will receive upto<strong>&nbsp;<span class="pacific_blue" id="calculator_bond_payout"></span></strong>.
+                  You will receive upto<strong>&nbsp;<span class="pacific_blue" id="calculator_bond_payout"></span></strong>
                 </p>
                 <br>
 
@@ -208,7 +206,7 @@
                   -->
 
                   <div class="row form-group">
-                    <div class="col-md-12 col-lg-7">
+                    <div class="col-md-12 col-lg-12 text-center">
                       <%= form_with(url: how_to_apply_path, local: true) do |f| %>
                         <input type="hidden" name="contract[status]"            id="contact_status"            value="0">
                         <input type="hidden" name="contract[contract_type]"     id="contact_contract_type"     value="">
@@ -219,7 +217,7 @@
                         <input type="hidden" name="contract[rolling_lease]"     id="contact_rolling_lease"     value="">
                         <input type="hidden" name="contract[property_weekly_rent]" id="contact_property_weekly_rent" value="">
 
-                        <button id="calculator_apply_button" type="submit" class="btn btn-success float-right">Apply now to receive your payout!</button>
+                        <button id="calculator_apply_button" type="submit" class="btn btn-success">Apply Now to Receive Your Payout!</button>
                       <% end %>
                     </div>
                   </div>
