@@ -78,10 +78,10 @@
   <div class="row form-group">
     <div class="col-lg-12">
       <strong>
-        <%= label_tag :face_photo %>
+        <%= label_tag :selfie %>
       </strong>
       <br>
-      <%= image_tag(customer.face_photo, width: 200) if customer.face_photo.attached? %>
+      <%= image_tag(customer.selfie, width: 200) if customer.selfie.attached? %>
     </div>
   </div>
 

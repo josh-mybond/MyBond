@@ -18,7 +18,7 @@ class Customer < ApplicationRecord
   has_many :contracts
 
   has_one_attached :drivers_license
-  has_one_attached :face_photo
+  has_one_attached :selfie
 
   #
   # Validations
@@ -34,7 +34,7 @@ class Customer < ApplicationRecord
   end
 
   def acceptable_image
-  return unless self.drivers_license.attached? and self.face_photo.attached?
+  return unless self.drivers_license.attached? and self.selfie.attached?
 
   # https://pragmaticstudio.com/tutorials/using-active-storage-in-rails
 
@@ -47,9 +47,9 @@ class Customer < ApplicationRecord
     end
   end
 
-  if self.face_photo.attached?
-    unless acceptable_types.include?(face_photo.content_type)
-      errors.add(:face_photo, error)
+  if self.selfie.attached?
+    unless acceptable_types.include?(selfie.content_type)
+      errors.add(:selfie, error)
     end
   end
 

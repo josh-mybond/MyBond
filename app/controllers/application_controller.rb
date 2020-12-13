@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
 
   def customer_params
     params[:customer][:email] = Customer::test_email if Rails.env.development?
-    params.require(:customer).permit(:first_name, :last_name, :email, :password, :password_confirmation, :iso_country_code, :mobile_number, :date_of_birth, :residential_status, :previous_address, :previous_agent, :drivers_license, :face_photo)
+    params.require(:customer).permit(:first_name, :last_name, :email, :password, :password_confirmation, :iso_country_code, :mobile_number, :date_of_birth, :residential_status, :previous_address, :previous_agent, :drivers_license, :selfie)
   end
 
   def contract_params
