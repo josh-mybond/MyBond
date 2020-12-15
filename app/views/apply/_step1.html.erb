@@ -6,10 +6,6 @@
     <div class="loader mx-auto"></div>
   </div>
 
-  <% if Rails.env.production? %>
-    <%= recaptcha_tags %>
-  <% end %>
-
   <div class="row form-group">
     <div class="col-lg-6">
       <%= f.label :first_name %>
@@ -115,6 +111,15 @@
     <% end %>
   </div>
   -->
+
+  <%# if Rails.env.production? %>
+    <div class="row form-group">
+       <div class="col-lg-12">
+        <%= recaptcha_tags %>
+      </div>
+    </div>
+  <%# end %>
+
 
   <%= render partial: 'apply/button', locals: { f: f, title: "Next"} %>
 
