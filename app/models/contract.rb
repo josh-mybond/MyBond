@@ -481,7 +481,7 @@ class Contract < ApplicationRecord
         # 1. If the bond is less than 3 months old. It is the bond_payout = total_bond - rent
         # 2. If the bond is between 4 - 6 months old it is: bond_payout = (bond - rent) + establishment_fee + one_month_interest
         # 3. If the bond is between 6 - 9 months it is:  bond_payout = ((bond - rent) + establishment_fee + one_month_interest*(months_left_on_lease - 3)) - ((months_left_on_lease/10)* fixed_fee)
-          months_left_on_lease = ((self.end_of_lease.year * 12 + self.end_of_lease.month) - ((self.start_of_lease.year) * 12 + self.start_of_lease.month))
+          months_left_on_lease = ((self.end_of_lease.year * 12 + self.end_of_lease.month) - ((now.year) * 12 + now.month))
           bond_payout   = nil
           bond_buy_back = []
           bond_payout = case months_left_on_lease
