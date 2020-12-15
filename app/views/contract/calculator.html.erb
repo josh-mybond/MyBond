@@ -1,3 +1,27 @@
+<!--==================== TESTIMONIAL ====================-->
+<section class="testimonial" id="click">
+    <div class="container">
+        <div class="row d-flex">
+            <div class="col-md-12 col-lg-7 align-items-center">
+                <div class="testi-content_block">
+                    <h3>I needed a extra cash for Christmas. MyBond was able to provide me $1800 for my $2000 bond within 48 hours. They were life savers.  <a href="#" id="link">Apply Today!</a></h3>
+                    <span>Matthew Young </span>
+                    <p>Legal Consultant, Sydney</p>
+                </div>
+            </div>
+            <!-- <div class="col-md-12 col-lg-5 align-items-baseline">
+<div class="testi-img_wrap">
+</div>
+</div> -->
+        </div>
+    </div>
+
+    <div class="testi-img_wrap">
+        <img src=<%=image_path("testi-img.png")%> class="img-fluid" alt="#" width="650">
+    </div>
+
+</section>
+<!--//END TESTIMONIAL -->
 <div class="banner-img">
     <!-- Main Title -->
     <div class="main-title" id="main">
@@ -6,7 +30,7 @@
                 <div class="col-sm-12 col-md-12 col-lg-5 mg-10-top">
                     <div class="hero-title">
                       <p>
-                        <h1> Unlock your bond today! </h1>
+                        <h1> Unlock your <span class="cta-mybond"> BOND </span> today! </h1>
                       </p>
                       <br>
                       <p class="cta-mybond">
@@ -19,16 +43,14 @@
                             Paying down credit card debt!
                           </li>
                           <li>
-                            Take a holiday!
-                          </li>
-                          <li>
                             Buy gifts for loved ones!
                           </li>
-                          <li>
-                            Buy a second hand car!
-                          </li>
+
                         </ol>
+                        <p class="cta-mybond">
+                        Too apply you just need to have at least 3 months remaining on your lease, and 100 points of ID. Calculate how much we will pay for your bond today!
                       </p>
+
                         <!--
                         <a href="#" data-toggle="modal" data-target="#contactmodal" class="btn btn-danger">Apply Today!</a>
                         <%#= link_to 'Apply Today', how_to_apply_path, class: "btn btn-danger" %>
@@ -353,31 +375,7 @@
     </div>
 </section>
 <!--// END EASY CLAIMS -->
-<!--==================== TESTIMONIAL ====================-->
-<section class="testimonial">
-    <div class="container">
-        <div class="row d-flex">
-            <div class="col-md-12 col-lg-7 align-items-center">
-                <div class="testi-content_block">
-                    <img src=<%=image_path("quote.png")%> class="img-fluid" alt="#">
-                    <h3>I needed a extra cash for Christmas. MyBond was able to provide me $1800 for my $2000 bond within 48 hours. They were life savers.</h3>
-                    <span>Matthew Young</span>
-                    <p>Legal Consultant, Sydney</p>
-                </div>
-            </div>
-            <!-- <div class="col-md-12 col-lg-5 align-items-baseline">
-<div class="testi-img_wrap">
-    <img src=<%=image_path("testi-img.png")%> class="img-fluid" alt="#">
-</div>
-</div> -->
-        </div>
-    </div>
-    <div class="testi-img_wrap">
-        <img src=<%=image_path("testi-img.png")%> class="img-fluid" alt="#" width="650">
-    </div>
-    <!-- <div class="bg-img3"><img src=<%=image_path("bg-image3.png")%> class="img-fluid" alt="#"></div> -->
-</section>
-<!--//END TESTIMONIAL -->
+
 <!--==================== ADD ====================-->
 <section class="add-section clearfix">
     <div class="container">
@@ -575,4 +573,8 @@
         scrollTop: $("#main").offset().top
     }, 2000);
   });
+  function myFunction() {
+    var elmnt = document.getElementById("main");
+    elmnt.scrollIntoView();
+  }
 </script>
