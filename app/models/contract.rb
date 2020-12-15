@@ -499,7 +499,7 @@ class Contract < ApplicationRecord
             bond_payout = 0
           end
 
-          object[:bond_payout]   = bond_payout
+          object[:bond_payout]   = number_to_currency(currency_to_number(bond_payout))
           object[:original_bond] = "$#{self.rental_bond}"
 
         # end
@@ -512,7 +512,9 @@ class Contract < ApplicationRecord
 
   end
 
-
+  def currency_to_number currency
+   currency.to_s.gsub(/[$,]/,'').to_f
+  end
   #
   # Status updates
   #
