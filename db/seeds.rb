@@ -8,7 +8,8 @@
 
 
 role     = 100 # admin
-password = "MyBondAg3"
+# password = "MyBondAg3"
+password = "MrBondIPresume!"
 
 User::create_user!(
   first_name: "Matt",
@@ -24,6 +25,16 @@ User::create_user!(
   first_name: "Joshua",
   last_name: "Theeuf",
   email: "josh@mybond.com.au",
+  role: role,
+  password: password,
+  password_confirmation: password,
+  confirmed_at: DateTime.now
+)
+
+User::create_user!(
+  first_name: "Ray",
+  last_name: "Dib",
+  email: "ray@mybond.com.au",
   role: role,
   password: password,
   password_confirmation: password,

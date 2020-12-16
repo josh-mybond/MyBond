@@ -59,6 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
     */
 
     function validate_field(field) {
+      console.log(`field: ${field}`);
+
       if (includes.is_blank(field.value)) {
         field.classList.add('is-invalid');
         error = true;
@@ -154,6 +156,61 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    let calculate_button = document.getElementById('calculate_button');
+    let calculate_form   = document.getElementById('calculate_form');
+    if (calculate_form) {
+      calculate_form.addEventListener("submit", (e) => {
+        console.log("calculate_button click");
+        
+        let overlay = document.getElementById('overlay_spinner');
+
+        console.log('overlay');
+        console.log(overlay);
+
+        calculate_button.disabled = true;  // no double taps
+        clear_errors();
+
+        // validate
+
+        let start_of_lease = document.getElementById('start_of_lease');
+        let end_of_lease   = document.getElementById('end_of_lease');
+
+        console.log(`start_of_lease: ${start_of_lease}`);
+        console.log(`end_of_lease:   ${end_of_lease}`);
+
+        validate_field(property_weekly_rent);
+        validate_field(bond_amount);
+        validate_field(property_postcode);
+
+        validate_field(start_of_lease);
+        validate_field(end_of_lease);
+
+        e.preventDefault();
+        e.preventDefault();
+        e.preventDefault();
+        e.preventDefault();
+        e.preventDefault();
+        e.preventDefault();
+        return;
+
+        if (error == true) {
+          e.preventDefault();
+          calculate_button.disabled = false;  // no double taps
+        } else {
+          e.preventDefault();
+          overlay.classList.add('d-flex');
+        }
+
+
+        // if ok
+          // show spinner
+          // submit form
+        // else
+          // show error
+      })
+    }
+
+/*
     var targetNode = document.getElementById('calculator_quote_modal');
     var observer   = new MutationObserver(function() {
 
@@ -204,8 +261,6 @@ document.addEventListener("DOMContentLoaded", () => {
           url_request(contract);
         } else {
           if (overlay) { overlay.classList.remove('d-flex'); }
-          // TODO: hide modal
-          // calculator_button.disabled = false;
         }
 
       }
@@ -213,7 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     observer.observe(targetNode, { attributes: true, childList: true });
-
+*/
 
     // if (!calculator_button) { return }
     // calculator_button.addEventListener("click", (e) => {

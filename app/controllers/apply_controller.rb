@@ -7,8 +7,17 @@ class ApplyController < ApplicationController
   def how_to_apply
     log_header
 
+    puts "---------------------------------"
+    puts params[:contract]
+
+    if params[:contract].nil?
+      redirect_to root_path and return
+    end
+
     @contract = Contract.new(contract_params)
+    @quote    = @contract.quote
   end
+
 
   def step1
     log_header

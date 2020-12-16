@@ -55,7 +55,12 @@ class ApplicationController < ActionController::Base
   end
 
   def contract_params
-    params.require(:contract).permit(:customer_id, :value, :agent_name, :agent_telephone, :agent_email, :property_weekly_rent, :property_address, :property_postcode, :property_country, :property_iso_country_code, :rental_bond, :rental_bond_board_id, :start_date, :end_date, :contract_type, :status, :rental_bond, :start_of_lease, :end_of_lease, :rolling_lease)
+    params.require(:contract).permit(:customer_id,
+      :value, :agent_name, :agent_telephone, :agent_email, :property_weekly_rent,
+      :property_address, :property_postcode, :property_country,
+      :property_iso_country_code, :rental_bond_board_id, :start_date,
+      :end_date, :contract_type, :status, :rental_bond, :start_of_lease,
+      :end_of_lease, :rolling_lease, :customer_id, :data, :status)
   end
 
 
