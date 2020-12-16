@@ -62,7 +62,9 @@
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb10">
                           <h2 class="text-white mb20">Apply Today</h2>
 
-                          <form class="form needs-validation" novalidate">
+                          <%= form_with url: how_to_apply_path, class: 'form needs-validation', local: true, method: 'post' do |f| %>
+
+                          <!-- <form id="calculate_form" class="form needs-validation" action="how_to_apply" method="post" novalidate> -->
                             <span id="calculator_host" class="hidden">
                               <%= "#{ENV['who_am_i']}/calculator" %>
                             </span>
@@ -75,7 +77,7 @@
                             <table>
                               <tr>
                                 <td colspan="2">
-                                  <select class="form-control" id='calculator_rental_type'>
+                                  <select class="form-control" id='calculator_rental_type' name="contract[contract_type]">
                                     <option value="0">I have a new lease and want a Rental Bond Facility</option>
                                     <option value="1" selected>Unlock my existing Rental Bond</option>
                                   </select>
@@ -110,7 +112,7 @@
                                   <%= label_tag :your_bond_amount %>
                                 </td>
                                 <td>
-                                  <%= number_field_tag :bond_amount, 2400, placeholder: 2400, id: 'calculator_bond_amount', class: 'form-control', min: 0, step: 1, required: true %>
+                                  <%= number_field_tag :bond_amount, 2400, placeholder: 2400, id: 'calculator_bond_amount', name: "contract[rental_bond]", class: 'form-control', min: 0, step: 1, required: true %>
                                   <div class="invalid-feedback">
                                       Please input a valid Rental Bond Amount.
                                   </div>
@@ -122,7 +124,7 @@
                                   <%= label_tag :weeky_rent %>
                                 </td>
                                 <td>
-                                  <%= number_field_tag :property_weekly_rent, 600, placeholder: 600, id: 'calculator_property_weekly_rent', class: 'form-control', min: 0, step: 1, required: true %>
+                                  <%= number_field_tag :property_weekly_rent, 600, placeholder: 600, id: 'calculator_property_weekly_rent', name: 'contract[property_weekly_rent]', class: 'form-control', min: 0, step: 1, required: true %>
                                   <div class="invalid-feedback">
                                       Please input a valid weekly rent.
                                   </div>
@@ -134,7 +136,7 @@
                                   <%= label_tag :your_postcode %>
                                 </td>
                                 <td>
-                                  <%= number_field_tag :property_postcode, 2000, placeholder: 2000, id: 'calculator_property_postcode', class: 'form-control', min: 2000, max: 2999, step: 1, required: true %>
+                                  <%= number_field_tag :property_postcode, 2000, placeholder: 2000, id: 'calculator_property_postcode', name: 'contract[property_postcode]', class: 'form-control', min: 2000, max: 2999, step: 1, required: true %>
                                   <div class="invalid-feedback">
                                       Please input a valid NSW Postcode.
                                   </div>
@@ -146,7 +148,7 @@
                                   <%= label_tag :start_of_lease %>
                                 </td>
                                 <td>
-                                  <%= text_field_tag :start_of_lease, "", as: :string, type: :text, class: "form-control calculator_start_date_picker" %>
+                                  <%= text_field_tag :start_of_lease, "", as: :string, type: :text, name: 'contract[start_of_lease]', class: "form-control calculator_start_date_picker", required: true %>
                                 </td>
                               </tr>
 
@@ -155,7 +157,7 @@
                                   <%= label_tag :end_of_lease %>
                                 </td>
                                 <td>
-                                  <%= text_field_tag :end_of_lease, "", as: :string, type: :text, class: "form-control calculator_end_date_picker" %>
+                                  <%= text_field_tag :end_of_lease, "", as: :string, type: :text, name: 'contract[end_of_lease]', class: "form-control calculator_end_date_picker", required: true %>
                                 </td>
                               </tr>
 
@@ -169,7 +171,7 @@
                                 </td>
                                 <td>
                                   <label class="switch">
-                                    <input type="checkbox" value="1" id="calculator_rolling_lease">
+                                    <input type="checkbox" value="1" id="calculator_rolling_lease" name='contact[rolling_lease]' >
                                     <span class="slider round"></span>
                                   </label>
                                 </td>
@@ -180,12 +182,14 @@
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center">
                               <br>
 
-                              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#calculator_quote_modal">
+                              <!-- <button type="button" id="calculate_button" class="btn btn-info" data-toggle="modal" data-target="#calculator_quote_modal" > -->
+                              <button type="submit" class="btn btn-success">
                                 Calculate Your Payout Now!
                               </button>
 
                             </div>
-                          </form>
+                          <% end %>
+                          <!-- </form> -->
                         </div>
                       </div>
                     </div>
@@ -551,10 +555,10 @@
                     <p>Copyright © 2020. MyBond</p>
 
                     <p>
-                      <%= link_to 'Privacy Policy', privacy_policy_path %> ::
-                      <%= link_to 'Terms and Conditions', terms_and_conditions_path %> ::
-                      <%= link_to 'Contact', contact_path %> ::
-                      <%= link_to 'Rental Bond Board', 'https://www.service.nsw.gov.au/nswgovdirectory/rental-bond-board' %>
+                      <%= link_to 'Privacy Policy', privacy_policy_path, alt: "Privacy Policy", title: "Privacy Policy - Your data belongs to you." %> ::
+                      <%= link_to 'Terms and Conditions', terms_and_conditions_path, alt: 'Terms and Conditions', title: 'Terms and Conditions - The very fine print.' %> ::
+                      <%= link_to 'Contact', contact_path, alt: 'Contact MyBond', title: 'Contact MyBond' %> ::
+                      <%= link_to 'Rental Bond Board', 'https://www.service.nsw.gov.au/nswgovdirectory/rental-bond-board', alt: 'Rental Bond Board', title: 'The Rental Bond Board is the independant custodian of Rental Bonds paid by Tenants to landlords of residential properties.' %>
                     </p>
                 </div>
             </div>
@@ -577,5 +581,4 @@
         scrollTop: $("#main").offset().top
     }, 2000);
   });
-
 </script>

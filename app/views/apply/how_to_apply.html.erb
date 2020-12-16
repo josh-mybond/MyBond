@@ -1,16 +1,4 @@
 
-<div class="row">
-  <div class="col-lg-12">
-    <h3>How to Apply</h3>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-12">
-    <br>
-  </div>
-</div>
-
 <!--
 <div class="row">
   <div class="col-md-12 col-lg-12">
@@ -60,34 +48,53 @@
 
 <div class="row">
   <div class="col-md-12 col-lg-12">
-    <h5>What you will need to apply</h5>
+    <br>
+    <h4>
+      MyBond will pay you <span class="pacific_blue"><%= @quote[:bond_payout].gsub(".00", "") %></span> for your bond.
+    </h4>
+    <%#= @quote.inspect %>
   </div>
 </div>
 
 <div class="row">
   <div class="col-md-12 col-lg-12">
-    <ol>
-      <li>Your Bond details</li>
-      <li>Address of your current property</li>
-      <li>Real Estate Agent name, address and contact details</li>
-      <li>Proof of identity</li>
-      <li>Copy of your tenancy ledger </li>
-      <li>Your nominated bank account to receive the funds</li>
-      <!-- <li>An Australian Internet Banking facility</li> -->
-    </ol>
+    <br>
+    <p>
+      To apply for your payout you will need to provide the following.
+    </p>
+    <ul class="text-muted">
+      <li>Your Bond details and a copy of your tenancy ledger</li>
+      <li>Address of the property</li>
+      <li>Your Real Estate Agent contact details</li>
+      <li>Proof of your identity</li>
+      <li>A nominated bank account to receive the funds</li>
+    </ul>
   </div>
 </div>
 
+<div class="row">
+  <div class="col-md-12 col-lg-12">
+    <p>
+      After receiving your application we will validate the details with your Real Estate Agent and the Rental Bond Board.
+    </p>
+    <p>
+      If you meet our application conditions you will receive the funds in 2-3 working days.
+    </p>
+  </div>
+</div>
+
+<!--
 <div class="row">
   <div class="col-md-12 col-lg-12">
   <h4>What Happens Next</h4>
   <ol>
     <li>We validate your details</li>
+    <li>We validate your details</li>
     <li>Once approved we transfer the funds to your nominated bank account</li>
   </ol>
   </div>
 </div>
-
+-->
 
 <div class="row">
   <div class="col-md-12 col-lg-12">
@@ -97,10 +104,9 @@
 
 <div class="row">
   <div class="col-md-12 col-lg-12">
-
     <%= form_with(url: step1_path, local: true) do |f| %>
       <%= render partial: 'apply/hidden_contract' %>
-      <button id="calculator_apply_button" type="submit" class="btn btn-success float-right">Apply Now!</button>
+      <button id="calculator_apply_button" type="submit" class="btn btn-success">Continue with my application!</button>
     <% end %>
     <%#= link_to 'Apply Now', step1_path, class: "btn btn-info" %>
   </div>
