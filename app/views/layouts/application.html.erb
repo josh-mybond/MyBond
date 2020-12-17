@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 
-  <%= render 'layouts/head' %>
+<%= render 'layouts/head' %>
 
-  <body>
-    <%= render "shared/flash_messages", flash: flash %>
-    <%= render 'layouts/loading_overlay' %>
+<body onload="copy_selector()">
+  <%= render "shared/flash_messages", flash: flash %>
+  <%= render 'layouts/loading_overlay' %>
 
-    <%= yield %>
+  <%= yield %>
 
-    <%#= render 'layouts/footer' %>
-  </body>
+  <%#= render 'layouts/footer' %>
+</body>
 </html>
