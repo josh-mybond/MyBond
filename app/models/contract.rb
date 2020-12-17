@@ -490,7 +490,7 @@ class Contract < ApplicationRecord
             bond = self.rental_bond
             rent = self.property_weekly_rent
             bond_payout = (bond - rent) + establishment_fee + one_month_interest
-          when 7, 6, 5 then
+          when 7, 6, 5, 4 then
             bond = self.rental_bond
             rent = self.property_weekly_rent
 

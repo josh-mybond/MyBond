@@ -30,33 +30,19 @@
                 <div class="col-sm-12 col-md-12 col-lg-5 mg-10-top">
                     <div class="hero-title">
                       <p>
-                        <h1>Access Savings in your <span class="pacific_blue" alt="Access savings in your Rental Bond" title="Access savings in your Rental Bond">Rental Bond</span></h1>
+                        <h1 id="cta-title" onload="copy_selector()">Access your money today!</h1>
                       </p>
                       <br>
                       <br>
-                      <p class="cta-mybond">
+                      <p class="cta-mybond" id="cta-body">
                         MyBond will purchase your rental bond from you!
                         <br>
                         <br>
-                        Modern life is difficult with many unexpected expenses along the way.
-                        MyBond can help you free up <strong>your</strong> savings for things like
-                        <ol class="cta-mybond">
-                          <li>
-                            Paying down credit card debt
-                          </li>
-                          <li>
-                            Buy a gift for loved ones (yes.. you can put a ring on it)
-                          </li>
-                          <li>
-                            Moving or furniture expenses
-                          </li>
-                          <li>
-                            Unexpected and unforseen expenses
-                          </li>
-                        </ol>
-                        <br>
+                        If you have a $2,000 rental bond, MyBond will pay you between $1500 - $1900 today! <br><br> <strong style="font-size:20px"> No Interest, No Repayments, No Fees. </strong>
+
+                        <br><br>
                         <p class="cta-mybond">
-                        Too apply you just need to have at least 3 months remaining on your lease, and 100 points of ID. Calculate how much we will pay for your bond today!
+                        Too apply you just need to have at least 3 months remaining on your lease, and 100 points of ID. Use our calculator to determine how much we will buy your bond for!
                       </p>
 
                         <!--
@@ -86,10 +72,11 @@
                             <table>
                               <tr>
                                 <td colspan="2">
-                                  <select class="form-control" id='calculator_rental_type' name="contract[contract_type]">
-                                    <option value="0">I have a new lease and want a Rental Bond Facility</option>
-                                    <option value="1" selected>Access savings in my Rental Bond</option>
-                                  </select>
+                                  <input type="hidden" class="form-control" id="calculator_rental_type" name="contract[contract_type]" value = 1 >
+                                  <!-- <select class="form-control" id='calculator_rental_type' name="contract[contract_type]"> -->
+                                    <!-- <option value="0">I have a new lease and want a Rental Bond Facility</option> -->
+                                    <!-- <option value="1" selected>Access savings in my Rental Bond</option> -->
+                                  <!-- </select> -->
                                 </td>
                               </tr>
 
@@ -152,7 +139,7 @@
                                 </td>
                               </tr>
 
-                              <tr>
+                              <tr style="display:none;">
                                 <td>
                                   <%= label_tag :start_of_lease %>
                                 </td>
@@ -589,5 +576,12 @@
     $([document.documentElement, document.body]).animate({
         scrollTop: $("#main").offset().top
     }, 2000);
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    if(Math.random() < 0.5){
+      document.getElementById("cta-title").innerHTML = "Access your <span class='pacific_blue'> Bond Refund </span> Today!";
+      document.getElementById("cta-body").innerHTML = "MyBond will buy your rental bond from you! <br> This means you will unlock extra cash for when you need it most. Such as: <br> <ol> <li> Paying down credit card debt </li> <li>School fee's </li> <li> Unforeseen life events </li>. </ol> <br> If your bond is $2,400. MyBond will pay you between $1800 - $2200 for your bond today! <br><br> <strong style='font-size:20px'> No Interest, No Repayments, No Fees. </strong>";
+    }
   });
 </script>
