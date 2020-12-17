@@ -37,6 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let calculator_months_until_expiry     = document.getElementById("calculator_months_until_expiry");
     let calculator_cash_back     = document.getElementById("calculator_cash_back");
 
+    let calculate_button = document.getElementById('calculate_button');
+
     // UI's
     // let calculator_button        = document.getElementById("calculator_button");
     let calculator_results_new_bond      = document.getElementById("calculator_results_new_bond");
@@ -140,6 +142,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /*
 
+    Initialise
+
+    */
+
+    if (!calculate_button) { return; }
+    calculate_button.innerHTML = "Calculate Your Payout Now!";
+    calculate_button.innerHTML = "Calculate Your Payout Now!";
+
+    /*
+
     Event listeners
 
     */
@@ -149,19 +161,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (calculator_rental_type.value == "0") {
         calculator_rolling_lease_row.classList.add('hidden');
+        calculate_button.innerHTML = "Fund your Rental Bond Now!";
+
       }
 
       if (calculator_rental_type.value == "1") {
         calculator_rolling_lease_row.classList.remove('hidden');
+        calculate_button.innerHTML = "Calculate Your Payout Now!";
       }
     });
 
-    let calculate_button = document.getElementById('calculate_button');
     let calculate_form   = document.getElementById('calculate_form');
     if (calculate_form) {
       calculate_form.addEventListener("submit", (e) => {
         console.log("calculate_button click");
-        
+
         let overlay = document.getElementById('overlay_spinner');
 
         console.log('overlay');
