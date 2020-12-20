@@ -58,7 +58,10 @@
                         MyBond will purchase your rental bond from you!
                         <br>
                         <br>
+                        <!--
                         If you have a $2,000 rental bond, MyBond will pay you between $1500 - $1900 today! <br><br> <strong style="font-size:20px"> No Interest, No Repayments, No Fees.</strong>
+                        -->
+                        If you have a $2,000 rental bond, MyBond will pay you between $1500 - $1900 today! <br><br> <strong style="font-size:20px">It's your money.</strong>
 
                         <br>
                         <p class="cta-mybond">
@@ -605,9 +608,21 @@
   });
 
   document.addEventListener("DOMContentLoaded", function() {
-    if(Math.random() < 0.5){
+    let homepage = "home_page_1";
+
+    if (Math.random() < 0.5) {
+      homepage = 'home_page_2';
+
+      // update page content
       document.getElementById("cta-title").innerHTML = "Access your <span class='pacific_blue'>Bond Refund</span> Today!";
       document.getElementById("cta-body").innerHTML  = "MyBond will buy your rental bond from you!<br>This means you will unlock extra cash for when you need it most. Such as: <br><br><ol><li>Paying down credit card debt</li><li>School fee's</li><li>Unforeseen life events</li></ol>If your bond is $2,400. MyBond will pay you between $1800 - $2200 for your bond today! <br><br> <strong style='font-size:20px'> No Interest, No Repayments, No Fees. </strong>";
     }
+
+    console.log(`homepage: ${homepage}`);
+
+    gtag('event', homepage, {
+      'event_category' : 'engagement'
+    });
+
   });
 </script>
