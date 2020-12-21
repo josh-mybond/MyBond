@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
 
+  before_action :set_title
+
   # protect_from_forgery with: :exception
 
   # layout :application
@@ -50,6 +52,8 @@ class ApplicationController < ActionController::Base
   #
 
   def set_title
+    puts "I am set title"
+    
     @title = "MyBond"
 
     case params[:controller]
