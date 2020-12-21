@@ -618,9 +618,11 @@
       document.getElementById("cta-body").innerHTML  = "MyBond will buy your rental bond from you!<br>This means you will unlock extra cash for when you need it most. Such as: <br><br><ol><li>Paying down credit card debt</li><li>School fee's</li><li>Unforeseen life events</li></ol>If your bond is $2,400. MyBond will pay you between $1800 - $2200 for your bond today! <br><br> <strong style='font-size:20px'> No Interest, No Repayments, No Fees. </strong>";
     }
 
-    gtag('event', homepage, {
-      'event_category' : 'engagement'
-    });
+    <% if Rails.env.production? %>
+      gtag('event', homepage, {
+        'event_category' : 'engagement'
+      });
+    <% end %>
 
   });
 </script>

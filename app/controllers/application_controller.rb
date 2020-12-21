@@ -46,6 +46,22 @@ class ApplicationController < ActionController::Base
   end
 
   #
+  # Title
+  #
+
+  def set_title
+    @title = "MyBond"
+
+    case params[:controller]
+    when "apply" then @title += " - #{params[:action].gsub("_", " ")}"
+    when "index" then @title += " - #{params[:action].gsub("_", " ")}"
+    end
+
+    @title += " - Access your Rental Bond today!"
+
+  end
+
+  #
   # Params
   #
 
