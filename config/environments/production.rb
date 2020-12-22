@@ -72,7 +72,6 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'https://www.mybond.com.au' }
 
-
   ActionMailer::Base.smtp_settings = {
     :user_name => 'apikey',
     :password => ENV['sendgrid_api_key'],
