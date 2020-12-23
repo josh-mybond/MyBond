@@ -2,6 +2,7 @@ class IndexController < ApplicationController
   layout 'apply', except: :index
 
   def index
+    session[:data] = {}
   end
 
   def app

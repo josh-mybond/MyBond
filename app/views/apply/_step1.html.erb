@@ -1,5 +1,6 @@
-<%= form_with(model: @customer, url: step2_path(@customer), local: true, id: "apply_form") do |f| %>
+<%= form_with(model: @customer, url: step2_path, local: true, method: "post", id: "apply_form") do |f| %>
   <%= render "shared/error_messages", resource: @customer %>
+  <%= render partial: 'apply/hidden_customer' %>
   <%= render partial: 'apply/hidden_contract' %>
 
   <div class="overlay hidden align-items-center">

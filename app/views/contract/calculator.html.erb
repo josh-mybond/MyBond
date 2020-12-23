@@ -135,6 +135,17 @@
                                 </td>
                               </tr>
                               -->
+                              <tr>
+                                <td>
+                                  <%= label_tag :email %>
+                                </td>
+                                <td>
+                                  <%= text_field_tag :email, nil, type: "email", placeholder: "Your email", id: 'calculator_email', name: "customer[email]", class: 'form-control', required: true %>
+                                  <div class="invalid-feedback">
+                                      Please provide a valid Email Address.
+                                  </div>
+                                </td>
+                              </tr>
 
                               <tr>
                                 <td>

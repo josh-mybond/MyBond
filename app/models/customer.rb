@@ -8,11 +8,11 @@ class Customer < ApplicationRecord
     # :confirmable,
 
   # Validations
-  validates :first_name, :last_name, :date_of_birth, presence: true, length: { maximum: 56 }
-  # validates :email, email: true, presence: true, reduce: true # This causes 'Email is Invalid' to be printed twice
+  # Note: validations replaced by_status
+  # validates :first_name, :last_name, :date_of_birth, presence: true, length: { maximum: 56 }
+  # validate :mobile_number_is_valid
 
-  validate :mobile_number_is_valid
-
+  validate :by_status
   validate :acceptable_image
 
   has_many :contracts
@@ -24,37 +24,43 @@ class Customer < ApplicationRecord
   # Validations
   #
 
-  def mobile_number_is_valid
+  def by_status
+    case
+    when self.prospect?
+      if !Truemail.valid?(self.email, with: :regex)
+        errors.add(:email, "is not valid")
+      end
+    when self.customer?
+      errors.add(:first_name,    "cannot be blank") if self.first_name.blank?
+      errors.add(:last_name,     "cannot be blank") if self.last_name.blank?
+      errors.add(:date_of_birth, "cannot be blank") if self.date_of_birth.blank?
 
-    if !Phonelib.valid_for_country? self.mobile_number, self.iso_country_code
-      errors.add(:iso_country_code, "invalid with Mobile Number")
-      errors.add(:mobile_number,    "invalid with Country Code")
-    end
+      # Validate mobile number
+      if !Phonelib.valid_for_country? self.mobile_number, self.iso_country_code
+        errors.add(:iso_country_code, "invalid with Mobile Number")
+        errors.add(:mobile_number,    "invalid with Country Code")
+      end
 
-  end
-
-  def acceptable_image
-  return unless self.drivers_license.attached? and self.selfie.attached?
-
-  # https://pragmaticstudio.com/tutorials/using-active-storage-in-rails
-
-  acceptable_types = ["image/jpeg", "image/png", "application/pdf"]
-  error            = "must be a JPEG, PNG or PDF"
-
-  if self.drivers_license.attached?
-    unless acceptable_types.include?(drivers_license.content_type)
-      errors.add(:drivers_license, error)
     end
   end
 
-  if self.selfie.attached?
-    unless acceptable_types.include?(selfie.content_type)
-      errors.add(:selfie, error)
-    end
-  end
+  # def mobile_number_is_valid
+  #
+  #   if !Phonelib.valid_for_country? self.mobile_number, self.iso_country_code
+  #     errors.add(:iso_country_code, "invalid with Mobile Number")
+  #     errors.add(:mobile_number,    "invalid with Country Code")
+  #   end
+  #
+  # end
 
-end
+  #
+  # Constants
+  #
 
+  STATUS = {
+    prospect: 0,
+    customer: 1
+  }
 
   RESIDENTIAL_STATUS = {
     citizen: 0,
@@ -63,14 +69,61 @@ end
     other: 3
   }
 
-  def residential_status_to_s
-    case self.residential_status
-    when RESIDENTIAL_STATUS[:citizen]            then "Citizen"
-    when RESIDENTIAL_STATUS[:permanent_resident] then "Permanent Resident"
-    when RESIDENTIAL_STATUS[:working_visa]       then "Working Visa"
-    when RESIDENTIAL_STATUS[:other]              then "Other"
-    end
+  def prospect?
+    self.status == STATUS[:prospect]
   end
+
+  def customer?
+    self.status == STATUS[:customer]
+  end
+
+  def status_to_s
+    STATUS.each do |key, value|
+      if self.status == value
+        return key.to_s.capitalize.gsub("_"," ")
+      end
+    end
+
+    "Unknown"
+  end
+
+  def residential_status_to_s
+    RESIDENTIAL_STATUS.each do |key, value|
+      if self.residential_status == value
+        return key.to_s.capitalize.gsub("_"," ")
+      end
+    end
+
+    "Unknown"
+  end
+
+
+  #
+  # Main
+  #
+
+  def acceptable_image
+    return unless self.drivers_license.attached? and self.selfie.attached?
+
+    # https://pragmaticstudio.com/tutorials/using-active-storage-in-rails
+
+    acceptable_types = ["image/jpeg", "image/png", "application/pdf"]
+    error            = "must be a JPEG, PNG or PDF"
+
+    if self.drivers_license.attached?
+      unless acceptable_types.include?(drivers_license.content_type)
+        errors.add(:drivers_license, error)
+      end
+    end
+
+    if self.selfie.attached?
+      unless acceptable_types.include?(selfie.content_type)
+        errors.add(:selfie, error)
+      end
+    end
+
+  end
+
 
   if !Rails.env.production?
     def self.test_email

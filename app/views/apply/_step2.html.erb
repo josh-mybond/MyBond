@@ -3,8 +3,8 @@
   <%= render "shared/error_messages", resource: @contract %>
 
   <%# Save model keys %>
-  <%= hidden_field_tag :customer_id, @customer.id %>
-  <%= hidden_field_tag :contract_id, @contract_id %>
+  <%= render partial: 'apply/hidden_customer' %>
+  <%= render partial: 'apply/hidden_contract' %>
 
   <div class="row form-group">
     <div class="col-lg-12">

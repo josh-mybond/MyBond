@@ -1,3 +1,5 @@
+require 'truemail'
+
 Truemail.configure do |config|
   # Required parameter. Must be an existing email on behalf of which verification will be performed
   config.verifier_email = 'matt@mybond.com.au'
@@ -7,10 +9,10 @@ Truemail.configure do |config|
   config.verifier_domain = 'mybond.com.au'
 
   # Optional parameter. You can override default regex pattern
-  config.email_pattern = /regex_pattern/
+  # config.email_pattern = /regex_pattern/
 
   # Optional parameter. You can override default regex pattern
-  config.smtp_error_body_pattern = /regex_pattern/
+  # config.smtp_error_body_pattern = /regex_pattern/
 
   # Optional parameter. Connection timeout is equal to 2 ms by default.
   config.connection_timeout = 1
@@ -55,7 +57,7 @@ Truemail.configure do |config|
   # config.blacklisted_domains = ['somedomain1.com', 'somedomain2.com']
 
   # Optional parameter. This option will provide to use not RFC MX lookup flow.
-  # It means that MX and Null MX records will be cheked on the DNS validation layer only.
+  # It means that MX and Null MX records will be checked on the DNS validation layer only.
   # By default this option is disabled.
   # config.not_rfc_mx_lookup_flow = true
   config.not_rfc_mx_lookup_flow = false
@@ -69,5 +71,5 @@ Truemail.configure do |config|
   # Optional parameter. This option will enable tracking events. You can print tracking events to
   # stdout, write to file or both of these. Tracking event by default is :error
   # Available tracking event: :all, :unrecognized_error, :recognized_error, :error
-  config.logger = { tracking_event: :all, stdout: true, log_absolute_path: '/home/app/log/truemail.log' }
+  config.logger = { tracking_event: :all, stdout: true, log_absolute_path: "#{Rails.root}/log/truemail.log" }
 end

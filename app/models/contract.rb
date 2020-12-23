@@ -41,19 +41,20 @@ class Contract < ApplicationRecord
   }
 
   STATUS = {
-    application: 0,
-    customer_rejected: 1,
-    customer_accepted: 2,
-    payment_requested: 3,
-    paid: 4,
-    cancelled: 5,
-    refunded: 6,
-    default: 7,
-    suspended: 8
+    quote:             0,
+    application:       1,
+    customer_rejected: 2,
+    customer_accepted: 3,
+    payment_requested: 4,
+    paid:              5,
+    cancelled:         6,
+    refunded:          7,
+    default:           8,
+    suspended:         9
   }
 
   VENDOR = {
-    split: 0,
+    split:  0,
     stripe: 1
   }
 
@@ -68,17 +69,8 @@ class Contract < ApplicationRecord
   end
 
   def status_to_s
-    case self.status
-    when STATUS[:application]       then "Application"
-    when STATUS[:customer_rejected] then "Customer Rejected"
-    when STATUS[:customer_accepted] then "Customer Accepted"
-    when STATUS[:payment_requested] then "Payment Requested"
-    when STATUS[:paid]              then "Paid"
-    when STATUS[:cancelled]         then "Cancelled"
-    when STATUS[:refunded]          then "Refunded"
-    when STATUS[:default]           then "Default"
-    when STATUS[:suspended]         then "Suspended"
-    end
+    STATUS.each { |key, value| return key.to_s.capitalize.gsub("_"," ") if value == self.status }
+    "Unknown"
   end
 
   def vendor_to_s

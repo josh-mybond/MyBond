@@ -7,31 +7,58 @@ class ApplyController < ApplicationController
   def how_to_apply
     log_header
 
-    puts "---------------------------------"
-    puts params[:contract]
+    case request.method.downcase
+    when "get" # user has hit back button
+      set_from_session
 
-    if params[:contract].nil?
-      redirect_to root_path and return
+      if @customer.nil? or @contract.nil?
+        redirect_to root_path and return
+      end
+    when "post"
+      # Ensure input is sane and not going to cause errors - ie: from search engine
+      if params[:contract].nil? or
+         params[:customer].nil? or
+         params[:customer][:email].nil?
+        redirect_to root_path and return
+      end
+
+      # Keep record of prospects
+      @customer = Customer.find_or_create_by(email: params[:customer][:email])
+      if !@customer.valid?
+        @customer.save(validate: false)
+      end
+
+      # TODO: keep contract record as well...
+      @contract = Contract.new(contract_params)
+
+      # save contract so we can track those that don't convert
+      @contract.customer = @customer
+      @contract.save(validate: false)
     end
 
-    @contract = Contract.new(contract_params)
     @quote    = @contract.quote
+
+    session[:data] = {}
+    session[:data][:customer_id] = @customer.id
+    session[:data][:contract_id] = @contract.id
   end
 
 
   def step1
     log_header
 
-    # CustomerMailer::application_update(Customer.last).deliver_now
+    case request.method.downcase
+    when "get"
+      set_from_session
 
-    # @customer = Customer.find(params[:id]) if params[:id]
-    # @customer = Customer.new if @customer.nil?
+      if @customer.nil? or @contract.nil?
+        redirect_to root_path and return
+      end
 
-    @customer = params[:id].nil?          ? Customer.new : Customer.find(params[:id])
-    @contract = params[:contract_id].nil? ? Contract.new(contract_params) : Contract.find(params[:contract_id])
-
-    puts "-------------------------"
-    puts @contract.inspect
+    when "post"
+      @customer = Customer.find(params[:customer_id])
+      @contract = Contract.find(params[:contract_id])
+    end
 
     # Add some test data to speed up testing
     # Remove for production
@@ -39,13 +66,13 @@ class ApplyController < ApplicationController
       session[:customer_id] = nil
       session[:contract_id] = nil
 
-      if @customer.new_record?
+      if @customer.first_name.blank?
         @customer.first_name = 'first'
         @customer.last_name  = 'last'
         @customer.email      = Customer::test_email
         @password            = 'test_password!@#$'
-        @customer.mobile_number = "0432212713"
-        @customer.date_of_birth = Date.parse("1968-12-15")
+        @customer.mobile_number    = "0432212713"
+        @customer.date_of_birth    = Date.parse("1968-12-15")
         @customer.previous_address = "over there"
         @customer.previous_agent   = "Previous Agent Bob"
       end
@@ -56,13 +83,17 @@ class ApplyController < ApplicationController
   def step2
     log_header
 
-    @customer = Customer.find(session[:customer_id]) if session[:customer_id]
-    @contract = Contract.find(session[:contract_id]) if session[:contract_id]
-
     case request.method.downcase
-    when "get"  # back button has been pressed - do nothing
+    when "get"
+      set_from_session
 
-    when "post" # form submission
+      if @customer.nil? or @contract.nil?
+        redirect_to root_path and return
+      end
+
+    when "post"
+      @customer = Customer.find(params[:customer_id])
+      @contract = Contract.find(params[:contract_id])
 
       # Ensure recaptcha has passed
       if Rails.env.production?
@@ -71,31 +102,23 @@ class ApplyController < ApplicationController
         end
       end
 
-      case @customer.nil?
-      when false then @customer.update(customer_params)
-      when true
-        # create device friendly customer
-        # ignore password & confirmation email
-        temp_password = Devise.friendly_token[0,20]
+      @customer.update(customer_params)
 
-        customer  = customer_params
-        customer[:password]              = temp_password
-        customer[:password_confirmation] = temp_password
-        customer[:confirmed_at]          = DateTime.now
-
-        # @customer = Customer.create(customer)
-
-        @customer = Customer.new(customer)
-        session[:customer_id] = @customer.id if @customer.save
-      end
+      # create device friendly customer
+      # ignore password & confirmation email
+      # temp_password = Devise.friendly_token[0,20]
+      #
+      # customer  = customer_params
+      # customer[:password]              = temp_password
+      # customer[:password_confirmation] = temp_password
+      # customer[:confirmed_at]          = DateTime.now
+      # @customer = Customer.create(customer)
     end
 
     if !@customer or !@customer.valid?
-      @customer = Customer.new if !@customer
       render :step1 and return
     end
 
-    @contract    = Contract.new if @contract.nil?
     @value_label = @contract.value_label
 
     # Add some test data to speed up testing
@@ -203,29 +226,19 @@ class ApplyController < ApplicationController
 
     # l "invitation: 1"
 
-    @customer = Customer.find(session[:customer_id]) if session[:customer_id]
-    @contract = Contract.find(session[:contract_id]) if session[:contract_id]
+    @customer = Customer.find(params[:customer_id])
+    @contract = Contract.find(params[:contract_id])
 
     # l "invitation: 2"
 
     case request.method.downcase
-    when "get"  # Refresh
-      case
-      when @customer.nil? then (redirect_to '/step1' and return)
-      when @contract.nil? then (redirect_to '/step2' and return)
-      end
+    # when "get"  # Refresh
 
     when "post" # form submission
 
       # l "invitation: 3"
 
-      case @contract.nil?
-      when false then @contract.update(contract_params)
-      when true
-        params[:contract][:customer_id] = @customer.id
-        @contract = Contract.create(contract_params)
-        @contract.save
-      end
+      @contract.update(contract_params)
     end
 
     if !@contract or !@contract.valid?
@@ -289,5 +302,10 @@ class ApplyController < ApplicationController
 
   def get_contract
     @contract = Contract.find(params[:contract_id])
+  end
+
+  def set_from_session
+    @customer = Customer.find(session[:data]["customer_id"])
+    @contract = Contract.find(session[:data]["contract_id"])
   end
 end
