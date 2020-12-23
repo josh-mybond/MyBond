@@ -7,31 +7,34 @@ class ApplyController < ApplicationController
   def how_to_apply
     log_header
 
-    puts "---------------------------------"
-    puts params[:contract]
-
-    if params[:contract].nil?
+    # Ensure input is sane and not going to cause errors - ie: from search engine
+    if params[:contract].nil? or
+       params[:customer].nil? or
+       params[:customer][:email].nil?
       redirect_to root_path and return
     end
 
+    # Keep record of prospects
+    @customer = Customer.find_or_create_by(email: params[:customer][:email])
+    if !@customer.valid?
+      @customer.save(validate: false)
+    end
+
+    # TODO: keep contract record as well...
     @contract = Contract.new(contract_params)
     @quote    = @contract.quote
+
+    # save contract so we can track those that don't convert
+    @contract.customer = @customer
+    @contract.save(validate: false)
   end
 
 
   def step1
     log_header
 
-    # CustomerMailer::application_update(Customer.last).deliver_now
-
-    # @customer = Customer.find(params[:id]) if params[:id]
-    # @customer = Customer.new if @customer.nil?
-
-    @customer = params[:id].nil?          ? Customer.new : Customer.find(params[:id])
-    @contract = params[:contract_id].nil? ? Contract.new(contract_params) : Contract.find(params[:contract_id])
-
-    puts "-------------------------"
-    puts @contract.inspect
+    @customer = Customer.find(params[:customer_id])
+    @contract = Contract.find(params[:contract_id])
 
     # Add some test data to speed up testing
     # Remove for production
@@ -39,13 +42,13 @@ class ApplyController < ApplicationController
       session[:customer_id] = nil
       session[:contract_id] = nil
 
-      if @customer.new_record?
+      if @customer.first_name.blank?
         @customer.first_name = 'first'
         @customer.last_name  = 'last'
         @customer.email      = Customer::test_email
         @password            = 'test_password!@#$'
-        @customer.mobile_number = "0432212713"
-        @customer.date_of_birth = Date.parse("1968-12-15")
+        @customer.mobile_number    = "0432212713"
+        @customer.date_of_birth    = Date.parse("1968-12-15")
         @customer.previous_address = "over there"
         @customer.previous_agent   = "Previous Agent Bob"
       end
@@ -56,8 +59,8 @@ class ApplyController < ApplicationController
   def step2
     log_header
 
-    @customer = Customer.find(session[:customer_id]) if session[:customer_id]
-    @contract = Contract.find(session[:contract_id]) if session[:contract_id]
+    @customer = Customer.find(params[:customer_id])
+    @contract = Contract.find(params[:contract_id])
 
     case request.method.downcase
     when "get"  # back button has been pressed - do nothing
@@ -203,29 +206,19 @@ class ApplyController < ApplicationController
 
     # l "invitation: 1"
 
-    @customer = Customer.find(session[:customer_id]) if session[:customer_id]
-    @contract = Contract.find(session[:contract_id]) if session[:contract_id]
+    @customer = Customer.find(params[:customer_id])
+    @contract = Contract.find(params[:contract_id])
 
     # l "invitation: 2"
 
     case request.method.downcase
-    when "get"  # Refresh
-      case
-      when @customer.nil? then (redirect_to '/step1' and return)
-      when @contract.nil? then (redirect_to '/step2' and return)
-      end
+    # when "get"  # Refresh
 
     when "post" # form submission
 
       # l "invitation: 3"
 
-      case @contract.nil?
-      when false then @contract.update(contract_params)
-      when true
-        params[:contract][:customer_id] = @customer.id
-        @contract = Contract.create(contract_params)
-        @contract.save
-      end
+      @contract.update(contract_params)
     end
 
     if !@contract or !@contract.valid?

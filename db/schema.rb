@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_02_040838) do
+ActiveRecord::Schema.define(version: 2020_12_22_063314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,9 +110,11 @@ ActiveRecord::Schema.define(version: 2020_12_02_040838) do
     t.integer "residential_status", default: 0
     t.string "previous_address"
     t.string "previous_agent"
+    t.integer "status", default: 0
     t.index ["confirmation_token"], name: "index_customers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
+    t.index ["status"], name: "index_customers_on_status"
     t.index ["unlock_token"], name: "index_customers_on_unlock_token", unique: true
   end
 
