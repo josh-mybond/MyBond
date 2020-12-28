@@ -562,8 +562,8 @@
                     <h6>ADDRESS</h6>
                     <p>11 York Street<br>
                         Sydney, 2000, NSW<br>
-                        <a href="tel:+61423934037">+61423934037</a><br>
-                        <a href="email:hello@mybond.com.au">hello@mybond.com.au</a>
+                        <a href="tel:<%= ENV['telephone_number'].gsub(' ', '') %>"><%= ENV['telephone_number'] %></a><br>
+                        <a href="email:<%= ENV['contact_email'] %>"><%= ENV['contact_email'] %></a>
                     </p>
                 </div>
             </div>

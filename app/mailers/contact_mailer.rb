@@ -1,5 +1,5 @@
 class ContactMailer < ApplicationMailer
-  default from: "hello@mybond.com.au"
+  default from: ENV['contact_email']
 
 
   def contact(to, message)

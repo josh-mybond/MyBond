@@ -93,33 +93,14 @@
     </div>
   </div>
 
-  <!--
-  <div class="form-group">
-    <%= f.label :password %>
-    <% if Rails.env.development? %>
-      <%= f.password_field :password, value: @password, class: "form-control", placeholder: "Password", required: true %>
-    <% else %>
-      <%= f.password_field :password, class: "form-control", placeholder: "Password", required: true %>
-    <% end %>
-  </div>
 
-  <div class="form-group">
-    <%= f.label :password_confirmation %>
-    <% if Rails.env.development? %>
-      <%= f.password_field :password_confirmation, value: @password, class: "form-control", placeholder: "Password Confirmation", required: true %>
-    <% else %>
-      <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Password Confirmation", required: true %>
-    <% end %>
-  </div>
-  -->
-
-  <%# if Rails.env.production? %>
+  <% if Rails.env.production? %>
     <div class="row form-group">
        <div class="col-lg-12">
         <%= recaptcha_tags %>
       </div>
     </div>
-  <%# end %>
+  <% end %>
 
 
   <%= render partial: 'apply/button', locals: { f: f, title: "Next"} %>
