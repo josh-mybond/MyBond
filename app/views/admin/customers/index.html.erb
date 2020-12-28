@@ -32,6 +32,7 @@
       <th>First Name</th>
       <th>Last Name</th>
       <th>Contracts</th>
+      <th>Status</th>
       <th>Residency</th>
       <th>Actions</th>
     </tr>
@@ -50,6 +51,7 @@
             <%= link_to customer.contracts.count, admin_customer_contracts_path(customer_id: customer.id) %>
           <% end %>
         </td>
+        <td><%= customer.status_to_s %></td>
         <td><%= customer.residential_status_to_s %></td>
         <td>
           <!--
