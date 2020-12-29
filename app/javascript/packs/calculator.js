@@ -147,8 +147,8 @@ document.addEventListener("DOMContentLoaded", () => {
     */
 
     if (!calculate_button) { return; }
-    calculate_button.innerHTML = "Calculate Your Payout Now!";
-    calculate_button.innerHTML = "Calculate Your Payout Now!";
+    calculate_button.innerHTML = "Apply For Your Payout Now!";
+    // calculate_button.innerHTML = "Apply For Your Payout Now!";
 
     /*
 
