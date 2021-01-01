@@ -472,24 +472,33 @@ class Contract < ApplicationRecord
         #Formula for calculating how much we will pay for a given bond is as follows:
         # 1. If the bond is less than 3 months old. It is the bond_payout = total_bond - rent
         # 2. If the bond is between 4 - 6 months old it is: bond_payout = (bond - rent) + establishment_fee + one_month_interest
-        # 3. If the bond is between 6 - 9 months it is:  bond_payout = ((bond - rent) + establishment_fee + one_month_interest*(months_left_on_lease - 3)) - ((months_left_on_lease/10)* fixed_fee)
+        # 3. If the bond is between 6 - 9 months it is:     bond_payout = ((bond - rent) + establishment_fee + one_month_interest*(months_left_on_lease - 3)) - ((months_left_on_lease/10)* fixed_fee)
+
+          puts "self.end_of_lease: #{self.end_of_lease}"
+
           months_left_on_lease = ((self.end_of_lease.year * 12 + self.end_of_lease.month) - ((now.year) * 12 + now.month))
+
+          puts "months_left_on_lease: #{months_left_on_lease}"
+
           bond_payout   = nil
           bond_buy_back = []
           bond_payout = case months_left_on_lease
-          when 10, 11, 12 then number_to_currency(self.rental_bond - self.property_weekly_rent)
-          when 9, 8 then
-            bond = self.rental_bond
-            rent = self.property_weekly_rent
-            bond_payout = (bond - rent) + establishment_fee + one_month_interest
-          when 7, 6, 5, 4 then
-            bond = self.rental_bond
-            rent = self.property_weekly_rent
+            # when 10, 11, 12 then number_to_currency(self.rental_bond - self.property_weekly_rent)
+            # when >= 10 then number_to_currency(self.rental_bond - self.property_weekly_rent)
+            when 9, 8 then
+              bond = self.rental_bond
+              rent = self.property_weekly_rent
+              bond_payout = (bond - rent) + establishment_fee + one_month_interest
+            when 7, 6, 5, 4 then
+              bond = self.rental_bond
+              rent = self.property_weekly_rent
 
-            bond_payout = (bond - rent)  + establishment_fee + one_month_interest*(months_left_on_lease-3) - ((months_left_on_lease.to_f/10)* fixed_fee)
-          else
-            bond_payout = 0
-          end
+              bond_payout = (bond - rent)  + establishment_fee + one_month_interest*(months_left_on_lease-3) - ((months_left_on_lease.to_f/10)* fixed_fee)
+            when 3, 2, 1, 0
+              bond_payout = 0
+            else # >= 10
+              number_to_currency(self.rental_bond - self.property_weekly_rent)
+            end
 
           object[:bond_payout]   = number_to_currency(currency_to_number(bond_payout))
           object[:original_bond] = "$#{self.rental_bond}"

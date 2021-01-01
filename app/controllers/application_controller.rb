@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
 
   def set_title
     puts "I am set title"
-    
+
     @title = "MyBond"
 
     case params[:controller]
@@ -104,7 +104,5 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :first_name, :last_name, :registration_code, :country_code, :postal_code, :password, :password_confirmation])
   end
-
-
 
 end
