@@ -31,29 +31,6 @@
                     <div class="hero-title">
                       <h1 id="cta-title" onload="copy_selector()">Access your money today!</h1>
                       <br>
-<!--
-                      <p class="cta-mybond">
-                        MyBond will purchase your existing rental bond from you, or fund your new bond!
-                        <br>
-                        <br>
-                        Modern life is difficult with many unexpected expenses along the way.
-                        MyBond helps you free up <strong>your</strong> savings for things like
-                        <ol class="cta-mybond">
-                          <li>
-                            Paying down credit card debt
-                          </li>
-                          <li>
-                            Buy a gift for loved ones (yes.. you can put a ring on it)
-                          </li>
-                          <li>
-                            Moving or furniture expenses
-                          </li>
-                          <li>
-                            Unexpected and unforseen expenses
-                          </li>
-                        </ol>
-                        <br>
--->
                       <p class="cta-mybond" id="cta-body">
                         MyBond will purchase your rental bond from you!
                         <br>
@@ -68,10 +45,6 @@
                         To apply you just need to have at least 3 months remaining on your lease, and 100 points of ID. Use our calculator to determine how much we will buy your bond for!
                       </p>
 
-                        <!--
-                        <a href="#" data-toggle="modal" data-target="#contactmodal" class="btn btn-danger">Apply Today!</a>
-                        <%#= link_to 'Apply Today', how_to_apply_path, class: "btn btn-danger" %>
-                        -->
                     </div>
                 </div>
                 <div class="offset-xl-1 col-xl-6 offset-lg-1 col-lg-6 col-md-12 col-sm-12 col-12">
@@ -152,7 +125,7 @@
                                   <%= label_tag :your_bond_amount %>
                                 </td>
                                 <td>
-                                  <%= number_field_tag :bond_amount, 2400, placeholder: 2400, id: 'calculator_bond_amount', name: "contract[rental_bond]", class: 'form-control', min: 0, step: 1, required: true %>
+                                  <%= number_field_tag :bond_amount, nil, placeholder: 2400, id: 'calculator_bond_amount', name: "contract[rental_bond]", class: 'form-control', min: 0, step: 1, required: true %>
                                   <div class="invalid-feedback">
                                       Please input a valid Rental Bond Amount.
                                   </div>
@@ -164,7 +137,7 @@
                                   <%= label_tag :weeky_rent %>
                                 </td>
                                 <td>
-                                  <%= number_field_tag :property_weekly_rent, 600, placeholder: 600, id: 'calculator_property_weekly_rent', name: 'contract[property_weekly_rent]', class: 'form-control', min: 0, step: 1, required: true %>
+                                  <%= number_field_tag :property_weekly_rent, nil, placeholder: 600, id: 'calculator_property_weekly_rent', name: 'contract[property_weekly_rent]', class: 'form-control', min: 0, step: 1, required: true %>
                                   <div class="invalid-feedback">
                                       Please input a valid weekly rent.
                                   </div>
@@ -176,7 +149,7 @@
                                   <%= label_tag :your_postcode %>
                                 </td>
                                 <td>
-                                  <%= number_field_tag :property_postcode, 2000, placeholder: 2000, id: 'calculator_property_postcode', name: 'contract[property_postcode]', class: 'form-control', min: 2000, max: 2999, step: 1, required: true %>
+                                  <%= number_field_tag :property_postcode, nil, placeholder: 2000, id: 'calculator_property_postcode', name: 'contract[property_postcode]', class: 'form-control', min: 2000, max: 2999, step: 1, required: true %>
                                   <div class="invalid-feedback">
                                       Please input a valid NSW Postcode.
                                   </div>

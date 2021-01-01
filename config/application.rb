@@ -28,7 +28,6 @@ module Fundmybond
       end if File.exists?(env_file)
     end
 
-
     # Allow access to api from other domains
     # config.middleware.insert_before 0, Rack::Cors do
     #   allow do
