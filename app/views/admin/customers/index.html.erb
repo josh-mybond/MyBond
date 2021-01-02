@@ -34,6 +34,7 @@
       <th>Contracts</th>
       <th>Status</th>
       <th>Residency</th>
+      <th>Signup IP</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -53,6 +54,7 @@
         </td>
         <td><%= customer.status_to_s %></td>
         <td><%= customer.residential_status_to_s %></td>
+        <td><%= customer.signup_ip %></td>
         <td>
           <!--
           <%#= link_to 'Show', [:admin, customer] %> :

@@ -14,6 +14,7 @@ class ApplyController < ApplicationController
       if @customer.nil? or @contract.nil?
         redirect_to root_path and return
       end
+
     when "post"
       # Ensure input is sane and not going to cause errors - ie: from search engine
       if params[:contract].nil? or
@@ -25,7 +26,18 @@ class ApplyController < ApplicationController
       # Keep record of prospects
       @customer = Customer.find_or_create_by(email: params[:customer][:email])
       if !@customer.valid?
+
+        @customer.signup_ip = request.remote_ip != "127.0.0.1" ? request.remote_ip : request.env['HTTP_X_FORWARDED_FOR']
         @customer.save(validate: false)
+      end
+
+      # Deny if this a possible hack attempt
+      case
+      when params[:contract][:rental_bond].blank?,
+           params[:contract][:property_weekly_rent].blank?,
+           params[:contract][:property_postcode].blank?
+        flash[:alert] = "Please complete all fields in the Calculator"
+        redirect_to root_path and return
       end
 
       # TODO: keep contract record as well...

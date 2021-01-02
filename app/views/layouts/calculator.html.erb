@@ -6,7 +6,7 @@
   <body class="container calculator_body">
     <%= render 'layouts/google_tag_manager_body_script' %>
     <%= render 'layouts/loading_overlay' %>
-    
+
     <div class="bg-white sticky-top py-2">
       <div class="container">
         <div class="row d-flex align-items-center">
@@ -23,6 +23,8 @@
         </div>
       </div>
     </div>
+
+    <%= render "shared/flash_messages", flash: flash %>
 
     <%= yield %>
   </body>
