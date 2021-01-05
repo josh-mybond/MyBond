@@ -17,9 +17,17 @@ class ApplyController < ApplicationController
 
     when "post"
       # Ensure input is sane and not going to cause errors - ie: from search engine
-      if params[:contract].nil? or
-         params[:customer].nil? or
-         params[:customer][:email].nil?
+      # if params[:contract].nil? or
+      #   params[:customer].nil? or
+      #   params[:customer][:email].nil? or
+      #   form_spammer?
+      #   flash[:alert] = "Please complete all fields in the Calculator"
+      #   redirect_to root_path and return
+      # end
+
+      # Sick of these guys..
+      if form_spammer?
+        flash[:alert] = "Please complete all fields in the Calculator"
         redirect_to root_path and return
       end
 
@@ -29,15 +37,6 @@ class ApplyController < ApplicationController
 
         @customer.signup_ip = request.remote_ip != "127.0.0.1" ? request.remote_ip : request.env['HTTP_X_FORWARDED_FOR']
         @customer.save(validate: false)
-      end
-
-      # Deny if this a possible hack attempt
-      case
-      when params[:contract][:rental_bond].blank?,
-           params[:contract][:property_weekly_rent].blank?,
-           params[:contract][:property_postcode].blank?
-        flash[:alert] = "Please complete all fields in the Calculator"
-        redirect_to root_path and return
       end
 
       # TODO: keep contract record as well...
@@ -320,4 +319,15 @@ class ApplyController < ApplicationController
     @customer = Customer.find(session[:data]["customer_id"])
     @contract = Contract.find(session[:data]["contract_id"])
   end
+
+  def form_spammer?
+    return true if params[:contract].blank?
+    return true if params[:customer].blank?
+    return true if params[:customer][:email].blank?
+    return true if params[:contract][:rental_bond].blank?
+    return true if params[:contract][:property_weekly_rent].blank?
+    return true if params[:contract][:property_postcode].blank?
+    false
+  end
+
 end
