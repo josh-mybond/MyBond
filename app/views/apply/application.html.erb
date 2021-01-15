@@ -1,0 +1,57 @@
+<%# declare any stimulus controllers to be used %>
+<div data-controller="form_validation">
+</div>
+
+<div id="address">
+</div>
+
+<div id="application">
+
+  <%= render partial: 'apply/progress_indicator', locals: { progress: 25 } %>
+
+  <div class="row">
+    <div class="col-md-12 col-lg-12">
+      <br>
+      <h4>
+        MyBond will pay you <span class="pacific_blue"><%= @quote[:bond_payout].gsub(".00", "") %></span> for your bond.
+      </h4>
+    </div>
+  </div>
+
+  <div class="row row_padding">
+    <div class="col-md-12 col-lg-12">
+      <br>
+      <p>
+        To apply for your payout you will need to provide the following.
+      </p>
+      <ul class="text-muted">
+        <li>Your Bond details and a copy of your tenancy ledger</li>
+        <li>Address of the property</li>
+        <li>Your Real Estate Agent contact details</li>
+        <li>Proof of your identity</li>
+        <li>A nominated bank account to receive the funds</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row row_padding">
+    <div class="col-md-12 col-lg-12">
+      <p>
+        After receiving your application we will validate the details with your Real Estate Agent and the Rental Bond Board.
+      </p>
+      <p>
+        If you meet our application conditions you will receive the funds in 2-3 working days.
+      </p>
+    </div>
+  </div>
+
+  <div class="row row_padding">
+    <div class="col-md-12 col-lg-12">
+      <%= form_with(url: step1_path, local: true) do |f| %>
+        <%= render partial: 'apply/hidden_customer' %>
+        <%= render partial: 'apply/hidden_contract' %>
+        <button id="calculator_apply_button" type="submit" class="btn btn-success">Continue with my application!</button>
+      <% end %>
+    </div>
+  </div>
+</div>

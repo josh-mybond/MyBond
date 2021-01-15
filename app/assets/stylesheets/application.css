@@ -1,0 +1,114 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ *= require bootstrap
+ *= require calculator
+ *= require loader
+ *= require slider
+ *= require flatpickr
+ *= require fincorp
+ */
+
+/* turbo-frame {
+  display: block;
+  border: 1px solid blue;
+} */
+
+
+#error_explanation {
+  color: #f00;
+  ul {
+    list-style: none;
+    margin: 0 0 18px 0;
+  }
+}
+
+.jumbotron_header_image {
+  width: 68%;
+}
+
+.field_with_errors input {
+  border: 1px solid red;
+}
+
+.bg_indigo {
+  background-color: #3c8dbc;
+}
+
+.indigo            { color: #3c8dbc; }
+.pacific_blue      { color: #0489DF; }
+.midnight_express  { color: #000342; }
+.pacific_blue_background      { background-color: #0489DF; }
+.midnight_express_background  { background-color: #000342; }
+
+
+.small_padding_fix {
+  padding-left: 12px;
+}
+
+.hr_top_padding {
+  margin-top: 36px;
+}
+
+.hidden  { display: none; }
+.visible { display: block; }
+
+/* Images */
+
+.logo {
+  background-image: url("../assets/logos/my-bond-logo-for-white-background.png");
+  background-size: 100% 100%;
+  width: 220px;
+  height: 80px;
+}
+
+.icon {
+  background-image: url("../assets/logos/my-bond-icon.png");
+  background-size: 100% 100%;
+  width: 20px;
+  height: 20px;
+}
+
+/* Apply - header */
+
+.apply_progress_bar {
+  margin-top: 44px;
+}
+
+/* End Apply - Pages */
+
+.row_padding {
+  padding-top: 16px;
+}
+
+.date_input {
+  display: block, block;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  appearance: none;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+/* scaffold helper */
+.min-width-btn {
+  min-width: 100px;
+  margin: 1px;
+}

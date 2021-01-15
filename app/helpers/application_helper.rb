@@ -46,6 +46,5 @@ module ApplicationHelper
   def admin_form_button_class
     "btn btn-info"
   end
-
-
+  
 end

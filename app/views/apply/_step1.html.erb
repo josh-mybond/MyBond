@@ -1,3 +1,6 @@
+<div id="application">
+  <%= render partial: 'apply/progress_indicator', locals: { progress: 50 } %>
+<div data-controller="form_validation">
 <%= form_with(model: @customer, url: step2_path, local: true, method: "post", id: "apply_form") do |f| %>
   <%= render "shared/error_messages", resource: @customer %>
   <%= render partial: 'apply/hidden_customer' %>
@@ -7,7 +10,7 @@
     <div class="loader mx-auto"></div>
   </div>
 
-  <div class="row form-group">
+  <div class="row form-group row_padding">
     <div class="col-lg-6">
       <%= f.label :first_name %>
       <%= f.text_field :first_name, class: "form-control", placeholder: "First Name", required: true %>
@@ -18,19 +21,20 @@
     </div>
   </div>
 
-   <div class="row form-group">
+   <div class="row form-group row_padding">
     <div class="col-lg-6">
       <%= f.label :email %>
       <%= f.text_field :email, class: "form-control", placeholder: "Email", required: true %>
     </div>
 
-    <div class="col-lg-6">
-      <%= f.label :mobile_number %>
-      <%= f.text_field :mobile_number, class: "form-control", placeholder: "Mobile number", required: true %>
-    </div>
+      <div class="col-lg-6">
+        <%= f.label :mobile_number %>
+        <%= f.text_field :mobile_number, class: "form-control", placeholder: "Mobile number", 'data-form_validation-target': 'mobileNumber', 'data-action': 'keyup->form_validation#validateMobile', required: true %>
+      </div>
+
   </div>
 
-  <div class="row form-group">
+  <div class="row form-group row_padding">
     <div class="col-lg-6">
       <%= f.label :date_of_birth %>
       <%= f.text_field :date_of_birth, as: :string, type: :text, class: "form-control date_of_birth_picker" %>
@@ -39,11 +43,12 @@
     </div>
   </div>
 
-  <div class="row form-group">
+  <div class="row form-group row_padding">
     <div class="col-lg-6">
       <%= f.label :country %>
       <%= f.country_select :iso_country_code, { selected: @customer.iso_country_code } , { class: 'form-control' } %>
     </div>
+
     <div class="col-lg-6">
       <%= f.label :residential_status %>
       <select name="customer[residential_status]" class="form-control">
@@ -56,7 +61,7 @@
     </div>
   </div>
 
-  <div class="row form-group">
+  <div class="row form-group row_padding">
     <div class="col-lg-12">
       <%= f.label :previous_address %>
       <%= f.text_field :previous_address, class: "form-control", placeholder: "Previous Address", required: true %>
@@ -65,10 +70,18 @@
           Make sure your web browser has JavaScript enabled.
         </a>
       </small>
+
+      <%# hidden fields - values are set via googlemaps javascript %>
+      <%= f.hidden_field :previous_address_address1  %>
+      <%= f.hidden_field :previous_address_address2  %>
+      <%= f.hidden_field :previous_address_city      %>
+      <%= f.hidden_field :previous_address_state     %>
+      <%= f.hidden_field :previous_address_postcode %>
+      <%= f.hidden_field :previous_address_country_code %>
     </div>
   </div>
 
-  <div class="row form-group">
+  <div class="row form-group row_padding">
     <div class="col-lg-12">
       <%= f.label :previous_agent %>
       <%= f.text_field :previous_agent, class: "form-control", placeholder: "Previous Agent", required: true %>
@@ -78,7 +91,7 @@
     </div>
   </div>
 
-  <div class="row form-group">
+  <div class="row form-group row_padding">
     <div class="col-lg-12">
       <%#= f.label :photo_of_your_drivers_license %>
       <%= f.label "Photo of your Driver's License" %>
@@ -86,7 +99,7 @@
     </div>
   </div>
 
-  <div class="row form-group">
+  <div class="row form-group row_padding">
     <div class="col-lg-12">
       <%= f.label :selfie %>
       <%= f.file_field :selfie, class: 'form-control', required: true %>
@@ -95,7 +108,7 @@
 
 
   <% if Rails.env.production? %>
-    <div class="row form-group">
+    <div class="row form-group row_padding">
        <div class="col-lg-12">
         <%= recaptcha_tags %>
       </div>
@@ -106,3 +119,5 @@
   <%= render partial: 'apply/button', locals: { f: f, title: "Next"} %>
 
 <% end %>
+</div>
+</div>

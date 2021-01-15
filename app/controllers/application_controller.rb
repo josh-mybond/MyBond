@@ -2,10 +2,11 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
 
   before_action :set_title
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
-  # protect_from_forgery with: :exception
-
-  # layout :application
+  #
+  # Logging
+  #
 
   def log_header
     l "------------------------------------------------------------------------------------------------------------------------------------------------"
@@ -21,6 +22,10 @@ class ApplicationController < ActionController::Base
     puts string
   end
 
+  #
+  # Error handling
+  #
+
   def set_error
     flash[:error] = @error if @error
   end
@@ -29,79 +34,119 @@ class ApplicationController < ActionController::Base
     flash[:error] = @error if @error
   end
 
-  def api_render(object)
-    respond_to do |format|
-      format.html { render plain: invalid_html_message }
-      format.json { render json: object.to_json }
-      format.js   { render json: object.to_json }
-    end
-  end
-
-  def common_render(object, redirect_me = nil)
-    respond_to do |format|
-      format.html {
-        set_flash
-        redirect_to redirect_me if redirect_me
-      }
-      format.json { render json: object.to_json }
-      format.js   { render json: object.to_json }
-    end
-  end
-
   #
-  # Title
-  #
-
-  def set_title
-    @title = "MyBond"
-
-    case params[:controller]
-    when "apply" then @title += " - #{params[:action].gsub("_", " ")}"
-    when "index" then @title += " - #{params[:action].gsub("_", " ")}"
-    end
-
-    @title += " - Access your Rental Bond today!"
-
-  end
-
-  #
-  # Params
+  # Sanitize params
   #
 
   def customer_params
     params[:customer][:email] = Customer::test_email if Rails.env.development?
-    params.require(:customer).permit(:first_name, :last_name, :email, :password, :password_confirmation, :iso_country_code, :mobile_number, :date_of_birth, :residential_status, :previous_address, :previous_agent, :drivers_license, :selfie)
+    params.require(:customer).permit(
+      :first_name,
+      :last_name,
+      :email,
+      :password,
+      :password_confirmation,
+      :iso_country_code,
+      :mobile_number,
+      :date_of_birth,
+      :residential_status,
+      :previous_address,
+      :previous_agent,
+      :drivers_license,
+      :selfie,
+      :previous_address_address1,
+      :previous_address_address2,
+      :previous_address_city,
+      :previous_address_state,
+      :previous_address_postcode,
+      :previous_address_country_code
+    )
   end
 
   def contract_params
-    params.require(:contract).permit(:customer_id,
-      :value, :agent_name, :agent_telephone, :agent_email, :property_weekly_rent,
-      :property_address, :property_postcode, :property_country,
-      :property_iso_country_code, :rental_bond_board_id, :start_date,
-      :end_date, :contract_type, :status, :rental_bond, :start_of_lease,
-      :end_of_lease, :rolling_lease, :customer_id, :data, :status)
+    params.require(:contract).permit(
+      :customer_id,
+      :value,
+      :agent_name,
+      :agent_telephone,
+      :agent_email,
+      :property_weekly_rent,
+      :property_address,
+      :property_postcode,
+      :property_country,
+      :property_iso_country_code,
+      :rental_bond_board_id,
+      :start_date,
+      :end_date,
+      :contract_type,
+      :status,
+      :rental_bond,
+      :start_of_lease,
+      :end_of_lease,
+      :rolling_lease,
+      :customer_id,
+      :data,
+      :status,
+      :property_address_address1,
+      :property_address_address2,
+      :property_address_city,
+      :property_address_state,
+      :property_address_postcode,
+      :property_address_country_code
+    )
+  end
+
+  #
+  # Request Method
+  #
+
+  def method
+    request.method.downcase
+  end
+
+  def get?
+    method == "get"
+  end
+
+  def post?
+    method == "post"
+  end
+
+  def patch?
+    method == "patch"
+  end
+
+  def delete?
+    method == "delete"
   end
 
 
 
   protected
 
-  # # redirect user after login
-  # def after_sign_in_path_for(resource)
-  #   stored_location_for(resource) || current_user.admin? ? admin_root_path : root_path
-  # end
-
-  def after_sign_in_path_for(resource)
-    case current_user.admin?
-    when false then (stored_location_for(resource) || dashboard_path)
-    when true  then admin_root_path
+    def after_sign_in_path_for(resource)
+      case current_user.admin?
+      when false then (stored_location_for(resource) || dashboard_path)
+      when true  then admin_root_path
+      end
     end
-  end
 
-  private
+    #
+    # Before filters
+    #
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :first_name, :last_name, :registration_code, :country_code, :postal_code, :password, :password_confirmation])
-  end
+    def set_title
+      @title = "MyBond"
 
+      case params[:controller]
+      when "apply" then @title += " - #{params[:action].gsub("_", " ")}"
+      when "index" then @title += " - #{params[:action].gsub("_", " ")}"
+      end
+
+      @title += " - Access your Rental Bond today!"
+    end
+
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :email])
+    end
 end

@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>MybondHotwire</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-<%= render 'layouts/head' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= yield :head %>
+    <%= turbo_include_tags %>
+    <%= stimulus_include_tags %>
+  </head>
 
-<body onload="copy_selector()">
-  <%= render "shared/flash_messages", flash: flash %>
-  <%= render 'layouts/loading_overlay' %>
-
-  <%= yield %>
-
-  <%#= render 'layouts/footer' %>
-</body>
+  <body>
+    <div class='container'>
+      <%= render "shared/flash_messages", flash: flash %>
+      <%= render 'layouts/loading_overlay' %>
+      
+      <%= yield %>
+    </div>
+  </body>
 </html>

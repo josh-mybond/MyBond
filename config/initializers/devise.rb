@@ -1,3 +1,26 @@
+# Patch to allow Devise to work with Turbo..
+# TODO - may not be needed in future releases..
+class TurboController < ApplicationController
+  class Responder < ActionController::Responder
+    def to_turbo_stream
+      controller.render(options.merge(formats: :html))
+    rescue ActionView::MissingTemplate => error
+      if get?
+        raise error
+      elsif has_errors? && default_action
+        render rendering_options.merge(formats: :html, status: :unprocessable_entity)
+      else
+        redirect_to navigation_location
+      end
+    end
+  end
+
+  self.responder = Responder
+
+  respond_to :html, :turbo_stream
+
+end
+
 # frozen_string_literal: true
 
 # Assuming you have not yet modified this file, each configuration option below
@@ -14,11 +37,12 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'ca3392dd5d672033c3438d18d0d05569f0b0fea165a785579b7653ce19da5c339d09deec19d1330b89dda8c8d4cd33a466fb2da7a08f1468cf8572ee7ad89dae'
+  # config.secret_key = '2e06866837bcf82173b362dfa8721c6dceb490dd3a7266670e371adc5bdae939778b4527b790cc7635b27c2e958cf61c20369424caafdb1a5199b0bb36ce8210'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
+  config.parent_controller = 'TurboController'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -126,7 +150,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 12
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '4ac2a0428d5786b2cb651e8f648a09f7195abdd3590a8befa4f15a067723ec212e44e37eb2a184ece81cc10bf93e7e9671f08f603f627daf1dd92e0a9bfe9599'
+  # config.pepper = '8f2a6ec14401c32cf60e6f42713226da45ea0cb8ac149a8b8f2f6a513dbc96494814600a429e31ff5325dfc8a7587f9dcb253c80aa151800470bb19b358816ca'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -183,8 +207,7 @@ Devise.setup do |config|
   # Email regex used to validate email formats. It simply asserts that
   # one (and only one) @ exists in the given string. This is mainly
   # to give user feedback and not to assert the e-mail validity.
-  # config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
-  config.email_regexp = URI::MailTo::EMAIL_REGEXP
+  config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
 
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
@@ -264,7 +287,7 @@ Devise.setup do |config|
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  # config.navigational_formats = ['*/*', :html]
+  config.navigational_formats = ['*/*', :html, :turbo_stream]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete

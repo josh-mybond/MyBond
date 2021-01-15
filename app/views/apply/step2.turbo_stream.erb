@@ -1,0 +1,5 @@
+<% if @rerender == true %>
+  <%= turbo_stream.replace "application", partial: 'apply/step1', locals: { customer: @customer, contract: @contract } %>
+<% else %>
+  <%= turbo_stream.replace "application", partial: 'apply/step2', locals: { customer: @customer, contract: @contract } %>
+<% end %>

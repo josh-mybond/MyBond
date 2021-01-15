@@ -1,4 +1,6 @@
-<%#= form_with(model: @contract, url: step3_path(@contract), local: true) do |f| %>
+<div id="application">
+  <%= render partial: 'apply/progress_indicator', locals: { progress: 75 } %>
+<div data-controller="form_validation">
 <%= form_with(model: @contract, url: invitation_path, local: true, method: "post", id: "apply_form") do |f| %>
   <%= render "shared/error_messages", resource: @contract %>
 
@@ -6,14 +8,14 @@
   <%= render partial: 'apply/hidden_customer' %>
   <%= render partial: 'apply/hidden_contract' %>
 
-  <div class="row form-group">
+  <div class="row form-group row_padding">
     <div class="col-lg-12">
       <%= f.label :agent_name %>
       <%= f.text_field :agent_name, class: "form-control", placeholder: "Real Estate Agent Name", required: true %>
     </div>
   </div>
 
-  <div class="row form-group">
+  <div class="row form-group row_padding">
     <div class="col-lg-6">
       <%= f.label :agent_telephone %>
       <%= f.text_field :agent_telephone, class: "form-control", placeholder: "Real Estate Agent Telephone", required: true %>
@@ -24,17 +26,13 @@
     </div>
   </div>
 
-  <%= render partial: 'apply/line_spacer' %>
-
-  <div class="row">
+  <div class="row row_padding">
     <div class="col-lg-12">
       <h4>Property Details</h4>
     </div>
   </div>
 
-  <%= render partial: 'apply/line_spacer' %>
-
-  <div class="row form-group">
+  <div class="row form-group row_padding">
     <div class="col-lg-12">
       <%= f.label :address %>
       <%= f.text_field :property_address, class: "form-control", placeholder: "Address", required: true %>
@@ -46,7 +44,15 @@
     </div>
   </div>
 
-  <div class="row form-group">
+  <%# hidden fields - values are set via googlemaps javascript %>
+  <%= f.hidden_field :property_address_address1  %>
+  <%= f.hidden_field :property_address_address2  %>
+  <%= f.hidden_field :property_address_city      %>
+  <%= f.hidden_field :property_address_state     %>
+  <%= f.hidden_field :property_address_postcode %>
+  <%= f.hidden_field :property_address_country_code %>
+
+  <div class="row form-group row_padding">
     <div class="col-lg-6">
       <%= f.label :postcode %>
       <%= f.text_field :property_postcode, class: "form-control", placeholder: "Postcode", required: true %>
@@ -57,7 +63,7 @@
     </div>
   </div>
 
-  <div class="row form-group">
+  <div class="row form-group row_padding">
 
     <div class="col-lg-6">
       <%= f.label :weekly_rent %>
@@ -70,7 +76,7 @@
     </div>
   </div>
 
-  <div class="row form-group">
+  <div class="row form-group row_padding">
     <div class="col-lg-6">
       <%= f.label :lease_start_date %>
       <%= f.text_field :start_date, as: :string, type: :text, class: "form-control contract_start_date_picker" %>
@@ -80,7 +86,8 @@
       <%= f.text_field :end_date, as: :string, type: :text, class: "form-control contract_end_date_picker" %>
     </div>
   </div>
-
   <%= render partial: 'apply/button', locals: { f: f, title: "Next"} %>
 
 <% end %>
+</div>
+</div>
